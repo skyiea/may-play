@@ -1,22 +1,23 @@
-var http        = require('http'),
-    dispatcher  = require('httpdispatcher'),
-    fs          = require('fs');
+import http from 'http';
+import httpdispatcher from 'httpdispatcher';
+import fs from 'fs';
 
-var PORT    = 1234,
-    server  = http.createServer();
+const PORT    = 4321;
+const server  = http.createServer();
 
-server.on('request', function (request, response) {
-        dispatcher.dispatch(request, response);
-    })
-    .listen(PORT, function () {
+server.
+    on('request', function (request, response) {
+        httpdispatcher.dispatch(request, response);
+    }).
+    listen(PORT, function () {
         console.log('Server listening on: http://localhost:%s', PORT);
     });
 
-dispatcher.setStaticDirname(__dirname);
-dispatcher.setStatic('public');
+httpdispatcher.setStaticDirname(__dirname);
+httpdispatcher.setStatic('public');
 
-dispatcher.onGet('/', function (request, response) {
-    var file_path = 'index.html';
+httpdispatcher.onGet('/', function (request, response) {
+    const file_path = 'index.html';
 
     fs.exists(file_path, function (exists) {
         if (exists) {
@@ -31,7 +32,7 @@ dispatcher.onGet('/', function (request, response) {
     });
 });
 
-dispatcher.onGet(/^\/.+/, function (request, response) {
+httpdispatcher.onGet(/^\/.+/, function (request, response) {
     response.writeHead(404, { 'Content-Type': 'text/plain' });
     response.end('404 Not found');
 });

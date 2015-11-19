@@ -1,8 +1,7 @@
-import React from 'react';
-
 import './body.less';
 
-const Body = React.createClass({
+@ReactClass
+export default class Body extends React.Component {
     render() {
         return (
             <div className="app-body">
@@ -10,6 +9,4 @@ const Body = React.createClass({
             </div>
         );
     }
-});
-
-module.exports = Body;
+}

@@ -1,7 +1,5 @@
-import React    from 'react';
-import $        from 'jquery';
-import App      from './body/Body';
+import 'babel/polyfill';
 
-$(() => {
-    React.render(<App />, document.getElementById('app-container'))
-});
+import App from './body/Body';
+
+ReactDOM.render(<App />, document.getElementById('app-container'));
