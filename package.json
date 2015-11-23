@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "start": "npm prune && npm install -g webpack webpack-dev-server && npm install",
     "build": "NODE_ENV=production webpack -p --bail",
     "server": "nodemon --exec babel-node -- server.js",
     "prepare": "npm prune && npm install -g grunt-cli webpack webpack-dev-server && npm install",

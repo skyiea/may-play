@@ -6,22 +6,22 @@ const PORT    = 4321;
 const server  = http.createServer();
 
 server.
-    on('request', function (request, response) {
+    on('request', (request, response) => {
         httpdispatcher.dispatch(request, response);
     }).
-    listen(PORT, function () {
+    listen(PORT, () => {
         console.log('Server listening on: http://localhost:%s', PORT);
     });
 
 httpdispatcher.setStaticDirname(__dirname);
 httpdispatcher.setStatic('public');
 
-httpdispatcher.onGet('/', function (request, response) {
+httpdispatcher.onGet('/', (request, response) => {
     const file_path = 'index.html';
 
-    fs.exists(file_path, function (exists) {
+    fs.exists(file_path, (exists) => {
         if (exists) {
-            fs.readFile(file_path, function (err, file) {
+            fs.readFile(file_path, (err, file) => {
                 response.writeHead(200, { 'Content-Type': 'text/html' });
                 response.end(file);
             });
@@ -32,7 +32,7 @@ httpdispatcher.onGet('/', function (request, response) {
     });
 });
 
-httpdispatcher.onGet(/^\/.+/, function (request, response) {
+httpdispatcher.onGet(/^\/.+/, (request, response) => {
     response.writeHead(404, { 'Content-Type': 'text/plain' });
     response.end('404 Not found');
 });
