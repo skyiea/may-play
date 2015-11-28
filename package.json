@@ -32,5 +32,10 @@
     "style-loader": "^0.12.4",
     "webpack": "^1.12.6",
     "webpack-dev-server": "^1.12.1"
+  },
+  "devDependencies": {
+    "file-loader": "^0.8.5",
+    "react-core-decorators": "0.0.1",
+    "url-loader": "^0.5.7"
   }
 }

@@ -32,7 +32,7 @@ export default {
                         'ReactDOM=react-dom',
                         '_=lodash',
                         'classnames',
-                        '{ReactClass}=<utils/Decorators'
+                        '{ReactClass}=react-core-decorators'
                     ].join(','),
                     'eslint'
                 ].join('!')
@@ -40,6 +40,14 @@ export default {
             {
                 test: /\.less$/,
                 loader: 'style!css!less'
+            },
+            {
+                test: /\.(png|jpg|svg)$/,
+                loader: 'url?limit=8192&name=[name].[ext]'
+            },
+            {
+                test: /\.(eot|ttf|woff|svg|svgz|otf)$/,
+                loader: 'file?name=fonts/[name].[ext]'
             }
         ]
     },
