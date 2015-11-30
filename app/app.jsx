@@ -1,7 +1,7 @@
 import 'babel/polyfill';
 
-import App from 'components/body/Body';
+import WebApp from 'components/web-app/WebApp';
 
 import 'app.less';
 
-ReactDOM.render(<App />, document.getElementById('app-container'));
+ReactDOM.render(<WebApp />, document.getElementById('app-container'));

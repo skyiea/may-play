@@ -3,13 +3,23 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "npm prune && npm install -g webpack webpack-dev-server && npm install",
+    "prepare": "npm prune && npm install -g webpack webpack-dev-server && npm install",
+    "server": "nodemon --watch server.js --exec babel-node -- server.js",
     "build": "NODE_ENV=production webpack -p --bail",
-    "server": "nodemon --exec babel-node -- server.js",
-    "prepare": "npm prune && npm install -g grunt-cli webpack webpack-dev-server && npm install",
-    "hot": "webpack-dev-server --inline --hot --progress"
+    "watch": "webpack --progress --watch",
+    "watchs": "webpack --progress --watch --devtool source-map",
+    "hot": "webpack-dev-server --inline --hot --progress",
+    "hots": "webpack-dev-server --inline --hot --progress --devtool source-map"
   },
   "dependencies": {
+    "express": "^4.10.2",
+    "lodash": "^3.10.1",
+    "nodemon": "^1.8.1",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "webpack": "^1.12.6"
+  },
+  "devDependencies": {
     "autoimport-loader": "^0.2.4",
     "babel": "^5.8.23",
     "babel-core": "^5.8.34",
@@ -19,21 +29,12 @@
     "eslint": "^1.9.0",
     "eslint-loader": "^1.1.1",
     "eslint-plugin-react": "^3.9.0",
-    "httpdispatcher": "^0.4.0",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
     "loader-utils": "^0.2.11",
-    "lodash": "^3.10.1",
-    "node-libs-browser": "^0.5.3",
-    "nodemon": "^1.8.1",
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3",
-    "react-hot-loader": "^1.3.0",
     "style-loader": "^0.12.4",
-    "webpack": "^1.12.6",
-    "webpack-dev-server": "^1.12.1"
-  },
-  "devDependencies": {
+    "webpack-dev-server": "^1.12.1",
+    "react-hot-loader": "^1.3.0",
     "file-loader": "^0.8.5",
     "react-core-decorators": "0.0.1",
     "url-loader": "^0.5.7"

@@ -67,7 +67,7 @@ export default {
         quiet   : false,
         noInfo  : false,
         proxy: {
-            '*': 'http://localhost:4321/'
+            '*': 'http://localhost:3000/'
         },
         stats: output_options
     }

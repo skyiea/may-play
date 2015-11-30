@@ -1,38 +1,18 @@
+import path from 'path';
+import express from 'express';
 import http from 'http';
-import httpdispatcher from 'httpdispatcher';
-import fs from 'fs';
 
-const PORT    = 4321;
-const server  = http.createServer();
+const PORT = 3000;
 
-server.
-    on('request', (request, response) => {
-        httpdispatcher.dispatch(request, response);
-    }).
-    listen(PORT, () => {
-        console.log('Server listening on: http://localhost:%s', PORT);
-    });
+const app = express();
+const server = http.Server(app);
 
-httpdispatcher.setStaticDirname(__dirname);
-httpdispatcher.setStatic('public');
+app.use('/public', express.static('public'));
 
-httpdispatcher.onGet('/', (request, response) => {
-    const file_path = 'index.html';
-
-    fs.exists(file_path, (exists) => {
-        if (exists) {
-            fs.readFile(file_path, (err, file) => {
-                response.writeHead(200, { 'Content-Type': 'text/html' });
-                response.end(file);
-            });
-        } else {
-            response.writeHead(500, { 'Content-Type': 'text/plain' });
-            response.end('500 Interval error');
-        }
-    });
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-httpdispatcher.onGet(/^\/.+/, (request, response) => {
-    response.writeHead(404, { 'Content-Type': 'text/plain' });
-    response.end('404 Not found');
+server.listen(PORT, () => {
+    console.log('Server listening on: http://*:%s', PORT);
 });
