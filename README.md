@@ -2,14 +2,14 @@
 Quick-start suit for JSX development
 
 Includes:
-  - Webpack (with dev-server)
+  - Webpack (with hot dev-server)
   - React
   - ES6 and JSX compiler (babel)
   - LESS compiler
   - Nodemon server
   
-To install packages, use:
-  - npm start
+To prepare project (install necessary global and local packages), use:
+  - npm prepare
   
 To start suit:
   - npm run server
