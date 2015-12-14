@@ -5,7 +5,7 @@ Includes:
   - Webpack (with hot dev-server)
   - React
   - ES6 and JSX compiler (babel)
-  - LESS compiler
+  - SCSS compiler
   - Nodemon server
   
 To prepare project (install necessary global and local packages), use:

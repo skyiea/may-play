@@ -1,4 +1,4 @@
-import './web-app.less';
+import './web-app.scss';
 
 @ReactClass
 class WebApp extends React.Component {

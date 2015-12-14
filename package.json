@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "prepare": "npm prune && npm install -g webpack webpack-dev-server && npm install",
+    "prepare": "npm install -g webpack webpack-dev-server && npm install",
     "server": "nodemon --watch server.js --exec babel-node -- server.js",
     "build": "NODE_ENV=production webpack -p --bail",
     "watch": "webpack --progress --watch",
-    "watchs": "webpack --progress --watch --devtool source-map",
+    "watchs": "SOURCE_MAPS=on webpack --progress --watch",
     "hot": "webpack-dev-server --inline --hot --progress",
-    "hots": "webpack-dev-server --inline --hot --progress --devtool source-map"
+    "hots": "SOURCE_MAPS=on webpack-dev-server --inline --hot --progress"
   },
   "dependencies": {
     "express": "^4.10.2",
@@ -29,14 +29,14 @@
     "eslint": "^1.9.0",
     "eslint-loader": "^1.1.1",
     "eslint-plugin-react": "^3.9.0",
-    "less": "^2.5.3",
-    "less-loader": "^2.2.1",
-    "loader-utils": "^0.2.11",
-    "style-loader": "^0.12.4",
-    "webpack-dev-server": "^1.12.1",
-    "react-hot-loader": "^1.3.0",
     "file-loader": "^0.8.5",
+    "loader-utils": "^0.2.11",
+    "node-sass": "^3.4.2",
     "react-core-decorators": "0.0.1",
-    "url-loader": "^0.5.7"
+    "react-hot-loader": "^1.3.0",
+    "sass-loader": "^3.1.2",
+    "style-loader": "^0.12.4",
+    "url-loader": "^0.5.7",
+    "webpack-dev-server": "^1.12.1"
   }
 }

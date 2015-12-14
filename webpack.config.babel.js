@@ -9,15 +9,18 @@ const output_options = {
 };
 
 const app_path = path.join(__dirname, 'app/');
+const with_source_maps = process.env.SOURCE_MAPS === 'on';
 
 export default {
+    devtool: with_source_maps && '#source-map',
     entry: {
         app: path.join(app_path, 'app.jsx')
     },
     output: {
-        path        : 'public/',
-        publicPath  : 'public/',
-        filename    : '[name].min.js'
+        path: 'public/',
+        publicPath: 'public/',
+        sourceMapFilename: '[file].map',
+        filename: '[name].min.js'
     },
     module: {
         loaders: [
@@ -38,8 +41,12 @@ export default {
                 ].join('!')
             },
             {
-                test: /\.less$/,
-                loader: 'style!css!less'
+                test: /\.scss/,
+                loader: [
+                    'style',
+                    `css${with_source_maps ? '?sourceMap' : ''}`,
+                    `sass${with_source_maps ? '?sourceMap' : ''}`
+                ].join('!')
             },
             {
                 test: /\.(png|jpg|svg)$/,
