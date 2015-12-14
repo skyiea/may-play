@@ -29,7 +29,7 @@ export default {
                 exclude: /node_modules/,
                 loader: [
                     'react-hot',
-                    'babel?optional[]=es7.classProperties&optional[]=es7.objectRestSpread&optional[]=es7.decorators',
+                    'babel',
                     'autoimport?config[]=checkIfUsed&' + [
                         'React=>react',
                         'ReactDOM=react-dom',
