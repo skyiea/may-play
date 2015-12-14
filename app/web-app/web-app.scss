@@ -1,0 +1,54 @@
+@import '../styles/colors';
+
+.web-app {
+    display: flex;
+    height: 100%;
+
+    flex-direction: column;
+
+    > header,
+    > footer {
+        $height: 30px;
+
+        height: $height;
+
+        line-height: $height;
+
+        background-color: $dark;
+    }
+
+    > header {
+        text-align: center;
+
+        > a {
+            color: $orange;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+    }
+
+    > main {
+        display: flex;
+
+        flex-grow: 1;
+        justify-content: center;
+        align-items: center;
+
+        font-size: 32px;
+        text-transform: uppercase;
+
+        background-color: $light-grey;
+    }
+
+    > footer {
+        padding: 0 20px;
+
+        text-align: right;
+
+        > a {
+            color: $light-grey;
+            text-decoration: none;
+            font-style: italic;
+        }
+    }
+}
