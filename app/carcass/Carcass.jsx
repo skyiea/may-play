@@ -1,10 +1,10 @@
-import './web-app.scss';
+import './carcass.scss';
 
 @ReactClass
-class WebApp extends React.Component {
+class Carcass extends React.Component {
     render() {
         return (
-            <section className="web-app">
+            <section className="carcass">
                 <header>
                     <a href="/#/">React application</a>
                 </header>
@@ -19,4 +19,4 @@ class WebApp extends React.Component {
     }
 }
 
-export default WebApp;
+export default Carcass;

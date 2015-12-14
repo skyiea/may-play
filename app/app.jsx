@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import { Router, Route, IndexRoute } from 'react-router';
 import { createHashHistory } from 'history/lib';
 
-import WebApp from 'web-app/WebApp';
+import Carcass from 'carcass/Carcass';
 import Index from 'pages/index/Index';
 
 import 'app.scss';
@@ -14,7 +14,7 @@ const history = createHashHistory({
 
 ReactDOM.render((
     <Router history={history}>
-        <Route path="/" component={WebApp}>
+        <Route path="/" component={Carcass}>
             <IndexRoute component={Index}/>
         </Route>
     </Router>
