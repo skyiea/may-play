@@ -27,7 +27,7 @@ export default {
             {
                 test: /\.jsx?/,
                 exclude: /node_modules/,
-                loader: [
+                loaders: [
                     'react-hot',
                     'babel',
                     'autoimport?config[]=checkIfUsed&' + [
@@ -38,23 +38,23 @@ export default {
                         '{ReactClass}=react-core-decorators'
                     ].join(','),
                     'eslint'
-                ].join('!')
+                ]
             },
             {
                 test: /\.scss/,
-                loader: [
+                loaders: [
                     'style',
                     `css${with_source_maps ? '?sourceMap' : ''}`,
                     `sass${with_source_maps ? '?sourceMap' : ''}`
-                ].join('!')
+                ]
             },
             {
                 test: /\.(png|jpg|svg)$/,
                 loader: 'url?limit=8192&name=[name].[ext]'
             },
             {
-                test: /\.(eot|ttf|woff|svg|svgz|otf)$/,
-                loader: 'file?name=fonts/[name].[ext]'
+                test: /\.(woff|woff2|ttf)$/,
+                loader: 'url?name=fonts/[name].[ext]'
             }
         ]
     },

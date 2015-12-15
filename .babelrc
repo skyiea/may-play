@@ -6,6 +6,7 @@
     "plugins": [
         "syntax-decorators",
         "syntax-object-rest-spread",
-        "syntax-class-properties"
+        "syntax-class-properties",
+        "transform-class-properties"
     ]
 }
