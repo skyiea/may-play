@@ -54,7 +54,7 @@ export default {
             },
             {
                 test: /\.(woff|woff2|ttf)$/,
-                loader: 'url?name=fonts/[name].[ext]'
+                loader: `${with_source_maps ? 'url' : 'file'}?name=fonts/[name].[ext]`
             }
         ]
     },
