@@ -1,0 +1,17 @@
+@import '../../styles/colors';
+
+.login-page {
+    display: flex;
+    height: 100%;
+
+    justify-content: center;
+    align-items: center;
+
+    > .popup {
+        width: 400px;
+        height: 300px;
+        border: 1px $brown-dark solid;
+
+        background-color: $brown-light;
+    }
+}
