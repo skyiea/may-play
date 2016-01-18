@@ -1,0 +1,16 @@
+{
+  "name": "may-play",
+  "version": "0.0.0",
+  "author": "Sergiy Murygin",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skyiea/may-play.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skyiea/may-play/issues"
+  },
+  "homepage": "https://github.com/skyiea/may-play"
+}
