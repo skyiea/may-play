@@ -1,20 +1,11 @@
 import webpack from 'webpack';
 import path from 'path';
 
-const output_options = {
-    chunks      : false,
-    chunkModules: false,
-    colors      : true,
-    timings     : true
-};
-
-const app_path = path.join(__dirname, 'app/');
-const with_source_maps = process.env.SOURCE_MAPS === 'on';
+const APP_PATH = path.join(__dirname, 'app/');
 
 export default {
-    devtool: with_source_maps && '#source-map',
     entry: {
-        app: path.join(app_path, 'app.jsx')
+        app: path.join(APP_PATH, 'app.jsx')
     },
     output: {
         path: 'public/',
@@ -33,8 +24,8 @@ export default {
                     'autoimport?config[]=checkIfUsed&' + [
                         'React=>react',
                         'ReactDOM=react-dom',
-                        '_=lodash',
                         'classnames',
+                        '_=lodash',
                         '{ReactClass}=react-core-decorators',
                         '{mixin}=react-core-decorators'
                     ].join(','),
@@ -42,11 +33,11 @@ export default {
                 ]
             },
             {
-                test: /\.scss/,
+                test: /\.scss$/,
                 loaders: [
                     'style',
-                    `css${with_source_maps ? '?sourceMap' : ''}`,
-                    `sass${with_source_maps ? '?sourceMap' : ''}`
+                    'css',
+                    'sass'
                 ]
             },
             {
@@ -55,12 +46,12 @@ export default {
             },
             {
                 test: /\.(woff|woff2|ttf)$/,
-                loader: `${with_source_maps ? 'url' : 'file'}?name=fonts/[name].[ext]`
+                loader: 'file?name=fonts/[name].[ext]'
             }
         ]
     },
     resolve: {
-        root: app_path,
+        root: APP_PATH,
         extensions: [ '', '.js', '.jsx' ]
     },
     plugins: [
@@ -68,7 +59,6 @@ export default {
             DEBUG: JSON.stringify(process.env.NODE_ENV) !== '"production"'
         })
     ],
-    stats: output_options,
     devServer: {
         host    : 'localhost',
         port    : '3001',
@@ -77,6 +67,10 @@ export default {
         proxy: {
             '*': 'http://localhost:3000/'
         },
-        stats: output_options
+        stats: {
+            chunks      : false,
+            chunkModules: false,
+            timings     : true
+        }
     }
 };

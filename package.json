@@ -1,7 +1,7 @@
 {
   "name": "may-play",
   "version": "0.0.0",
-  "author": "Sergiy Murygin",
+  "author": "Sergiy Skye Murygin & Myroslava Yurchyshyn",
   "repository": {
     "type": "git",
     "url": "https://github.com/skyiea/may-play.git"
@@ -17,9 +17,9 @@
     "server": "nodemon --watch server.js --exec babel-node -- server.js",
     "build": "NODE_ENV=production webpack -p --bail",
     "watch": "webpack --progress --watch",
-    "watchs": "SOURCE_MAPS=on webpack --progress --watch",
+    "watchs": "npm run watch -- --devtool source-map",
     "hot": "webpack-dev-server --inline --hot --progress",
-    "hots": "SOURCE_MAPS=on webpack-dev-server --inline --hot --progress"
+    "hots": "npm run hot -- --devtool source-map"
   },
   "dependencies": {
     "autoimport-loader": "^0.2.4",
@@ -36,8 +36,9 @@
     "babel-preset-react": "^6.3.13",
     "css-loader": "^0.23.0",
     "eslint": "^1.10.3",
+    "eslint-config-skye": "0.0.3",
     "eslint-loader": "^1.1.1",
-    "eslint-plugin-react": "^3.11.3",
+    "eslint-plugin-react": "^3.16.1",
     "express": "^4.13.3",
     "file-loader": "^0.8.5",
     "history": "^1.13.1",
