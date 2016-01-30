@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 import path from 'path';
 
-const APP_PATH = path.join(__dirname, 'app/');
+const APP_PATH = path.join(__dirname, 'app');
 
 export default {
     entry: {
@@ -16,7 +16,7 @@ export default {
     module: {
         loaders: [
             {
-                test: /\.jsx?/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loaders: [
                     'react-hot',
