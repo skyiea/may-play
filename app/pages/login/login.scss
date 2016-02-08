@@ -13,5 +13,10 @@
         border: 1px $brown-dark solid;
 
         background-color: $brown-light;
+
+        .warning {
+            font-size: 15px;
+            color: $red-light;
+        }
     }
 }
