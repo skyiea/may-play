@@ -14,13 +14,14 @@
 
         background-color: $brown-light;
 
-        #nickname:focus,
-        #password:focus {
+        .input-field:focus {
             background-color: $coffee;
         }
 
-        label[for] {
-            cursor: pointer;
+        > .input-line {
+            label[for] {
+                cursor: pointer;
+            }
         }
 
         > .warning {

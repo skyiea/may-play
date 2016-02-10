@@ -2,8 +2,9 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import fetch from 'isomorphic-fetch';
 import { Link } from 'react-router';
 
-import './login.scss';
+import styles from './Login.scss';
 
+@CSSModules(styles)
 @mixin(LinkedStateMixin)
 @ReactClass
 class Login extends React.Component {
@@ -57,20 +58,22 @@ class Login extends React.Component {
 
     render() {
         return (
-            <section className="login-page">
-                <section className="popup">
+            <section styleName="login-page">
+                <section styleName="popup">
                     <h2>Log in</h2>
-                    <section className="input-line">
+                    <section styleName="input-line">
                         <label htmlFor="nickname">Nickname:</label>
                         <input
                                 id="nickname"
+                                styleName="input-field"
                                 type="text"
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('nickname')}/>
                     </section>
-                    <section className="input-line">
+                    <section styleName="input-line">
                         <label htmlFor="password">Password:</label>
                         <input
+                                styleName="input-field"
                                 id="password"
                                 type={this.state.isChecked ? "text" : "password"}
                                 onFocus={this._clearWarning}
@@ -84,17 +87,14 @@ class Login extends React.Component {
                     </section>
                     {
                         this.state.warningMessage.length !== 0 &&
-                            <div className="warning">{this.state.warningMessage}</div>
+                            <div styleName="warning">{this.state.warningMessage}</div>
                     }
                     <button
-                            className="login-button"
                             onClick={this._sendUserData}>
                         Log in
                     </button>
                     <br/>
-                    <Link
-                            to="register"
-                            className="newAccount-button">
+                    <Link to="register">
                         Create new account
                     </Link>
                 </section>

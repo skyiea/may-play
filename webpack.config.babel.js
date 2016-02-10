@@ -2,6 +2,7 @@ import webpack from 'webpack';
 import path from 'path';
 
 const APP_PATH = path.join(__dirname, 'app');
+const isCamelCasedSCSS = /([A-Z][a-z0-9]*)+\.scss$/;
 
 export default {
     entry: {
@@ -25,6 +26,7 @@ export default {
                         'React=>react',
                         'ReactDOM=react-dom',
                         'classnames',
+                        'CSSModules=react-css-modules',
                         '_=lodash',
                         '{ReactClass}=react-core-decorators',
                         '{mixin}=react-core-decorators'
@@ -34,9 +36,18 @@ export default {
             },
             {
                 test: /\.scss$/,
+                exclude: isCamelCasedSCSS,
                 loaders: [
                     'style',
                     'css',
+                    'sass'
+                ]
+            },
+            {
+                test: isCamelCasedSCSS,
+                loaders: [
+                    'style',
+                    'css?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]',
                     'sass'
                 ]
             },
