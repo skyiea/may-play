@@ -5,6 +5,7 @@ import { createHistory } from 'history/lib';
 
 import Carcass from 'carcass/Carcass';
 import Login from 'pages/login/Login';
+import Registration from 'pages/registration/Registration';
 
 import 'app.scss';
 
@@ -12,6 +13,7 @@ ReactDOM.render((
     <Router history={createHistory()}>
         <Route path="/" component={Carcass}>
             <IndexRoute component={Login}/>
+            <Route path="register" component={Registration}/>
         </Route>
     </Router>
 ), document.getElementById('may-play-app'));

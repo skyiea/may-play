@@ -1,5 +1,6 @@
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import fetch from 'isomorphic-fetch';
+import { Link } from 'react-router';
 
 import './login.scss';
 
@@ -9,7 +10,8 @@ class Login extends React.Component {
     state = {
         nickname: '',
         password: '',
-        warningMessage: ''
+        warningMessage: '',
+        isChecked: false
     };
 
     _sendUserData = () => {
@@ -17,18 +19,25 @@ class Login extends React.Component {
 
         if (nickname.length === 0 || password.length === 0) {
             this.setState({
-                warningMessage: "* all fields must be non-empty!"
+                warningMessage: '* all fields must be non-empty!'
             });
         } else {
             fetch('/api/login', {
                 method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
                     nickname, // nickname: nickname
                     password
                 })
-            }).then((res) => {
-                console.log('result', res);
-            }).catch((ex) => {
+            }).
+            then((res) => res.json()).
+            then((json) => {
+                console.log('result', json);
+            }).
+            catch((ex) => {
                 console.log('error', ex);
             });
         }
@@ -36,7 +45,13 @@ class Login extends React.Component {
 
     _clearWarning = () => {
         this.setState({
-            warningMessage: ""
+            warningMessage: ''
+        });
+    };
+
+    _checkChange = () => {
+        this.setState({
+            isChecked: !this.state.isChecked
         });
     };
 
@@ -57,9 +72,15 @@ class Login extends React.Component {
                         <label htmlFor="password">Password:</label>
                         <input
                                 id="password"
-                                type="text"
+                                type={this.state.isChecked ? "text" : "password"}
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('password')}/>
+                        <input
+                                id="showPassword"
+                                type="checkbox"
+                                checked={this.state.isChecked}
+                                onChange={this._checkChange} />
+                        <label htmlFor="showPassword">Show password</label>
                     </section>
                     {
                         this.state.warningMessage.length !== 0 &&
@@ -70,6 +91,12 @@ class Login extends React.Component {
                             onClick={this._sendUserData}>
                         Log in
                     </button>
+                    <br/>
+                    <Link
+                            to="register"
+                            className="newAccount-button">
+                        Create new account
+                    </Link>
                 </section>
             </section>
         );

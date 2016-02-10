@@ -14,7 +14,16 @@
 
         background-color: $brown-light;
 
-        .warning {
+        #nickname:focus,
+        #password:focus {
+            background-color: $coffee;
+        }
+
+        label[for] {
+            cursor: pointer;
+        }
+
+        > .warning {
             font-size: 15px;
             color: $red-light;
         }
