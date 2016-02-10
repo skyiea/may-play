@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 import styles from './Login.scss';
 
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 @mixin(LinkedStateMixin)
 @ReactClass
 class Login extends React.Component {
@@ -58,14 +58,13 @@ class Login extends React.Component {
 
     render() {
         return (
-            <section styleName="login-page">
+            <section styleName="overlay">
                 <section styleName="popup">
-                    <h2>Log in</h2>
+                    <h2 styleName="title">Log in</h2>
                     <section styleName="input-line">
                         <label htmlFor="nickname">Nickname:</label>
                         <input
                                 id="nickname"
-                                styleName="input-field"
                                 type="text"
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('nickname')}/>
@@ -73,11 +72,12 @@ class Login extends React.Component {
                     <section styleName="input-line">
                         <label htmlFor="password">Password:</label>
                         <input
-                                styleName="input-field"
                                 id="password"
                                 type={this.state.isChecked ? "text" : "password"}
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('password')}/>
+                    </section>
+                    <section styleName="input-line checkbox-line">
                         <input
                                 id="showPassword"
                                 type="checkbox"

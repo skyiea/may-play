@@ -1,6 +1,6 @@
 @import '../../styles/colors';
 
-.login-page {
+.overlay {
     display: flex;
     height: 100%;
 
@@ -10,17 +10,66 @@
     > .popup {
         width: 400px;
         height: 300px;
-        border: 1px $brown-dark solid;
+        padding: 20px;
+        border: 2px $dark solid;
 
-        background-color: $brown-light;
+        background-color: #999;
+        box-shadow: 0 8px 8px #777;
 
-        .input-field:focus {
-            background-color: $coffee;
+        > .title {
+            margin-bottom: 20px;
+
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
         }
 
         > .input-line {
+            $label-width: 80px;
+            $input-width: 200px;
+
             label[for] {
+                display: inline-block;
+                width: $label-width;
+
+                font-style: italic;
+                font-weight: 400;
+
                 cursor: pointer;
+            }
+
+            > input {
+                &[type="text"],
+                &[type="password"] {
+                    $height: 30px;
+
+                    width: $input-width;
+                    height: $height;
+
+                    font-size: 18px;
+                    line-height: $height;
+                    text-indent: 10px;
+
+                    outline: none;
+
+                    &:focus {
+                        border: 2px solid dodgerblue;
+
+                        box-sizing: border-box;
+                    }
+                }
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 10px;
+            }
+
+            &.checkbox-line {
+                margin-left: $label-width;
+
+                > label {
+                    width: $input-width;
+                }
             }
         }
 
