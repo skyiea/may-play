@@ -1,10 +1,11 @@
-import './carcass.scss';
+import styles from './Carcass.scss';
 
+@CSSModules(styles, { allowMultiple: true })
 @ReactClass
 class Carcass extends React.Component {
     render() {
         return (
-            <section className="carcass">
+            <section styleName="carcass">
                 { this.props.children }
             </section>
         );
