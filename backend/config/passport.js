@@ -3,7 +3,7 @@ const User          = require('../models/user');
 const SignupStatus  = require('../../universal/SignupStatus');
 const LoginStatus   = require('../../universal/LoginStatus');
 
-module.exports = (passport) => {
+module.exports = function (passport) {
     passport.serializeUser((user, done) => {
         done(null, user.id);
     });
@@ -24,21 +24,21 @@ module.exports = (passport) => {
 
             if (user) {
                 return done(null, false, SignupStatus.USER_ALREADY_EXISTS);
-            } else {
-                const newUser = new User();
-
-                newUser.local.username  = username;
-                newUser.local.email     = req.body.email;
-                newUser.local.password  = newUser.generateHash(password);
-
-                newUser.save((err) => {
-                    if (err) {
-                        throw err;
-                    }
-
-                    return done(null, newUser);
-                });
             }
+            
+            const newUser = new User();
+
+            newUser.local.username  = username;
+            newUser.local.email     = req.body.email;
+            newUser.local.password  = newUser.generateHash(password);
+
+            newUser.save((err) => {
+                if (err) {
+                    throw err;
+                }
+
+                return done(null, newUser);
+            });
         });
     }));
 

@@ -7,38 +7,37 @@
     justify-content: center;
     align-items: center;
 
-    >.contact-form {
-        $input-width: 210px;
-        $height: 30px;
+    color: $white;
 
-        width: 300px;
-        height: 370px;
-        padding: 30px;
+    > .contact-form {
+        $input-width: 21rem;
+        $height: 3rem;
 
-        background-color: #848484;
-        box-shadow: 0 10px 10px #777;
+        padding: 3rem;
 
-        >.title {
-            margin-bottom: 20px;
+        background-color: $grey-1;
+        box-shadow: 0 1rem 1rem $grey-2;
 
-            color: $white;
+        > .title {
+            margin-bottom: 2rem;
+
             text-align: center;
-            font-size: 30px;
+            font-size: 3.2rem;
             font-weight: 300;
         }
 
 
         > .input-line {
-            margin-bottom: 15px;
+            margin-bottom: 1.5rem;
 
             > img {
                 display: inline-block;
                 vertical-align: middle;
 
-                margin-right: 2px;
+                margin-right: .2rem;
 
-                height: 24px;
-                width: 24px;
+                height: 2.4rem;
+                width: 2.4rem;
             }
 
             > input {
@@ -49,7 +48,7 @@
 
                 font-size: 15px;
                 line-height: $height;
-                text-indent: 10px;
+                text-indent: 1rem;
 
                 &:focus {
                     border: 2px solid dodgerblue;
@@ -61,16 +60,16 @@
 
 
         > .button {
-            width: 234px;
-            height: 50px;
+            width: 23.4rem;
+            height: 5rem;
 
-            border-radius: 10px;
+            border-radius: 1rem;
             border-style: none;
 
             background-color: #666666;
 
-            color: white;
-            font-size: 24px;
+            color: $white;
+            font-size: 2.4rem;
             font-weight: 300;
         }
 

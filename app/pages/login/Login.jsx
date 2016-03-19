@@ -1,6 +1,8 @@
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import fetch from 'utils/fetch';
 import { Link } from 'react-router';
+
+import fetch from 'utils/fetch';
+import LoginStatus from '../../../universal/LoginStatus';
 
 import styles from './Login.scss';
 
@@ -31,7 +33,13 @@ class Login extends React.Component {
                 })
             }).
             then((json) => {
-                console.log('result', json);
+                const { message } = json;
+
+                if (message && message in LoginStatus) {
+                    this.setState({
+                        warningMessage: message
+                    });
+                }
             });
         }
     };
@@ -49,6 +57,11 @@ class Login extends React.Component {
     };
 
     render() {
+        const {
+            isChecked,
+            warningMessage
+        } = this.state;
+
         return (
             <section styleName="overlay">
                 <section styleName="popup">
@@ -61,25 +74,27 @@ class Login extends React.Component {
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('username')}/>
                     </section>
+
                     <section styleName="input-line">
                         <label htmlFor="password">Password:</label>
                         <input
                                 id="password"
-                                type={this.state.isChecked ? "text" : "password"}
+                                type={isChecked ? "text" : "password"}
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('password')}/>
                     </section>
+
                     <section styleName="input-line checkbox-line">
                         <input
                                 id="showPassword"
                                 type="checkbox"
-                                checked={this.state.isChecked}
+                                checked={isChecked}
                                 onChange={this._checkChange} />
                         <label htmlFor="showPassword">Show password</label>
                     </section>
                     {
-                        this.state.warningMessage.length !== 0 &&
-                            <div styleName="warning">{this.state.warningMessage}</div>
+                        warningMessage &&
+                            <div styleName="warning">{ warningMessage }</div>
                     }
                     <button onClick={this._sendUserData}>
                         Log in

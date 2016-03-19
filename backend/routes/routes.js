@@ -3,7 +3,7 @@ const path      = require('path');
 
 const isLoggedIn = require('./isLoggedIn');
 
-module.exports = (app, passport) => {
+module.exports = function (app, passport) {
     const api = require('./api')(passport);
 
     app.use('/public', express.static('public'));

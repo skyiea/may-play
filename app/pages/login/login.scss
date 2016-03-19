@@ -7,33 +7,30 @@
     justify-content: center;
     align-items: center;
 
-    > .popup {
-        width: 400px;
-        height: 300px;
-        padding: 20px;
-        border: 2px $dark solid;
+    color: $white;
 
-        background-color: #999;
-        box-shadow: 0 8px 8px #777;
+    > .popup {
+        padding: 2rem;
+
+        font-weight: 300;
+
+        background-color: $grey-1;
+        box-shadow: 0 1rem 1rem $grey-2;
 
         > .title {
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
 
-            font-size: 28px;
-            font-weight: 600;
+            font-size: 3.2rem;
             text-align: center;
         }
 
         > .input-line {
-            $label-width: 80px;
-            $input-width: 200px;
+            $label-width: 8rem;
+            $input-width: 20rem;
 
             label[for] {
                 display: inline-block;
                 width: $label-width;
-
-                font-style: italic;
-                font-weight: 400;
 
                 cursor: pointer;
             }
@@ -41,14 +38,14 @@
             > input {
                 &[type="text"],
                 &[type="password"] {
-                    $height: 30px;
+                    $height: 3rem;
 
                     width: $input-width;
                     height: $height;
 
-                    font-size: 18px;
+                    font-size: 1.8rem;
                     line-height: $height;
-                    text-indent: 10px;
+                    text-indent: 1rem;
 
                     outline: none;
 
@@ -61,7 +58,7 @@
             }
 
             &:not(:last-child) {
-                margin-bottom: 10px;
+                margin-bottom: 1rem;
             }
 
             &.checkbox-line {
@@ -74,7 +71,7 @@
         }
 
         > .warning {
-            font-size: 15px;
+            font-size: 1.6rem;
             color: $red-light;
         }
     }

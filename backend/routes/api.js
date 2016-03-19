@@ -2,7 +2,7 @@ const express = require('express');
 
 const api = express.Router();
 
-module.exports = (passport) => {
+module.exports = function (passport) {
     api.post('/signup',
         (req, res, next) => {
             passport.authenticate('local-signup', (err, user, message) => {
@@ -42,8 +42,14 @@ module.exports = (passport) => {
                     });
                 }
 
-                return res.status(302).json({
-                    location: '/profile'
+                req.logIn(user, (err) => {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    return res.status(302).json({
+                        location: '/profile'
+                    });
                 });
             })(req, res, next);
         }

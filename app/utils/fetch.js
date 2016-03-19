@@ -17,6 +17,8 @@ export default function (url, options) {
             if (res.status === 302) { // redirection
                 return res.json().then(({ location }) => {
                     browserHistory.push(location);
+
+                    return {};
                 });
             }
 
