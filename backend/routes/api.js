@@ -55,5 +55,14 @@ module.exports = function (passport) {
         }
     );
 
+    api.post('/logout', (req, res) => {
+        req.logout();
+        res.clearCookie('connect.sid', '/');
+
+        res.status(302).json({
+            location: '/'
+        });
+    });
+
     return api;
 };

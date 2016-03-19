@@ -1,7 +1,7 @@
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { Link } from 'react-router';
 
-import fetch from 'utils/fetch';
+import { login } from 'utils/api';
 import LoginStatus from '../../../universal/LoginStatus';
 
 import styles from './Login.scss';
@@ -25,13 +25,7 @@ class Login extends React.Component {
                 warningMessage: '* all fields must be non-empty!'
             });
         } else {
-            fetch('/api/login', {
-                method: 'post',
-                body: JSON.stringify({
-                    username, // username: username
-                    password
-                })
-            }).
+            login(username, password).
             then((json) => {
                 const { message } = json;
 

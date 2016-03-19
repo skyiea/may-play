@@ -13,11 +13,6 @@ module.exports = function (app, passport) {
         next();
     });
 
-    app.get('/logout', (req, res) => {
-        req.logout();
-        res.redirect('/');
-    });
-
     app.get('/favicon.png', (req, res) => {
         res.sendFile(path.resolve('favicon.png'));
     });

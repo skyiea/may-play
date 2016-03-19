@@ -2,6 +2,8 @@
 //import fetch from 'utils/fetch';
 //import { Link } from 'react-router';
 
+import { logout } from 'utils/api';
+
 //import styles from './Profile.scss';
 
 //@CSSModules(styles, { allowMultiple: true })
@@ -11,7 +13,9 @@ class Profile extends React.Component {
     render() {
         return (
             <section>
-                <a href="logout">
+                <a
+                        href="#"
+                        onClick={logout}>
                     Logout
                 </a>
                 <br/>
