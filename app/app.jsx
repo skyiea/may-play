@@ -7,18 +7,47 @@ import Login from 'pages/login/Login';
 import Signup from 'pages/signup/Signup';
 import Profile from 'pages/profile/Profile';
 
+import { isLoggedIn } from 'utils/auth';
+
 import 'app.scss';
+
+function requireAuth(nextState, replace) {
+    if (!isLoggedIn()) {
+        replace({
+            pathname: '/login',
+            state: {
+                nextPathname: nextState.location.pathname
+            }
+        });
+    }
+}
+
+function requireNoAuth(nextState, replace) {
+    if (isLoggedIn()) {
+        replace({
+            pathname: '/profile',
+            state: {
+                nextPathname: nextState.location.pathname
+            }
+        });
+    }
+}
 
 ReactDOM.render((
     <Router history={browserHistory}>
         <Route path="/" component={Carcass}>
             <IndexRoute component={Login}/>
-            <Route path="login" component={Login}/>
-            <Route path="signup" component={Signup}/>
-            <Route path="profile" component={Profile}/>
+
+            /* Only for non-authorized users */
+            <Route onEnter={requireNoAuth}>
+                <Route path="login" component={Login}/>
+                <Route path="signup" component={Signup}/>
+            </Route>
+
+            /* Only for authorized users */
+            <Route onEnter={requireAuth}>
+                <Route path="profile" component={Profile}/>
+            </Route>
         </Route>
     </Router>
 ), document.getElementById('may-play-app'));
-
-// By default Lo-Dash will be exposed in global scope, which is not what we want when using Webpack.
-_.noConflict();

@@ -1,7 +1,7 @@
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { Link } from 'react-router';
 
-import { login } from 'utils/api';
+import { login } from 'utils/auth';
 import LoginStatus from '../../../universal/LoginStatus';
 
 import styles from './Login.scss';

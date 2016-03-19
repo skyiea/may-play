@@ -2,7 +2,7 @@
 //import fetch from 'utils/fetch';
 //import { Link } from 'react-router';
 
-import { logout } from 'utils/api';
+import { logout } from 'utils/auth';
 
 //import styles from './Profile.scss';
 

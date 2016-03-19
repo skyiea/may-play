@@ -15,10 +15,12 @@ export default function (url, options) {
     }).
         then((res) => {
             if (res.status === 302) { // redirection
-                return res.json().then(({ location }) => {
-                    browserHistory.push(location);
+                return res.json().then(({ location, ...payload }) => {
+                    setTimeout(() => {
+                        browserHistory.push(location);
+                    }, 0);
 
-                    return {};
+                    return payload;
                 });
             }
 
