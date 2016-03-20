@@ -1,18 +1,21 @@
 import 'babel-polyfill';
 
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Provider } from 'react-redux';
 
-import Carcass from 'carcass/Carcass';
+import { configureStore } from 'store';
+
+import CarcassContainer from 'carcass/CarcassContainer';
 import LoginContainer from 'pages/login/LoginContainer';
 import Signup from 'pages/signup/Signup';
-import Profile from 'pages/profile/Profile';
-
-import { isLoggedIn } from 'utils/auth';
+import ProfileContainer from 'pages/profile/ProfileContainer';
 
 import 'app.scss';
 
+const store = configureStore();
+
 function requireAuth(nextState, replace) {
-    if (!isLoggedIn()) {
+    if (!store.getState().loggedIn) {
         replace({
             pathname: '/login',
             state: {
@@ -23,7 +26,7 @@ function requireAuth(nextState, replace) {
 }
 
 function requireNoAuth(nextState, replace) {
-    if (isLoggedIn()) {
+    if (store.getState().loggedIn) {
         replace({
             pathname: '/profile',
             state: {
@@ -33,20 +36,27 @@ function requireNoAuth(nextState, replace) {
     }
 }
 
+const ReduxProvider = (props) => (
+    <Provider store={store}>
+        <CarcassContainer>
+            { props.children }
+        </CarcassContainer>
+    </Provider>
+);
+
 ReactDOM.render((
     <Router history={browserHistory}>
-        <Route path="/" component={Carcass}>
-            <IndexRoute component={LoginContainer}/>
-
+        <Route path="/" component={ReduxProvider}>
             /* Only for non-authorized users */
             <Route onEnter={requireNoAuth}>
+                <IndexRoute component={LoginContainer}/>
                 <Route path="login" component={LoginContainer}/>
                 <Route path="signup" component={Signup}/>
             </Route>
 
             /* Only for authorized users */
             <Route onEnter={requireAuth}>
-                <Route path="profile" component={Profile}/>
+                <Route path="profile" component={ProfileContainer}/>
             </Route>
         </Route>
     </Router>

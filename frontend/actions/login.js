@@ -22,7 +22,13 @@ function loginFailure(payload) {
     };
 }
 
-export default function login(username, password) {
+export function doLogin() {
+    return {
+        type: TYPES.LOGIN
+    };
+}
+
+export default function processLogin(username, password) {
     return function (dispatch) {
         dispatch(loginRequest());
 
@@ -33,6 +39,7 @@ export default function login(username, password) {
             then((result) => {
                 if (result.success) {
                     dispatch(loginSuccess(result));
+                    dispatch(doLogin());
                 } else {
                     throw result.payload;
                 }

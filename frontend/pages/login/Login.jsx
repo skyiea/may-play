@@ -14,7 +14,7 @@ class Login extends React.Component {
         
         login: PropTypes.func.isRequired
     };
-
+    
     static warnings = {
         'INSUFFICIENT_DATA'                 : 'All field must be filled',
         [ LoginStatus.NO_USER_FOUND ]       : 'Incorrect username entered',
@@ -53,8 +53,7 @@ class Login extends React.Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        // Use error returned from backend as warning message
-        if (this.props.error !== nextProps.error) { // only once when it appears
+        if (nextProps.error) {
             this.setState({
                 warningMessage: Login.warnings[nextProps.error]
             });

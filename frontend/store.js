@@ -3,9 +3,10 @@ import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 
 import rootReducer from 'reducers/rootReducer';
+import constants from 'utils/constants';
 
 const initialState = {
-    loggedIn: false,
+    loggedIn: !!window.localStorage.getItem(constants.LS_loggedKey),
     
     login: {
         error: null
