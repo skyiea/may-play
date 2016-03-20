@@ -1,19 +1,21 @@
 import 'babel-polyfill';
 
-import { Router, Route, IndexRoute } from 'react-router';
-import { createHistory } from 'history/lib';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import Carcass from 'carcass/Carcass';
 import Login from 'pages/login/Login';
-import Registration from 'pages/registration/Registration';
+import Signup from 'pages/signup/Signup';
+import Profile from 'pages/profile/Profile';
 
 import 'app.scss';
 
 ReactDOM.render((
-    <Router history={createHistory()}>
+    <Router history={browserHistory}>
         <Route path="/" component={Carcass}>
             <IndexRoute component={Login}/>
-            <Route path="register" component={Registration}/>
+            <Route path="login" component={Login}/>
+            <Route path="signup" component={Signup}/>
+            <Route path="profile" component={Profile}/>
         </Route>
     </Router>
 ), document.getElementById('may-play-app'));

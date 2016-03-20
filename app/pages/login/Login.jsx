@@ -1,5 +1,5 @@
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import fetch from 'isomorphic-fetch';
+import fetch from 'utils/fetch';
 import { Link } from 'react-router';
 
 import styles from './Login.scss';
@@ -9,37 +9,29 @@ import styles from './Login.scss';
 @ReactClass
 class Login extends React.Component {
     state = {
-        nickname: '',
+        username: '',
         password: '',
         warningMessage: '',
         isChecked: false
     };
 
     _sendUserData = () => {
-        const { nickname, password } = this.state;
+        const { username, password } = this.state;
 
-        if (nickname.length === 0 || password.length === 0) {
+        if (username.length === 0 || password.length === 0) {
             this.setState({
                 warningMessage: '* all fields must be non-empty!'
             });
         } else {
             fetch('/api/login', {
                 method: 'post',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
-                    nickname, // nickname: nickname
+                    username, // username: username
                     password
                 })
             }).
-            then((res) => res.json()).
             then((json) => {
                 console.log('result', json);
-            }).
-            catch((ex) => {
-                console.log('error', ex);
             });
         }
     };
@@ -62,12 +54,12 @@ class Login extends React.Component {
                 <section styleName="popup">
                     <h2 styleName="title">Log in</h2>
                     <section styleName="input-line">
-                        <label htmlFor="nickname">Nickname:</label>
+                        <label htmlFor="username">Username:</label>
                         <input
-                                id="nickname"
+                                id="username"
                                 type="text"
                                 onFocus={this._clearWarning}
-                                valueLink={this.linkState('nickname')}/>
+                                valueLink={this.linkState('username')}/>
                     </section>
                     <section styleName="input-line">
                         <label htmlFor="password">Password:</label>
@@ -89,12 +81,11 @@ class Login extends React.Component {
                         this.state.warningMessage.length !== 0 &&
                             <div styleName="warning">{this.state.warningMessage}</div>
                     }
-                    <button
-                            onClick={this._sendUserData}>
+                    <button onClick={this._sendUserData}>
                         Log in
                     </button>
                     <br/>
-                    <Link to="register">
+                    <Link to="signup">
                         Create new account
                     </Link>
                 </section>

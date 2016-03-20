@@ -1,15 +1,53 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const api = express.Router();
 
-api.use(bodyParser.json());
+module.exports = (passport) => {
+    api.post('/signup',
+        (req, res, next) => {
+            passport.authenticate('local-signup', (err, user, message) => {
+                if (err) {
+                    return next(err);
+                }
 
-api.post('/login', (req, res) => {
-    console.log(req.body);
-    res.send({
-        successful: req.body.nickname === 'myrka'
-    });
-});
+                if (!user) {
+                    return res.json({
+                        message
+                    });
+                }
 
-module.exports = api;
+                req.logIn(user, (err) => {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    return res.status(302).json({
+                        location: '/profile'
+                    });
+                });
+            })(req, res, next);
+        }
+    );
+
+    api.post('/login',
+        (req, res, next) => {
+            passport.authenticate('local-login', (err, user, message) => {
+                if (err) {
+                    return next(err);
+                }
+
+                if (!user) {
+                    return res.json({
+                        message
+                    });
+                }
+
+                return res.status(302).json({
+                    location: '/profile'
+                });
+            })(req, res, next);
+        }
+    );
+
+    return api;
+};
