@@ -1,7 +1,7 @@
 const express   = require('express');
 const path      = require('path');
 
-const isLoggedIn = require('./isLoggedIn');
+const { authPage } = require('./authMiddleware');
 
 module.exports = function (app, passport) {
     const api = require('./api')(passport);
@@ -9,7 +9,7 @@ module.exports = function (app, passport) {
     app.use('/public', express.static('public'));
     app.use('/api', api);
 
-    app.get('/profile', isLoggedIn, (req, res, next) => {
+    app.get('/profile', authPage, (req, res, next) => {
         next();
     });
 

@@ -14,15 +14,20 @@ export default function (url, options = {}) {
         }
     }).
         then((res) => {
-            if (res.status === 302) { // redirection
-                return res.json().then(({ location, ...payload }) => {
-                    // timeout is necessary to make promise to be executed by other listeners
-                    setTimeout(() => {
-                        browserHistory.push(location);
-                    }, 0);
-
-                    return payload;
-                });
+            switch (res.status) {
+                case 302:   // redirection
+                    return res.json().then(({ location, ...payload }) => {
+                        // timeout is necessary to make promise to be executed by other listeners
+                        setTimeout(() => {
+                            browserHistory.push(location);
+                        }, 0);
+    
+                        return payload;
+                    });
+                case 401:   // unauthorized
+                    browserHistory.push('logout');
+                    break;
+                default:
             }
 
             return res.json();

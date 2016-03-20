@@ -14,8 +14,8 @@
   "homepage": "https://github.com/skyiea/may-play",
   "scripts": {
     "prepare": "npm install -g webpack webpack-dev-server && npm install",
-    "start": "node ./backend/server.js",
-    "nodemon": "nodemon backend/server.js --watch",
+    "start": "node --harmony_destructuring ./backend/server.js",
+    "nodemon": "nodemon --harmony_destructuring backend/server.js --watch",
     "build": "NODE_ENV=production webpack -p --bail",
     "watch": "webpack --progress --watch",
     "watchs": "npm run watch -- --devtool source-map",

@@ -9,6 +9,7 @@ import CarcassContainer from 'carcass/CarcassContainer';
 import LoginContainer from 'pages/login/LoginContainer';
 import SignupContainer from 'pages/signup/SignupContainer';
 import ProfileContainer from 'pages/profile/ProfileContainer';
+import LogoutContainer from 'pages/logout/LogoutContainer';
 
 import 'app.scss';
 
@@ -48,6 +49,7 @@ ReactDOM.render((
     <Router history={browserHistory}>
         <Route path="/" component={ReduxProvider}>
             <IndexRedirect to="login"/>
+            <Route path="logout" component={LogoutContainer}/>
 
             /* Only for unauthorized users */
             <Route onEnter={requireUnauth}>

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const isLoggedIn = require('./isLoggedIn');
+const { authAPI } = require('./authMiddleware');
 
 const api = express.Router();
 
@@ -72,10 +72,12 @@ module.exports = function (passport) {
         });
     });
 
-    api.get('/profile', isLoggedIn, (req, res) => {
+    api.get('/profile', authAPI, (req, res) => {
+        const { username, email } = req.user.local;
+
         res.json({
-            username: req.user.local.username,
-            email   : req.user.local.email
+            username,
+            email
         });
     });
 
