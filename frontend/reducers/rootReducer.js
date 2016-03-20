@@ -5,6 +5,9 @@ export default function rootReducer(state, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case TYPES.SIGNUP_SUCCESS:
+            window.localStorage.setItem(constants.LS_loggedKey, true);
+            break;
         case TYPES.LOGIN_REQUEST:
             return {
                 ...state,

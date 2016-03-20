@@ -7,7 +7,7 @@ import { configureStore } from 'store';
 
 import CarcassContainer from 'carcass/CarcassContainer';
 import LoginContainer from 'pages/login/LoginContainer';
-import Signup from 'pages/signup/Signup';
+import SignupContainer from 'pages/signup/SignupContainer';
 import ProfileContainer from 'pages/profile/ProfileContainer';
 
 import 'app.scss';
@@ -51,7 +51,7 @@ ReactDOM.render((
             <Route onEnter={requireNoAuth}>
                 <IndexRoute component={LoginContainer}/>
                 <Route path="login" component={LoginContainer}/>
-                <Route path="signup" component={Signup}/>
+                <Route path="signup" component={SignupContainer}/>
             </Route>
 
             /* Only for authorized users */

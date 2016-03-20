@@ -1,5 +1,4 @@
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import fetch from 'utils/fetch';
 
 import styles from './Signup.scss';
 
@@ -7,6 +6,10 @@ import styles from './Signup.scss';
 @mixin(LinkedStateMixin)
 @ReactClass
 class Signup extends React.Component {
+    static propTypes = {
+        signup: PropTypes.func.isRequired
+    };
+    
     state = {
         username    : '',
         email       : '',
@@ -16,16 +19,10 @@ class Signup extends React.Component {
 
     _handleSubmit = (e) => {
         const { username, email, password } = this.state;
-
+        
         e.preventDefault();
 
-        fetch('/api/signup', {
-            method: 'post',
-            body: JSON.stringify({ username, email, password })
-        }).
-        then((payload) => {
-            console.log('result', payload);
-        });
+        this.props.signup({ username, email, password });
     };
 
     render() {
