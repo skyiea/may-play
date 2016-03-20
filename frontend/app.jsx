@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import Carcass from 'carcass/Carcass';
-import Login from 'pages/login/Login';
+import LoginContainer from 'pages/login/LoginContainer';
 import Signup from 'pages/signup/Signup';
 import Profile from 'pages/profile/Profile';
 
@@ -36,11 +36,11 @@ function requireNoAuth(nextState, replace) {
 ReactDOM.render((
     <Router history={browserHistory}>
         <Route path="/" component={Carcass}>
-            <IndexRoute component={Login}/>
+            <IndexRoute component={LoginContainer}/>
 
             /* Only for non-authorized users */
             <Route onEnter={requireNoAuth}>
-                <Route path="login" component={Login}/>
+                <Route path="login" component={LoginContainer}/>
                 <Route path="signup" component={Signup}/>
             </Route>
 

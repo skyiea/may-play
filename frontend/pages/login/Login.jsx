@@ -1,7 +1,6 @@
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { Link } from 'react-router';
 
-import { login } from 'utils/auth';
 import LoginStatus from '../../../universal/LoginStatus';
 
 import styles from './Login.scss';
@@ -10,6 +9,18 @@ import styles from './Login.scss';
 @mixin(LinkedStateMixin)
 @ReactClass
 class Login extends React.Component {
+    static propTypes = {
+        error: PropTypes.string,
+        
+        login: PropTypes.func.isRequired
+    };
+
+    static warnings = {
+        'INSUFFICIENT_DATA'                 : 'All field must be filled',
+        [ LoginStatus.NO_USER_FOUND ]       : 'Incorrect username entered',
+        [ LoginStatus.INCORRECT_PASSWORD ]  : 'Incorrect password entered'
+    };
+    
     state = {
         username: '',
         password: '',
@@ -22,19 +33,10 @@ class Login extends React.Component {
 
         if (username.length === 0 || password.length === 0) {
             this.setState({
-                warningMessage: '* all fields must be non-empty!'
+                warningMessage: Login.warnings.INSUFFICIENT_DATA
             });
         } else {
-            login(username, password).
-            then((json) => {
-                const { message } = json;
-
-                if (message && message in LoginStatus) {
-                    this.setState({
-                        warningMessage: message
-                    });
-                }
-            });
+            this.props.login(username, password);
         }
     };
 
@@ -49,6 +51,15 @@ class Login extends React.Component {
             isChecked: !this.state.isChecked
         });
     };
+
+    componentWillReceiveProps(nextProps) {
+        // Use error returned from backend as warning message
+        if (this.props.error !== nextProps.error) { // only once when it appears
+            this.setState({
+                warningMessage: Login.warnings[nextProps.error]
+            });
+        }
+    }
 
     render() {
         const {
