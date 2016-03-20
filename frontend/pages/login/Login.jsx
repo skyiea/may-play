@@ -67,7 +67,7 @@ class Login extends React.Component {
         } = this.state;
 
         return (
-            <section styleName="overlay">
+            <section styleName="page overlay">
                 <section styleName="popup">
                     <h2 styleName="title">Log in</h2>
                     <section styleName="input-line">

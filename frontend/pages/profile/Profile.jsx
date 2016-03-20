@@ -2,9 +2,9 @@
 //import fetch from 'utils/fetch';
 //import { Link } from 'react-router';
 
-//import styles from './Profile.scss';
+import styles from './Profile.scss';
 
-//@CSSModules(styles, { allowMultiple: true })
+@CSSModules(styles, { allowMultiple: true })
 //@mixin(LinkedStateMixin)
 @ReactClass
 class Profile extends React.Component {
@@ -14,7 +14,7 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <section>
+            <section styleName="page">
                 <a
                         href="#"
                         onClick={this.props.logout}>

@@ -27,7 +27,7 @@ class Signup extends React.Component {
 
     render() {
         return (
-            <div styleName="form">
+            <div styleName="page form">
                 <form
                         styleName="contact-form"
                         method="post"
