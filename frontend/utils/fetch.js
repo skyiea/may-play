@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import { browserHistory } from 'react-router';
 
-export default function (url, options) {
+export default function (url, options = {}) {
     const { headers } = options;
 
     return fetch(url, {

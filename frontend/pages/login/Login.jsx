@@ -1,5 +1,5 @@
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import { Link } from 'react-router';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import LoginStatus from '../../../universal/LoginStatus';
 

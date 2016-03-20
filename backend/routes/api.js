@@ -1,5 +1,7 @@
 const express = require('express');
 
+const isLoggedIn = require('./isLoggedIn');
+
 const api = express.Router();
 
 module.exports = function (passport) {
@@ -61,11 +63,19 @@ module.exports = function (passport) {
 
     api.post('/logout', (req, res) => {
         req.logout();
+        // not cleared automatically
         res.clearCookie('connect.sid', '/');
 
         res.status(302).json({
             success: true,
             location: '/'
+        });
+    });
+
+    api.get('/profile', isLoggedIn, (req, res) => {
+        res.json({
+            username: req.user.local.username,
+            email   : req.user.local.email
         });
     });
 

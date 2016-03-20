@@ -26,7 +26,6 @@ function requireAuth(nextState, replace) {
 }
 
 function requireUnauth(nextState, replace) {
-    console.log('requireNoAuth called', store.getState().loggedIn);
     if (store.getState().loggedIn) {
         replace({
             pathname: '/profile',

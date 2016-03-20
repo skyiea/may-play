@@ -41,6 +41,15 @@ export default function rootReducer(state, action) {
                 ...state,
                 loggedIn: false
             };
+        case TYPES.PROFILE_FETCH_SUCCESS:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    username: payload.username,
+                    email: payload.email
+                }
+            };
         default:
             break;
     }

@@ -11,5 +11,9 @@ export default {
     LOGOUT_REQUEST  : Symbol('Logout request'),
     LOGOUT_SUCCESS  : Symbol('Logged out successfully in BE'),
     LOGOUT_FAILURE  : Symbol('Logout failed'),
-    LOGOUT          : Symbol('Logout')
+    LOGOUT          : Symbol('Logout'),
+    
+    PROFILE_FETCH_REQUEST   : Symbol('Profile fetch request'),
+    PROFILE_FETCH_SUCCESS   : Symbol('Profile successfully fetched'),
+    PROFILE_FETCH_FAILURE   : Symbol('Profile fetch failure')
 };

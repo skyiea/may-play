@@ -1,18 +1,26 @@
-//import LinkedStateMixin from 'react-addons-linked-state-mixin';
-//import fetch from 'utils/fetch';
-//import { Link } from 'react-router';
-
 import styles from './Profile.scss';
 
 @CSSModules(styles, { allowMultiple: true })
-//@mixin(LinkedStateMixin)
 @ReactClass
 class Profile extends React.Component {
     static propTypes = {
-        logout: PropTypes.func.isRequired
+        username: PropTypes.string,
+        email: PropTypes.string,
+
+        logout      : PropTypes.func.isRequired,
+        fetchData   : PropTypes.func.isRequired
     };
 
+    componentWillMount() {
+        this.props.fetchData();
+    }
+
     render() {
+        const {
+            username,
+            email
+        } = this.props;
+
         return (
             <section styleName="page">
                 <a
@@ -21,7 +29,8 @@ class Profile extends React.Component {
                     Logout
                 </a>
                 <br/>
-                Yay! Profile under development!
+                Hello { username }!
+                Your email address is { email }.
             </section>
         );
     }

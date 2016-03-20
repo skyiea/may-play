@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import styles from './Signup.scss';
@@ -75,6 +76,10 @@ class Signup extends React.Component {
                     </section>
                     <br/>
                     <input styleName="button" type="submit" value="Sign up!" />
+                    <br/>
+                    <Link to="login">
+                        Back to login
+                    </Link>
                 </form>
             </div>
         );

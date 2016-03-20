@@ -10,6 +10,11 @@ const initialState = {
     
     login: {
         error: null
+    },
+    
+    profile: {
+        username: null,
+        email: null
     }
 };
 
