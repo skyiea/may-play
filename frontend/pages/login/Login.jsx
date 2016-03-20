@@ -1,6 +1,7 @@
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import fetch from 'isomorphic-fetch';
 import { Link } from 'react-router';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
+
+import LoginStatus from '../../../universal/LoginStatus';
 
 import styles from './Login.scss';
 
@@ -8,39 +9,34 @@ import styles from './Login.scss';
 @mixin(LinkedStateMixin)
 @ReactClass
 class Login extends React.Component {
+    static propTypes = {
+        error: PropTypes.string,
+        
+        login: PropTypes.func.isRequired
+    };
+    
+    static warnings = {
+        'INSUFFICIENT_DATA'                 : 'All field must be filled',
+        [ LoginStatus.NO_USER_FOUND ]       : 'Incorrect username entered',
+        [ LoginStatus.INCORRECT_PASSWORD ]  : 'Incorrect password entered'
+    };
+    
     state = {
-        nickname: '',
+        username: '',
         password: '',
         warningMessage: '',
         isChecked: false
     };
 
     _sendUserData = () => {
-        const { nickname, password } = this.state;
+        const { username, password } = this.state;
 
-        if (nickname.length === 0 || password.length === 0) {
+        if (username.length === 0 || password.length === 0) {
             this.setState({
-                warningMessage: '* all fields must be non-empty!'
+                warningMessage: Login.warnings.INSUFFICIENT_DATA
             });
         } else {
-            fetch('/api/login', {
-                method: 'post',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    nickname, // nickname: nickname
-                    password
-                })
-            }).
-            then((res) => res.json()).
-            then((json) => {
-                console.log('result', json);
-            }).
-            catch((ex) => {
-                console.log('error', ex);
-            });
+            this.props.login(username, password);
         }
     };
 
@@ -56,45 +52,59 @@ class Login extends React.Component {
         });
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.error) {
+            this.setState({
+                warningMessage: Login.warnings[nextProps.error]
+            });
+        }
+    }
+
     render() {
+        const {
+            isChecked,
+            warningMessage
+        } = this.state;
+
         return (
-            <section styleName="overlay">
+            <section styleName="page overlay">
                 <section styleName="popup">
                     <h2 styleName="title">Log in</h2>
                     <section styleName="input-line">
-                        <label htmlFor="nickname">Nickname:</label>
                         <input
-                                id="nickname"
+                                id="username"
                                 type="text"
+                                placeholder="Username"
                                 onFocus={this._clearWarning}
-                                valueLink={this.linkState('nickname')}/>
+                                valueLink={this.linkState('username')}/>
                     </section>
+
                     <section styleName="input-line">
-                        <label htmlFor="password">Password:</label>
                         <input
                                 id="password"
-                                type={this.state.isChecked ? "text" : "password"}
+                                type={isChecked ? "text" : "password"}
+                                placeholder="Password"
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('password')}/>
                     </section>
-                    <section styleName="input-line checkbox-line">
+
+                    <section styleName="input-line">
                         <input
                                 id="showPassword"
                                 type="checkbox"
-                                checked={this.state.isChecked}
+                                checked={isChecked}
                                 onChange={this._checkChange} />
                         <label htmlFor="showPassword">Show password</label>
                     </section>
                     {
-                        this.state.warningMessage.length !== 0 &&
-                            <div styleName="warning">{this.state.warningMessage}</div>
+                        warningMessage &&
+                            <div styleName="warning">{ warningMessage }</div>
                     }
-                    <button
-                            onClick={this._sendUserData}>
+                    <button onClick={this._sendUserData}>
                         Log in
                     </button>
                     <br/>
-                    <Link to="register">
+                    <Link to="signup">
                         Create new account
                     </Link>
                 </section>

@@ -2,7 +2,7 @@
     "extends": "skye",
     "globals": {
         "React": false,
-        "_": false,
+        "PropTypes": false,
         "classnames": false,
         "ReactClass": false,
         "CSSModules": false,

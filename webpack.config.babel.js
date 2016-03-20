@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 import path from 'path';
 
-const APP_PATH = path.join(__dirname, 'app');
+const APP_PATH = path.join(__dirname, 'frontend');
 const isCamelCasedSCSS = /([A-Z][a-z0-9]*)+\.scss$/;
 
 export default {
@@ -24,6 +24,7 @@ export default {
                     'babel',
                     'autoimport?config[]=checkIfUsed&' + [
                         'React=>react',
+                        '{PropTypes}=react',
                         'ReactDOM=react-dom',
                         'classnames',
                         'CSSModules=react-css-modules',
