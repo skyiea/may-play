@@ -25,7 +25,8 @@ function requireAuth(nextState, replace) {
     }
 }
 
-function requireNoAuth(nextState, replace) {
+function requireUnauth(nextState, replace) {
+    console.log('requireNoAuth called', store.getState().loggedIn);
     if (store.getState().loggedIn) {
         replace({
             pathname: '/profile',
@@ -49,8 +50,8 @@ ReactDOM.render((
         <Route path="/" component={ReduxProvider}>
             <IndexRedirect to="login"/>
 
-            /* Only for non-authorized users */
-            <Route onEnter={requireNoAuth}>
+            /* Only for unauthorized users */
+            <Route onEnter={requireUnauth}>
                 <Route path="login" component={LoginContainer}/>
                 <Route path="signup" component={SignupContainer}/>
             </Route>

@@ -1,5 +1,3 @@
-import { browserHistory } from 'react-router';
-
 import constants from 'utils/constants';
 
 import styles from './Carcass.scss';
@@ -9,18 +7,7 @@ import styles from './Carcass.scss';
 class Carcass extends React.Component {
     _listenToLogin = (e) => {
         if (e.key === constants.LS_loggedKey) {
-            const {
-                login,
-                logout
-            } = this.props;
-
-            if (e.newValue) {
-                login();
-            } else {
-                logout();
-            }
-            
-            browserHistory.push('/');
+            document.location.reload();
         }
     };
     
