@@ -61,24 +61,24 @@ class Login extends React.Component {
                 <section styleName="popup">
                     <h2 styleName="title">Log in</h2>
                     <section styleName="input-line">
-                        <label htmlFor="username">Username:</label>
                         <input
                                 id="username"
                                 type="text"
+                                placeholder="Username"
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('username')}/>
                     </section>
 
                     <section styleName="input-line">
-                        <label htmlFor="password">Password:</label>
                         <input
                                 id="password"
                                 type={isChecked ? "text" : "password"}
+                                placeholder="Password"
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('password')}/>
                     </section>
 
-                    <section styleName="input-line checkbox-line">
+                    <section styleName="input-line">
                         <input
                                 id="showPassword"
                                 type="checkbox"
