@@ -1,3 +1,5 @@
+import { browserHistory } from 'react-router';
+
 import constants from 'utils/constants';
 
 import styles from './Carcass.scss';
@@ -17,6 +19,8 @@ class Carcass extends React.Component {
             } else {
                 logout();
             }
+            
+            browserHistory.push('/');
         }
     };
     

@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 
 import { configureStore } from 'store';
@@ -47,9 +47,10 @@ const ReduxProvider = (props) => (
 ReactDOM.render((
     <Router history={browserHistory}>
         <Route path="/" component={ReduxProvider}>
+            <IndexRedirect to="login"/>
+
             /* Only for non-authorized users */
             <Route onEnter={requireNoAuth}>
-                <IndexRoute component={LoginContainer}/>
                 <Route path="login" component={LoginContainer}/>
                 <Route path="signup" component={SignupContainer}/>
             </Route>

@@ -16,6 +16,7 @@ export default function (url, options) {
         then((res) => {
             if (res.status === 302) { // redirection
                 return res.json().then(({ location, ...payload }) => {
+                    // timeout is necessary to make promise to be executed by other listeners
                     setTimeout(() => {
                         browserHistory.push(location);
                     }, 0);
