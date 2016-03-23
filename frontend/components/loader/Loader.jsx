@@ -10,7 +10,8 @@ class Loader extends React.Component {
         size: PropTypes.oneOf([
             'small',
             'normal',
-            'big'
+            'big',
+            'flex'
         ])
     };
 

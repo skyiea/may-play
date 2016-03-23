@@ -22,9 +22,7 @@
     border-left-color: #fff;
 
     font-size: 1rem;
-    animation-name: load8;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    animation: load8 1.1s linear infinite;
 
     &.small {
         $edge: 2rem;
@@ -32,8 +30,6 @@
         width: $edge;
         height: $edge;
         border-width: .2rem;
-
-        animation-duration: .7s;
     }
 
     &.normal {
@@ -42,8 +38,6 @@
         width: $edge;
         height: $edge;
         border-width: .5rem;
-
-        animation-duration: .9s;
     }
 
     &.big {
@@ -51,9 +45,15 @@
 
         width: $edge;
         height: $edge;
-        border-width: 1.1rem;
+        border-width: 1rem;
+    }
 
-        animation-duration: 1.1s;
+    &.flex {
+        $edge: 100%;
+
+        width: $edge;
+        height: $edge;
+        border-width: 1.1rem;
     }
 
     &.dark {
