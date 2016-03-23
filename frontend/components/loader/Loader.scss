@@ -1,0 +1,67 @@
+@keyframes load8 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader {
+    $border-white-transparent: rgba(255, 255, 255, .2);
+
+    position: relative;
+    transform: translateZ(0);
+
+    border-radius: 50%;
+    border-style: solid;
+    border-top-color: $border-white-transparent;
+    border-right-color: $border-white-transparent;
+    border-bottom-color: $border-white-transparent;
+    border-left-color: #fff;
+
+    font-size: 1rem;
+    animation-name: load8;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+    &.small {
+        $edge: 2rem;
+
+        width: $edge;
+        height: $edge;
+        border-width: .2rem;
+
+        animation-duration: .7s;
+    }
+
+    &.normal {
+        $edge: 5rem;
+
+        width: $edge;
+        height: $edge;
+        border-width: .5rem;
+
+        animation-duration: .9s;
+    }
+
+    &.big {
+        $edge: 11rem;
+
+        width: $edge;
+        height: $edge;
+        border-width: 1.1rem;
+
+        animation-duration: 1.1s;
+    }
+
+    &.dark {
+        $border-dark-transparent: rgba(0, 0, 0, .2);
+
+        border-top-color: $border-dark-transparent;
+        border-right-color: $border-dark-transparent;
+        border-bottom-color: $border-dark-transparent;
+        border-left-color: #000;
+    }
+}

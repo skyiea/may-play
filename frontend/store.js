@@ -9,7 +9,8 @@ const initialState = {
     loggedIn: !!window.localStorage.getItem(constants.LS_loggedKey),
     
     login: {
-        error: null
+        error: null,
+        processing: false
     },
     
     profile: {

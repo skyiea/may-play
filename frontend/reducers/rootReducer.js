@@ -13,6 +13,7 @@ export default function rootReducer(state, action) {
                 ...state,
                 login: {
                     ...state.login,
+                    processing: true,
                     error: null
                 }
             };
@@ -22,13 +23,19 @@ export default function rootReducer(state, action) {
         case TYPES.LOGIN:
             return {
                 ...state,
-                loggedIn: true
+                loggedIn: true,
+                login: {
+                    ...state.login,
+                    processing: false,
+                    error: null
+                }
             };
         case TYPES.LOGIN_FAILURE: {
             return {
                 ...state,
                 login: {
                     ...state.login,
+                    processing: false,
                     error: payload
                 }
             };

@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import LoginStatus from '../../../universal/LoginStatus';
+import Loader from 'components/loader/Loader';
 
 import styles from './Login.scss';
 
@@ -11,6 +12,7 @@ import styles from './Login.scss';
 class Login extends React.Component {
     static propTypes = {
         error: PropTypes.string,
+        processing: PropTypes.bool.isRequired,
         
         login: PropTypes.func.isRequired
     };
@@ -62,6 +64,10 @@ class Login extends React.Component {
 
     render() {
         const {
+            processing
+        } = this.props;
+
+        const {
             isChecked,
             warningMessage
         } = this.state;
@@ -69,11 +75,19 @@ class Login extends React.Component {
         return (
             <section styleName="page overlay">
                 <section styleName="popup">
+                    {
+                        processing &&
+                            <section styleName="loader-container">
+                                <Loader/>
+                            </section>
+                    }
+
                     <h2 styleName="title">Log in</h2>
                     <section styleName="input-line">
                         <input
                                 id="username"
                                 type="text"
+                                disabled={processing}
                                 placeholder="Username"
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('username')}/>
@@ -83,6 +97,7 @@ class Login extends React.Component {
                         <input
                                 id="password"
                                 type={isChecked ? "text" : "password"}
+                                disabled={processing}
                                 placeholder="Password"
                                 onFocus={this._clearWarning}
                                 valueLink={this.linkState('password')}/>
@@ -92,6 +107,7 @@ class Login extends React.Component {
                         <input
                                 id="showPassword"
                                 type="checkbox"
+                                disabled={processing}
                                 checked={isChecked}
                                 onChange={this._checkChange} />
                         <label htmlFor="showPassword">Show password</label>
@@ -100,11 +116,15 @@ class Login extends React.Component {
                         warningMessage &&
                             <div styleName="warning">{ warningMessage }</div>
                     }
-                    <button onClick={this._sendUserData}>
+                    <button
+                            onClick={this._sendUserData}
+                            disabled={processing}>
                         Log in
                     </button>
                     <br/>
-                    <Link to="signup">
+                    <Link
+                            to="signup"
+                            tabIndex={processing ? -1 : 0}>
                         Create new account
                     </Link>
                 </section>

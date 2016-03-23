@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import processLogin from 'actions/login';
 import Login from './Login';
 
-const mapStateToProps = ({ login: { error } }) => ({
-    error
+const mapStateToProps = ({ login: { error, processing } }) => ({
+    error,
+    processing
 });
 
 const mapDispatchToProps = (dispatch) => ({

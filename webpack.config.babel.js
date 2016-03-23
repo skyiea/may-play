@@ -28,7 +28,6 @@ export default {
                         'ReactDOM=react-dom',
                         'classnames',
                         'CSSModules=react-css-modules',
-                        '_=lodash',
                         '{ReactClass}=react-core-decorators',
                         '{mixin}=react-core-decorators'
                     ].join(','),
