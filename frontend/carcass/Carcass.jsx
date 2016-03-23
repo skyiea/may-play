@@ -2,7 +2,7 @@ import constants from 'utils/constants';
 
 import styles from './Carcass.scss';
 
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 @ReactClass
 class Carcass extends React.Component {
     _listenToLogin = (e) => {
@@ -26,7 +26,10 @@ class Carcass extends React.Component {
 
         return (
             <section styleName="carcass">
-                Logged in: { String(loggedIn) }
+                {
+                    DEBUG &&
+                        <i styleName={classnames('debug-online-status', loggedIn && 'online')}/>
+                }
                 { this.props.children }
             </section>
         );
