@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
+import autoprefixer from 'autoprefixer';
 
 const APP_PATH = path.join(__dirname, 'frontend');
 const isCamelCasedSCSS = /([A-Z][a-z0-9]*)+\.scss$/;
@@ -40,6 +41,7 @@ export default {
                 loaders: [
                     'style',
                     'css',
+                    'postcss',
                     'sass'
                 ]
             },
@@ -48,6 +50,7 @@ export default {
                 loaders: [
                     'style',
                     'css?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]',
+                    'postcss',
                     'sass'
                 ]
             },
@@ -64,6 +67,18 @@ export default {
     resolve: {
         root: APP_PATH,
         extensions: [ '', '.js', '.jsx' ]
+    },
+    postcss() {
+        return [
+            autoprefixer({
+                browsers: [
+                    // default prefixing
+                    '> 1%', 'last 2 versions', 'Firefox ESR',
+                    // excluding unsupported IE
+                    'not ie < 10'
+                ]
+            })
+        ];
     },
     plugins: [
         new webpack.DefinePlugin({
