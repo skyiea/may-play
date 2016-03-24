@@ -1,0 +1,81 @@
+@import '../../styles/colors';
+
+header {
+    position: relative;
+
+    height: 8.5rem;
+
+    background-color: $brand-woodsmoke;
+    transition: all .3s ease-out;
+
+    .link {
+        font-weight: 600;
+        text-decoration: none;
+
+        transition: color .2s ease-in-out;
+
+        &:hover,
+        &:active {
+            color: $brand-gossamer;
+        }
+    }
+
+    > .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+
+        display: flex;
+        height: 100%;
+
+        align-items: center;
+
+        font-size: 3.2rem;
+        color: $brand-white;
+    }
+
+    > .sign-area,
+    > .account-area {
+        float: right;
+
+        height: 100%;
+        margin-right: 2rem;
+
+        align-items: center;
+
+        > .link {
+            display: inline-flex;
+            height: 100%;
+            margin: 0 1.2rem;
+
+            align-items: center;
+        }
+    }
+
+    .debug-online-status {
+        $edge: 1rem;
+
+        position: absolute;
+        top: 1.3rem;
+        right: -1.3rem;
+
+        width: $edge;
+        height: $edge;
+        border-radius: 50%;
+        border: 1px solid darken($brand-amaranth, 10%);
+
+        background-color: $brand-amaranth;
+
+        transition: all .5s linear;
+
+        &.online {
+            border-color: darken($brand-gossamer, 2%);
+
+            background-color: $brand-gossamer;
+        }
+    }
+
+    @media (max-width: 640px) {
+        height: 6rem;
+    }
+}

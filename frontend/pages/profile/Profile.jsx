@@ -1,5 +1,3 @@
-import { Link } from 'react-router';
-
 import styles from './Profile.scss';
 
 @CSSModules(styles, { allowMultiple: true })
@@ -24,10 +22,6 @@ class Profile extends React.Component {
 
         return (
             <section styleName="page">
-                <Link to="logout">
-                    Logout
-                </Link>
-                <br/>
                 Hello { username }!
                 Your email address is { email }.
             </section>

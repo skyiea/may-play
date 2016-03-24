@@ -1,4 +1,3 @@
-import { Link } from 'react-router';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import LoginStatus from '../../../universal/LoginStatus';
@@ -121,12 +120,6 @@ class Login extends React.Component {
                             disabled={processing}>
                         Log in
                     </button>
-                    <br/>
-                    <Link
-                            to="signup"
-                            tabIndex={processing ? -1 : 0}>
-                        Create new account
-                    </Link>
                 </section>
             </section>
         );

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 import { configureStore } from 'store';
 
-import CarcassContainer from 'carcass/CarcassContainer';
+import CarcassContainer from 'components/carcass/CarcassContainer';
 import LoginContainer from 'pages/login/LoginContainer';
 import SignupContainer from 'pages/signup/SignupContainer';
 import ProfileContainer from 'pages/profile/ProfileContainer';
@@ -63,4 +63,4 @@ ReactDOM.render((
             </Route>
         </Route>
     </Router>
-), document.getElementById('may-play-app'));
+), document.getElementById('app'));

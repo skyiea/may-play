@@ -1,3 +1,4 @@
+import HeaderContainer from 'components/header/HeaderContainer';
 import constants from 'utils/constants';
 
 import styles from './Carcass.scss';
@@ -20,16 +21,9 @@ class Carcass extends React.Component {
     }
     
     render() {
-        const {
-            loggedIn
-        } = this.props;
-
         return (
             <section styleName="carcass">
-                {
-                    DEBUG &&
-                        <i styleName={classnames('debug-online-status', loggedIn && 'online')}/>
-                }
+                <HeaderContainer/>
                 { this.props.children }
             </section>
         );
