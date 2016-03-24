@@ -11,7 +11,7 @@ class Header extends React.Component {
         } = this.props;
 
         return (
-            <header>
+            <header styleName="app-header">
                 <Link
                         styleName="logo link"
                         to="/">

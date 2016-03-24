@@ -1,6 +1,6 @@
 @import '../../styles/colors';
 
-header {
+header.app-header {
     position: relative;
 
     height: 8.5rem;
@@ -56,8 +56,9 @@ header {
         $edge: 1rem;
 
         position: absolute;
-        top: 1.3rem;
+        top: 33%;
         right: -1.3rem;
+        transform: translateY(-50%);
 
         width: $edge;
         height: $edge;
