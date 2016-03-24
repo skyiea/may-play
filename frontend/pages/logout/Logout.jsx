@@ -1,3 +1,5 @@
+import Loader from 'components/loader/Loader';
+
 import styles from './Logout.scss';
 
 @CSSModules(styles)
@@ -14,7 +16,7 @@ class Logout extends React.Component {
     render() {
         return (
             <section styleName="page">
-                Logging out..
+                <Loader/>
             </section>
         );
     }

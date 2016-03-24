@@ -1,3 +1,5 @@
+import Loader from 'components/loader/Loader';
+
 import styles from './Profile.scss';
 
 @CSSModules(styles, { allowMultiple: true })
@@ -7,7 +9,7 @@ class Profile extends React.Component {
         username: PropTypes.string,
         email: PropTypes.string,
 
-        fetchData   : PropTypes.func.isRequired
+        fetchData: PropTypes.func.isRequired
     };
 
     componentWillMount() {
@@ -16,9 +18,18 @@ class Profile extends React.Component {
 
     render() {
         const {
+            fetched,
             username,
             email
         } = this.props;
+
+        if (!fetched) {
+            return (
+                <section styleName="page">
+                    <Loader/>
+                </section>
+            );
+        }
 
         return (
             <section styleName="page">
