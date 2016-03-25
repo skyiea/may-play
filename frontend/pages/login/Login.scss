@@ -1,18 +1,22 @@
 @import '../../styles/page';
 @import '../../styles/colors';
+@import '../../styles/breakpoints';
 
-.overlay {
-    > .popup {
+.login-page {
+    >.popup {
         position: relative;
 
-        padding: 2rem;
+        width: 40rem;
+        border: {
+            width: 1rem;
+            style: solid;
+            color: rgba($brand-woodsmoke, .25);
+            radius: 5px;
+        }
 
-        font-weight: 300;
+        background-color: $brand-white;
 
-        background-color: $grey-1;
-        box-shadow: 0 1rem 1rem $grey-2;
-
-        > .loader-container {
+        >.loader-container {
             position: absolute;
             top: 0;
             right: 0;
@@ -24,55 +28,89 @@
             justify-content: center;
             align-items: center;
 
-            background-color: rgba(0, 0, 0, .4);
+            background-color: rgba($brand-woodsmoke, .4);
         }
 
-        > .title {
-            margin-bottom: 2rem;
+        >.login-header {
+            position: relative;
+
+            display: flex;
+            height: 8rem;
+
+            justify-content: center;
+            align-items: center;
 
             font-size: 3.2rem;
-            text-align: center;
+            font-weight: 500;
+            color: $brand-white;
+
+            background-color: $brand-woodsmoke;
+
+            @media ($device-mobile) {
+                height: 6rem;
+
+                font-size: 2.4rem;
+            }
         }
 
-        > .input-line {
-            $input-width: 20rem;
+        >.login-content {
+            $height: 5.5rem;
 
-            label[for] {
-                display: inline-block;
+            padding: 3rem;
 
-                cursor: pointer;
-            }
+            color: $brand-woodsmoke;
 
-            > input {
-                &[type="text"],
-                &[type="password"] {
-                    $height: 3rem;
+            >.input-line {
+                margin-bottom: 1rem;
 
-                    width: $input-width;
+                > input {
+                    width: 100%;
                     height: $height;
 
                     font-size: 1.6rem;
-                    line-height: $height;
                     text-indent: 1rem;
 
-                    outline: none;
+                    border: 1px solid $brand-aluminium;
 
                     &:focus {
-                        border: 2px solid dodgerblue;
-
-                        box-sizing: border-box;
+                        border-width: 2px;
                     }
                 }
             }
 
-            &:not(:last-child) {
+            >.warning {
                 margin-bottom: 1rem;
-            }
-        }
 
-        > .warning {
-            font-size: 1.6rem;
-            color: $red-light;
+                font-size: 1.8rem;
+                font-weight: 400;
+                color: $brand-amaranth;
+            }
+
+            >.login-button {
+                width: 100%;
+                height: $height;
+                border: {
+                    style: solid;
+                    width: 1px;
+                    radius: 4px;
+                    color: darken($brand-observatory, 10%);
+                }
+
+                background-color: $brand-observatory;
+
+                transition: background-color .15s linear;
+
+                font-size: 2rem;
+                font-weight: 400;
+                color: $brand-white;
+
+                &:disabled {
+                    border-color: darken($brand-aluminium, 20%);
+
+                    background-color: $brand-aluminium;
+                    opacity: .7;
+                }
+            }
         }
     }
 }

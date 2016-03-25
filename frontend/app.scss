@@ -10,6 +10,7 @@ html {
 }
 
 body {
+    font-family: MayPlayFont, Helvetica, 'Helvetica Neue';
     font-size: 1.6rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -26,6 +27,13 @@ body,
     box-sizing: border-box;
 }
 
-a {
-    color: $brand-white;
+input,
+button {
+    font-family: MayPlayFont, Helvetica, 'Helvetica Neue';
+
+    outline: none;
+}
+
+label[for] {
+    cursor: pointer;
 }

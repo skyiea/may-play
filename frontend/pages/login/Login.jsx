@@ -17,7 +17,6 @@ class Login extends React.Component {
     };
     
     static warnings = {
-        'INSUFFICIENT_DATA'                 : 'All field must be filled',
         [ LoginStatus.NO_USER_FOUND ]       : 'Incorrect username entered',
         [ LoginStatus.INCORRECT_PASSWORD ]  : 'Incorrect password entered'
     };
@@ -25,31 +24,18 @@ class Login extends React.Component {
     state = {
         username: '',
         password: '',
-        warningMessage: '',
-        isChecked: false
+        warningMessage: ''
     };
 
-    _sendUserData = () => {
+    _login = () => {
         const { username, password } = this.state;
 
-        if (username.length === 0 || password.length === 0) {
-            this.setState({
-                warningMessage: Login.warnings.INSUFFICIENT_DATA
-            });
-        } else {
-            this.props.login(username, password);
-        }
+        this.props.login(username, password);
     };
 
     _clearWarning = () => {
         this.setState({
             warningMessage: ''
-        });
-    };
-
-    _checkChange = () => {
-        this.setState({
-            isChecked: !this.state.isChecked
         });
     };
 
@@ -67,12 +53,13 @@ class Login extends React.Component {
         } = this.props;
 
         const {
-            isChecked,
+            username,
+            password,
             warningMessage
         } = this.state;
 
         return (
-            <section styleName="page overlay">
+            <section styleName="page login-page">
                 <section styleName="popup">
                     {
                         processing &&
@@ -80,46 +67,41 @@ class Login extends React.Component {
                                 <Loader/>
                             </section>
                     }
-
-                    <h2 styleName="title">Log in</h2>
-                    <section styleName="input-line">
-                        <input
-                                id="username"
-                                type="text"
-                                disabled={processing}
-                                placeholder="Username"
-                                onFocus={this._clearWarning}
-                                valueLink={this.linkState('username')}/>
-                    </section>
-
-                    <section styleName="input-line">
-                        <input
-                                id="password"
-                                type={isChecked ? "text" : "password"}
-                                disabled={processing}
-                                placeholder="Password"
-                                onFocus={this._clearWarning}
-                                valueLink={this.linkState('password')}/>
-                    </section>
-
-                    <section styleName="input-line">
-                        <input
-                                id="showPassword"
-                                type="checkbox"
-                                disabled={processing}
-                                checked={isChecked}
-                                onChange={this._checkChange} />
-                        <label htmlFor="showPassword">Show password</label>
-                    </section>
-                    {
-                        warningMessage &&
-                            <div styleName="warning">{ warningMessage }</div>
-                    }
-                    <button
-                            onClick={this._sendUserData}
-                            disabled={processing}>
+                    <section styleName="login-header">
                         Log in
-                    </button>
+                    </section>
+
+                    <section styleName="login-content">
+                        <section styleName="input-line">
+                            <input
+                                    id="username"
+                                    type="text"
+                                    disabled={processing}
+                                    placeholder="Username"
+                                    valueLink={this.linkState('username')}
+                                    onFocus={this._clearWarning}/>
+                        </section>
+
+                        <section styleName="input-line">
+                            <input
+                                    id="password"
+                                    type="password"
+                                    disabled={processing}
+                                    placeholder="Password"
+                                    valueLink={this.linkState('password')}
+                                    onFocus={this._clearWarning}/>
+                        </section>
+                        {
+                            !!warningMessage &&
+                                <div styleName="warning">{ warningMessage }</div>
+                        }
+                        <button
+                                styleName="login-button"
+                                disabled={!username || !password || this.props.processing}
+                                onClick={this._login}>
+                            Log in
+                        </button>
+                    </section>
                 </section>
             </section>
         );
@@ -127,3 +109,12 @@ class Login extends React.Component {
 }
 
 export default Login;
+
+/*
+    TODO:
+        - validation error: yellow border and error message (yellow background)
+        - login using Enter button on password field
+        - replace <button> to <div>
+        - fix input field jumping effect on focus
+        - add placeholder for username with the same effect as in target site
+ */
