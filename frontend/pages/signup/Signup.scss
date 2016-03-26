@@ -1,70 +1,66 @@
 @import '../../styles/page';
 @import '../../styles/colors';
 
-.form {
-    >.contact-form {
-        $input-width: 21rem;
-        $height: 3rem;
+.signup-popup {
+    $input-width: 21rem;
+    $height: 3rem;
 
-        padding: 3rem;
+    padding: 3rem;
 
-        background-color: $grey-1;
-        box-shadow: 0 1rem 1rem $grey-2;
+    background-color: $grey-1;
+    box-shadow: 0 1rem 1rem $grey-2;
 
-        >.title {
-            margin-bottom: 2rem;
+    >.title {
+        margin-bottom: 2rem;
 
-            text-align: center;
-            font-size: 3.2rem;
-            font-weight: 300;
+        text-align: center;
+        font-size: 3.2rem;
+        font-weight: 300;
+    }
+
+
+    >.input-line {
+        margin-bottom: 1.5rem;
+
+        > img {
+            display: inline-block;
+            vertical-align: middle;
+
+            margin-right: .2rem;
+
+            height: 2.4rem;
+            width: 2.4rem;
         }
 
+        > input {
+            display: inline-block;
+            vertical-align: middle;
+            width: $input-width;
+            height: $height;
 
-        >.input-line {
-            margin-bottom: 1.5rem;
+            font-size: 15px;
+            line-height: $height;
+            text-indent: 1rem;
 
-            > img {
-                display: inline-block;
-                vertical-align: middle;
+            &:focus {
+                border: 2px solid dodgerblue;
 
-                margin-right: .2rem;
-
-                height: 2.4rem;
-                width: 2.4rem;
-            }
-
-            > input {
-                display: inline-block;
-                vertical-align: middle;
-                width: $input-width;
-                height: $height;
-
-                font-size: 15px;
-                line-height: $height;
-                text-indent: 1rem;
-
-                &:focus {
-                    border: 2px solid dodgerblue;
-
-                    box-sizing: border-box;
-                }
+                box-sizing: border-box;
             }
         }
+    }
 
+    >.button {
+        width: 23.4rem;
+        height: 5rem;
 
-        >.button {
-            width: 23.4rem;
-            height: 5rem;
+        border-radius: 1rem;
+        border-style: none;
 
-            border-radius: 1rem;
-            border-style: none;
+        background-color: #666666;
 
-            background-color: #666666;
-
-            color: $white;
-            font-size: 2.4rem;
-            font-weight: 300;
-        }
-
+        color: $white;
+        font-size: 2.4rem;
+        font-weight: 300;
     }
 }

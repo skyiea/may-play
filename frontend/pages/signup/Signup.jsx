@@ -17,21 +17,16 @@ class Signup extends React.Component {
         repassword  : ''
     };
 
-    _handleSubmit = (e) => {
+    _handleSubmit = () => {
         const { username, email, password } = this.state;
         
-        e.preventDefault();
-
         this.props.signup({ username, email, password });
     };
 
     render() {
         return (
-            <div styleName="page form">
-                <form
-                        styleName="contact-form"
-                        method="post"
-                        onSubmit={this._handleSubmit}>
+            <section styleName="page">
+                <section styleName="signup-popup">
                     <h1 styleName="title">New Account</h1>
                     <section styleName="input-line">
                        <img src="https://cdn2.iconfinder.com/data/icons/website-icons/512/User_Avatar-512.png" />
@@ -74,9 +69,13 @@ class Signup extends React.Component {
                                required />
                     </section>
                     <br/>
-                    <input styleName="button" type="submit" value="Sign up!" />
-                </form>
-            </div>
+                    <input
+                            styleName="button"
+                            type="submit"
+                            value="Sign up!"
+                            onClick={this._handleSubmit}/>
+                </section>
+            </section>
         );
     }
 }

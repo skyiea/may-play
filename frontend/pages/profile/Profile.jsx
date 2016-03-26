@@ -32,7 +32,7 @@ class Profile extends React.Component {
         }
 
         return (
-            <section styleName="page">
+            <section styleName="profile-page page">
                 Hello { username }!
                 Your email address is { email }.
             </section>

@@ -2,114 +2,112 @@
 @import '../../styles/colors';
 @import '../../styles/breakpoints';
 
-.login-page {
-    >.popup {
+.login-popup {
+    position: relative;
+
+    width: 40rem;
+    border: {
+        width: 1rem;
+        style: solid;
+        color: rgba($brand-woodsmoke, .25);
+        radius: 5px;
+    }
+
+    background-color: $brand-white;
+
+    >.loader-container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        background-color: rgba($brand-woodsmoke, .4);
+    }
+
+    >.login-header {
         position: relative;
 
-        width: 40rem;
-        border: {
-            width: 1rem;
-            style: solid;
-            color: rgba($brand-woodsmoke, .25);
-            radius: 5px;
+        display: flex;
+        height: 8rem;
+
+        justify-content: center;
+        align-items: center;
+
+        font-size: 3.2rem;
+        font-weight: 500;
+        color: $brand-white;
+
+        background-color: $brand-woodsmoke;
+
+        @media ($device-mobile) {
+            height: 6rem;
+
+            font-size: 2.4rem;
         }
+    }
 
-        background-color: $brand-white;
+    >.login-content {
+        $height: 5.5rem;
 
-        >.loader-container {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
+        padding: 3rem;
 
-            display: flex;
+        color: $brand-woodsmoke;
 
-            justify-content: center;
-            align-items: center;
+        >.input-line {
+            margin-bottom: 1rem;
 
-            background-color: rgba($brand-woodsmoke, .4);
-        }
-
-        >.login-header {
-            position: relative;
-
-            display: flex;
-            height: 8rem;
-
-            justify-content: center;
-            align-items: center;
-
-            font-size: 3.2rem;
-            font-weight: 500;
-            color: $brand-white;
-
-            background-color: $brand-woodsmoke;
-
-            @media ($device-mobile) {
-                height: 6rem;
-
-                font-size: 2.4rem;
-            }
-        }
-
-        >.login-content {
-            $height: 5.5rem;
-
-            padding: 3rem;
-
-            color: $brand-woodsmoke;
-
-            >.input-line {
-                margin-bottom: 1rem;
-
-                > input {
-                    width: 100%;
-                    height: $height;
-
-                    font-size: 1.6rem;
-                    text-indent: 1rem;
-
-                    border: 1px solid $brand-aluminium;
-
-                    &:focus {
-                        border-width: 2px;
-                    }
-                }
-            }
-
-            >.warning {
-                margin-bottom: 1rem;
-
-                font-size: 1.8rem;
-                font-weight: 400;
-                color: $brand-amaranth;
-            }
-
-            >.login-button {
+            > input {
                 width: 100%;
                 height: $height;
-                border: {
-                    style: solid;
-                    width: 1px;
-                    radius: 4px;
-                    color: darken($brand-observatory, 10%);
+
+                font-size: 1.6rem;
+                text-indent: 1rem;
+
+                border: 1px solid $brand-aluminium;
+
+                &:focus {
+                    border-width: 2px;
                 }
+            }
+        }
 
-                background-color: $brand-observatory;
+        >.warning {
+            margin-bottom: 1rem;
 
-                transition: background-color .15s linear;
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: $brand-amaranth;
+        }
 
-                font-size: 2rem;
-                font-weight: 400;
-                color: $brand-white;
+        >.login-button {
+            width: 100%;
+            height: $height;
+            border: {
+                style: solid;
+                width: 1px;
+                radius: 4px;
+                color: darken($brand-observatory, 10%);
+            }
 
-                &:disabled {
-                    border-color: darken($brand-aluminium, 20%);
+            background-color: $brand-observatory;
 
-                    background-color: $brand-aluminium;
-                    opacity: .7;
-                }
+            transition: background-color .15s linear;
+
+            font-size: 2rem;
+            font-weight: 400;
+            color: $brand-white;
+
+            &:disabled {
+                border-color: darken($brand-aluminium, 20%);
+
+                background-color: $brand-aluminium;
+                opacity: .7;
             }
         }
     }

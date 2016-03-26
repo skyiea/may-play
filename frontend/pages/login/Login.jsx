@@ -59,8 +59,8 @@ class Login extends React.Component {
         } = this.state;
 
         return (
-            <section styleName="page login-page">
-                <section styleName="popup">
+            <section styleName="page">
+                <section styleName="login-popup">
                     {
                         processing &&
                             <section styleName="loader-container">
