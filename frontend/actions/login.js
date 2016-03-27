@@ -37,12 +37,8 @@ export default function processLogin(username, password) {
             body: JSON.stringify({ username, password })
         }).
             then((result) => {
-                if (result.success) {
-                    dispatch(loginSuccess(result));
-                    dispatch(doLogin());
-                } else {
-                    throw result.payload;
-                }
+                dispatch(loginSuccess(result));
+                dispatch(doLogin());
             }).
             catch((error) => {
                 dispatch(loginFailure(error));

@@ -31,12 +31,14 @@ export default function rootReducer(state, action) {
                 }
             };
         case TYPES.LOGIN_FAILURE: {
+            const errorMessage = payload.message;
+
             return {
                 ...state,
                 login: {
                     ...state.login,
                     processing: false,
-                    error: payload
+                    error: errorMessage
                 }
             };
         }

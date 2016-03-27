@@ -27,7 +27,6 @@ export default function updateProfile(data) {
 
         fetch('/api/profile', {
             method: 'post',
-            accept: false,
             body: JSON.stringify(data)
         }).
             then(() => {

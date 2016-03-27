@@ -13,9 +13,8 @@ module.exports = function (passport) {
                 }
 
                 if (!user) {
-                    return res.json({
-                        success: false,
-                        payload
+                    return res.status(400).json({
+                        message: payload
                     });
                 }
 
@@ -25,7 +24,6 @@ module.exports = function (passport) {
                     }
 
                     return res.status(302).json({
-                        success: true,
                         location: '/profile'
                     });
                 });
@@ -41,9 +39,8 @@ module.exports = function (passport) {
                 }
 
                 if (!user) {
-                    return res.json({
-                        success: false,
-                        payload
+                    return res.status(400).json({
+                        message: payload
                     });
                 }
 
@@ -53,7 +50,6 @@ module.exports = function (passport) {
                     }
 
                     return res.status(302).json({
-                        success: true,
                         location: '/profile'
                     });
                 });
@@ -67,7 +63,6 @@ module.exports = function (passport) {
         res.clearCookie('connect.sid', '/');
 
         res.status(302).json({
-            success: true,
             location: '/'
         });
     });

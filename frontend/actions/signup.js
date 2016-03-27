@@ -33,12 +33,8 @@ export default function signup(data) {
             body: JSON.stringify(data)
         }).
             then((result) => {
-                if (result.success) {
-                    dispatch(signupSuccess(result));
-                    dispatch(doLogin());
-                } else {
-                    throw result.payload;
-                }
+                dispatch(signupSuccess(result));
+                dispatch(doLogin());
             }).
             catch((error) => {
                 dispatch(signupFailure(error));

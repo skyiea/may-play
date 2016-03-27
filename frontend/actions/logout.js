@@ -36,12 +36,8 @@ export default function processLogout() {
             method: 'post'
         }).
             then((result) => {
-                if (result.success) {
-                    dispatch(logoutSuccess(result));
-                    dispatch(doLogout());
-                } else {
-                    throw result.payload;
-                }
+                dispatch(logoutSuccess(result));
+                dispatch(doLogout());
             }).
             catch((error) => {
                 dispatch(logoutFailure(error));

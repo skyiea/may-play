@@ -90,22 +90,22 @@ class Profile extends React.Component {
             <section styleName="profile-page page">
                 <section>
                     <input
-                        type="text"
-                        value={username}
-                        placeholder="Username"
-                        onChange={(e) => this.setState({ username: e.target.value })}/>
+                            type="text"
+                            value={username}
+                            placeholder="Username"
+                            onChange={(e) => this.setState({ username: e.target.value })}/>
                     <br/>
                     <input
-                        type="email"
-                        value={email}
-                        placeholder="Email"
-                        onChange={(e) => this.setState({ email: e.target.value })}/>
+                            type="email"
+                            value={email}
+                            placeholder="Email"
+                            onChange={(e) => this.setState({ email: e.target.value })}/>
                     <br/>
                     <input
-                        type="password"
-                        value={password}
-                        placeholder="Password"
-                        onChange={(e) => this.setState({ password: e.target.value })}/>
+                            type="password"
+                            value={password}
+                            placeholder="Password"
+                            onChange={(e) => this.setState({ password: e.target.value })}/>
                     <br/>
                     <button onClick={this._handleChange}>
                         Change
