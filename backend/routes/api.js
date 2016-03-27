@@ -81,5 +81,29 @@ module.exports = function (passport) {
         });
     });
 
+    api.post('/profile', authAPI, (req, res) => {
+        const { user, body } = req;
+
+        if (body.username) {
+            user.local.username = body.username;
+        }
+
+        if (body.email) {
+            user.local.email = body.email;
+        }
+
+        if (body.password) {
+            user.local.password = user.generateHash(body.password);
+        }
+
+        user.save((err) => {
+            if (err) {
+                throw err;
+            }
+
+            res.end();
+        });
+    });
+
     return api;
 };

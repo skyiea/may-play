@@ -15,6 +15,7 @@ const initialState = {
     
     profile: {
         fetched: false,
+        updating: false,
         username: null,
         email: null
     }

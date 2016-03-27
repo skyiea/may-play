@@ -15,5 +15,9 @@ export default {
     
     PROFILE_FETCH_REQUEST   : Symbol('Profile fetch request'),
     PROFILE_FETCH_SUCCESS   : Symbol('Profile successfully fetched'),
-    PROFILE_FETCH_FAILURE   : Symbol('Profile fetch failure')
+    PROFILE_FETCH_FAILURE   : Symbol('Profile fetch failure'),
+    
+    PROFILE_UPDATE_REQUEST   : Symbol('Profile update request'),
+    PROFILE_UPDATE_SUCCESS   : Symbol('Profile successfully updated'),
+    PROFILE_UPDATE_FAILURE   : Symbol('Profile update failure')
 };

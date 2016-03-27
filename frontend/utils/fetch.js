@@ -2,13 +2,20 @@ import fetch from 'isomorphic-fetch';
 import { browserHistory } from 'react-router';
 
 export default function (url, options = {}) {
-    const { headers } = options;
+    const {
+        headers = {},
+        accept = true,
+        ...otherOptions
+    } = options;
+    
+    if (accept) {
+        headers.Accept = 'application/json';
+    }
 
     return fetch(url, {
         credentials: 'same-origin',
-        ...options,
+        ...otherOptions,
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json',
             ...headers
         }
@@ -25,14 +32,20 @@ export default function (url, options = {}) {
                         return payload;
                     });
                 case 401:   // unauthorized
-                    browserHistory.push('logout');
-                    break;
+                    setTimeout(() => {
+                        browserHistory.push('logout');
+                    }, 0);
+
+                    throw new Error('Unauthorized');
                 default:
             }
 
-            return res.json();
-        }).
-        catch((err) => {
-            console.error('Error occurred: %s', err);
+            if (accept) {
+                return res.json().catch(() => {
+                    throw new Error('Error parsing server response as JSON.');
+                });
+            } else {
+                return res;
+            }
         });
 }
