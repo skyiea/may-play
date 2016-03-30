@@ -2,6 +2,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import LoginStatus from '../../../universal/LoginStatus';
 import Loader from 'components/loader/Loader';
+import Button from 'components/button/Button';
 
 import styles from './Login.scss';
 
@@ -24,7 +25,17 @@ class Login extends React.Component {
     state = {
         username: '',
         password: '',
-        warningMessage: ''
+        warningMessage: '',
+        focusedInput: null
+    };
+
+    _handleLoginKeyDown = (e) => {
+        const { username, password } = this.state;
+        const ENTER_CODE = 13;
+
+        if (e.keyCode === ENTER_CODE && !!password && !!username) {
+            this._login();
+        }
     };
 
     _login = () => {
@@ -55,8 +66,11 @@ class Login extends React.Component {
         const {
             username,
             password,
-            warningMessage
+            warningMessage,
+            focusedInput
         } = this.state;
+
+        const isLoginAvailable = !!username && !!password && !processing;
 
         return (
             <section styleName="page">
@@ -67,40 +81,54 @@ class Login extends React.Component {
                                 <Loader/>
                             </section>
                     }
-                    <section styleName="login-header">
-                        Log in
-                    </section>
+                    <section styleName="login-header">Log in</section>
 
-                    <section styleName="login-content">
-                        <section styleName="input-line">
-                            <input
-                                    id="username"
-                                    type="text"
-                                    disabled={processing}
-                                    placeholder="Username"
-                                    valueLink={this.linkState('username')}
-                                    onFocus={this._clearWarning}/>
-                        </section>
-
-                        <section styleName="input-line">
-                            <input
-                                    id="password"
-                                    type="password"
-                                    disabled={processing}
-                                    placeholder="Password"
-                                    valueLink={this.linkState('password')}
-                                    onFocus={this._clearWarning}/>
-                        </section>
+                    <section styleName={classnames('login-content', !!warningMessage && 'error')}>
                         {
                             !!warningMessage &&
                                 <div styleName="warning">{ warningMessage }</div>
                         }
-                        <button
-                                styleName="login-button"
-                                disabled={!username || !password || this.props.processing}
+                        <section
+                                styleName={classnames('login-line', focusedInput === 'login' && 'focused')}
+                                onChange={(e) => this.setState({ focusedInput: !!e.target.value ? 'login' : null })}>
+                            <label htmlFor="username">Username</label>
+
+                            <input
+                                    id="username"
+                                    styleName={warningMessage === 'Incorrect username entered' ? 'incorrect' : null}
+                                    type="text"
+                                    autoFocus
+                                    disabled={processing}
+                                    placeholder="Username"
+                                    value={username}
+                                    onFocus={this._clearWarning}
+                                    onChange={(e) => this.setState({ username: e.target.value })}/>
+                        </section>
+
+                        <section
+                                styleName={classnames('login-line', focusedInput === 'password' && 'focused')}
+                                onChange={(e) => this.setState({ focusedInput: !!e.target.value ? 'password' : null })}>
+                            <label htmlFor="password">
+                                Password
+                            </label>
+
+                            <input
+                                    id="password"
+                                    styleName={warningMessage === 'Incorrect password entered' ? 'incorrect' : null}
+                                    type="password"
+                                    disabled={processing}
+                                    placeholder="Password"
+                                    valueLink={this.linkState('password')}
+                                    onFocus={this._clearWarning}
+                                    onKeyDown={this._handleLoginKeyDown}/>
+                        </section>
+
+                        <Button
+                                disabled={!isLoginAvailable}
+                                styleName={classnames('login-button', !isLoginAvailable && 'disabled')}
                                 onClick={this._login}>
                             Log in
-                        </button>
+                        </Button>
                     </section>
                 </section>
             </section>
@@ -112,9 +140,9 @@ export default Login;
 
 /*
     TODO:
-        - validation error: yellow border and error message (yellow background)
-        - login using Enter button on password field
-        - replace <button> to <div>
-        - fix input field jumping effect on focus
-        - add placeholder for username with the same effect as in target site
- */
+    -   extract enhanced input line to separate component <Input>
+    -   make padding-top transition in <Input>
+    -   clear error-state on login
+    -   use LoginStatus instead string literals in render method
+    -   get rid LinkedStateMixin
+*/

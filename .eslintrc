@@ -9,5 +9,8 @@
         "ReactDOM": false,
         "mixin": false,
         "DEBUG": false
+    },
+    "rules": {
+        "brace-style": [ 1, "1tbs", { "allowSingleLine": true } ]
     }
 }
