@@ -1,8 +1,13 @@
+import React, { Component, PropTypes } from 'react';
+import { ReactClass } from 'react-core-decorators';
+import classnames from 'classnames';
+import CSSModules from 'react-css-modules';
+
 import styles from './Input.scss';
 
 @CSSModules(styles, { allowMultiple: true })
 @ReactClass
-class Input extends React.Component {
+class Input extends Component {
     static PropTypes = {
         className   : PropTypes.string,
         value       : PropTypes.string,

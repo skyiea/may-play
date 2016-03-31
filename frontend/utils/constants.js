@@ -1,3 +1,3 @@
 export default {
-    LS_loggedKey: 'loggedIn'
+    lsLoggedKey: 'loggedIn'
 };

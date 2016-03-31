@@ -1,5 +1,9 @@
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { ReactClass } from 'react-core-decorators';
+
 @ReactClass
-class Button extends React.Component {
+class Button extends Component {
     static propTypes = {
         disabled: PropTypes.bool,
         tabIndex: PropTypes.oneOfType([

@@ -6,7 +6,7 @@ import rootReducer from 'reducers/rootReducer';
 import constants from 'utils/constants';
 
 const initialState = {
-    loggedIn: !!window.localStorage.getItem(constants.LS_loggedKey),
+    loggedIn: !!window.localStorage.getItem(constants.lsLoggedKey),
     
     login: {
         error: null,

@@ -1,10 +1,14 @@
+import React, { Component, PropTypes } from 'react';
+import { ReactClass } from 'react-core-decorators';
+import CSSModules from 'react-css-modules';
+
 import Loader from 'components/loader/Loader';
 
 import styles from './Profile.scss';
 
 @CSSModules(styles, { allowMultiple: true })
 @ReactClass
-class Profile extends React.Component {
+class Profile extends Component {
     static propTypes = {
         username: PropTypes.string,
         email: PropTypes.string,

@@ -1,3 +1,6 @@
+import React, { Component, PropTypes } from 'react';
+import { ReactClass, mixin } from 'react-core-decorators';
+import CSSModules from 'react-css-modules';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import styles from './Signup.scss';
@@ -5,7 +8,7 @@ import styles from './Signup.scss';
 @CSSModules(styles, { allowMultiple: true })
 @mixin(LinkedStateMixin)
 @ReactClass
-class Signup extends React.Component {
+class Signup extends Component {
     static propTypes = {
         signup: PropTypes.func.isRequired
     };

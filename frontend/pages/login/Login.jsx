@@ -1,3 +1,8 @@
+import React, { Component, PropTypes } from 'react';
+import { ReactClass } from 'react-core-decorators';
+import classnames from 'classnames';
+import CSSModules from 'react-css-modules';
+
 import LoginStatus from '../../../universal/LoginStatus';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
@@ -7,7 +12,7 @@ import styles from './Login.scss';
 
 @CSSModules(styles, { allowMultiple: true })
 @ReactClass
-class Login extends React.Component {
+class Login extends Component {
     static propTypes = {
         error: PropTypes.string,
         processing: PropTypes.bool.isRequired,
