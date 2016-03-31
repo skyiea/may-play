@@ -1,5 +1,3 @@
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
-
 import LoginStatus from '../../../universal/LoginStatus';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
@@ -7,7 +5,6 @@ import Button from 'components/button/Button';
 import styles from './Login.scss';
 
 @CSSModules(styles, { allowMultiple: true })
-@mixin(LinkedStateMixin)
 @ReactClass
 class Login extends React.Component {
     static propTypes = {
@@ -26,7 +23,8 @@ class Login extends React.Component {
         username: '',
         password: '',
         warningMessage: '',
-        focusedInput: null
+        focusedName: null,
+        focusedPass: null
     };
 
     _handleLoginKeyDown = (e) => {
@@ -42,6 +40,7 @@ class Login extends React.Component {
         const { username, password } = this.state;
 
         this.props.login(username, password);
+        this._clearWarning();
     };
 
     _clearWarning = () => {
@@ -67,10 +66,14 @@ class Login extends React.Component {
             username,
             password,
             warningMessage,
-            focusedInput
+            focusedName,
+            focusedPass
         } = this.state;
 
         const isLoginAvailable = !!username && !!password && !processing;
+
+        const incorrectUserName = Login.warnings[LoginStatus.NO_USER_FOUND];
+        const incorrectPassword = Login.warnings[LoginStatus.INCORRECT_PASSWORD];
 
         return (
             <section styleName="page">
@@ -89,13 +92,13 @@ class Login extends React.Component {
                                 <div styleName="warning">{ warningMessage }</div>
                         }
                         <section
-                                styleName={classnames('login-line', focusedInput === 'login' && 'focused')}
-                                onChange={(e) => this.setState({ focusedInput: !!e.target.value ? 'login' : null })}>
+                                styleName={classnames('login-line', focusedName === 'login' && 'focused')}
+                                onChange={(e) => this.setState({ focusedName: !!e.target.value ? 'login' : null })}>
                             <label htmlFor="username">Username</label>
 
                             <input
                                     id="username"
-                                    styleName={warningMessage === 'Incorrect username entered' ? 'incorrect' : null}
+                                    styleName={warningMessage === incorrectUserName ? 'incorrect' : null}
                                     type="text"
                                     autoFocus
                                     disabled={processing}
@@ -106,21 +109,22 @@ class Login extends React.Component {
                         </section>
 
                         <section
-                                styleName={classnames('login-line', focusedInput === 'password' && 'focused')}
-                                onChange={(e) => this.setState({ focusedInput: !!e.target.value ? 'password' : null })}>
+                                styleName={classnames('login-line', focusedPass === 'password' && 'focused')}
+                                onChange={(e) => this.setState({ focusedPass: !!e.target.value ? 'password' : null })}>
                             <label htmlFor="password">
                                 Password
                             </label>
 
                             <input
                                     id="password"
-                                    styleName={warningMessage === 'Incorrect password entered' ? 'incorrect' : null}
+                                    styleName={warningMessage === incorrectPassword ? 'incorrect' : null}
                                     type="password"
                                     disabled={processing}
                                     placeholder="Password"
-                                    valueLink={this.linkState('password')}
+                                    value={password}
                                     onFocus={this._clearWarning}
-                                    onKeyDown={this._handleLoginKeyDown}/>
+                                    onKeyDown={this._handleLoginKeyDown}
+                                    onChange={ (e) => this.setState({ password: e.target.value })}/>
                         </section>
 
                         <Button
@@ -141,8 +145,10 @@ export default Login;
 /*
     TODO:
     -   extract enhanced input line to separate component <Input>
-    -   make padding-top transition in <Input>
-    -   clear error-state on login
-    -   use LoginStatus instead string literals in render method
-    -   get rid LinkedStateMixin
+    -   make padding-top transition in <Input> +
+    -   clear error-state on login +
+    -   use LoginStatus instead string literals in render method +
+    -   get rid LinkedStateMixin +
+    -   make label-placeholder not possible to select and click on (like in target site) +
+    -   fix issue with label-placeholder incorrect appearance (doesn't appear when input is just focused)+
 */
