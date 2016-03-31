@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import { ReactClass } from 'react-core-decorators';
+import omit from 'lodash.omit';
 
 @ReactClass
 class Button extends Component {
@@ -69,15 +70,18 @@ class Button extends Component {
             children,
             disabled,
             tabIndex,
-            onClick,
-            blurOnEscape,
-            blurOnEnter,
-            blurOnClick,
             ...otherProps
         } = this.props;
 
+        const filteredProps = omit(otherProps, [
+            'onClick',
+            'blurOnEscape',
+            'blurOnEnter',
+            'blurOnClick'
+        ]);
+
         return (
-            <div { ...otherProps }
+            <div { ...filteredProps }
                     tabIndex={disabled ? null : tabIndex}
                     onClick={disabled ? null : this._handleClick}
                     onKeyDown={this._handleKeyDown}>
