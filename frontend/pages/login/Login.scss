@@ -32,8 +32,6 @@
     }
 
     >.login-header {
-        position: relative;
-
         display: flex;
         height: 8rem;
 
@@ -54,86 +52,34 @@
     }
 
     >.login-content {
-        $height: 5.5rem;
+        $line-height: 5.5rem;
 
         padding: 3rem;
 
         color: $brand-woodsmoke;
 
-        &.error {
-            >.login-line .incorrect {
-                box-shadow: inset 0 0 0 1px $brand-school-bus-yellow;
-            }
+        >:not(:last-child) {
+            margin-bottom: 1rem;
         }
-
-        >.login-line {
-            position: relative;
-
-            &.focused {
-                input {
-                    padding-top: 2rem;
-                }
-                label {
-                    opacity: 1;
-                }
-            }
-
-            > label {
-                position: absolute;
-                display: block;
-
-                margin-top: 0.8rem;
-                margin-left: 1.5rem;
-
-                text-transform: uppercase;
-                font-size: 1.2rem;
-                color: $brand-aluminium;
-                opacity: 0;
-
-                transition: all 200ms ease-out;
-
-                pointer-events: none;
-            }
-
-            > input {
-                margin-bottom: 1rem;
-                padding: 7px 1.5rem;
-
-                height: $height;
-                width: 100%;
-
-                border: none;
-                box-shadow: inset 0 0 0 1px #666e6e;
-
-                font-size: 1.6rem;
-                transition: all 0.15s linear;
-
-                &:focus {
-                    box-shadow: inset 0 0 0 2px #666e6e;
-                }
-            }
-        }
-
 
         >.warning {
-            padding: 1rem 1rem;
-            margin-bottom: 5px;
+            padding: 1rem;
 
             font-size: 1.6rem;
             font-weight: 400;
-            background-color: $brand-school-bus-yellow;
-            color: $brand-woodsmoke ;
+            color: $brand-woodsmoke;
 
+            background-color: $brand-school-bus-yellow;
+        }
+
+        .login-input {
+            height: $line-height;
         }
 
         >.login-button {
             display: flex;
-
-            justify-content: center;
-            align-items: center;
-
             width: 100%;
-            height: $height;
+            height: $line-height;
             border: {
                 style: solid;
                 width: 1px;
@@ -141,13 +87,18 @@
                 color: darken($brand-observatory, 10%);
             }
 
-            background-color: $brand-observatory;
-
-            transition: background-color .15s linear;
+            justify-content: center;
+            align-items: center;
 
             font-size: 2rem;
             font-weight: 400;
             color: $brand-white;
+
+            background-color: $brand-observatory;
+
+            transition-property: opacity, background-color;
+            transition-duration: 150ms;
+            transition-timing-function: linear;
 
             &.disabled {
                 border-color: darken($brand-aluminium, 20%);

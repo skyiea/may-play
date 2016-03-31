@@ -1,6 +1,7 @@
 import LoginStatus from '../../../universal/LoginStatus';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
+import Input from 'components/input/Input';
 
 import styles from './Login.scss';
 
@@ -22,9 +23,7 @@ class Login extends React.Component {
     state = {
         username: '',
         password: '',
-        warningMessage: '',
-        focusedName: null,
-        focusedPass: null
+        error: null
     };
 
     _handleLoginKeyDown = (e) => {
@@ -45,14 +44,14 @@ class Login extends React.Component {
 
     _clearWarning = () => {
         this.setState({
-            warningMessage: ''
+            error: null
         });
     };
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.error) {
             this.setState({
-                warningMessage: Login.warnings[nextProps.error]
+                error: nextProps.error
             });
         }
     }
@@ -65,15 +64,10 @@ class Login extends React.Component {
         const {
             username,
             password,
-            warningMessage,
-            focusedName,
-            focusedPass
+            error
         } = this.state;
 
         const isLoginAvailable = !!username && !!password && !processing;
-
-        const incorrectUserName = Login.warnings[LoginStatus.NO_USER_FOUND];
-        const incorrectPassword = Login.warnings[LoginStatus.INCORRECT_PASSWORD];
 
         return (
             <section styleName="page">
@@ -86,46 +80,32 @@ class Login extends React.Component {
                     }
                     <section styleName="login-header">Log in</section>
 
-                    <section styleName={classnames('login-content', !!warningMessage && 'error')}>
+                    <section styleName="login-content">
                         {
-                            !!warningMessage &&
-                                <div styleName="warning">{ warningMessage }</div>
+                            !!error &&
+                                <div styleName="warning">{ Login.warnings[error] }</div>
                         }
-                        <section
-                                styleName={classnames('login-line', focusedName === 'login' && 'focused')}
-                                onChange={(e) => this.setState({ focusedName: !!e.target.value ? 'login' : null })}>
-                            <label htmlFor="username">Username</label>
+                        <Input
+                                styleName="login-input"
+                                incorrect={error === LoginStatus.NO_USER_FOUND}
+                                type="text"
+                                autoFocus
+                                disabled={processing}
+                                placeholder="Username"
+                                value={username}
+                                onFocus={this._clearWarning}
+                                onChange={(e) => this.setState({ username: e.target.value })}/>
 
-                            <input
-                                    id="username"
-                                    styleName={warningMessage === incorrectUserName ? 'incorrect' : null}
-                                    type="text"
-                                    autoFocus
-                                    disabled={processing}
-                                    placeholder="Username"
-                                    value={username}
-                                    onFocus={this._clearWarning}
-                                    onChange={(e) => this.setState({ username: e.target.value })}/>
-                        </section>
-
-                        <section
-                                styleName={classnames('login-line', focusedPass === 'password' && 'focused')}
-                                onChange={(e) => this.setState({ focusedPass: !!e.target.value ? 'password' : null })}>
-                            <label htmlFor="password">
-                                Password
-                            </label>
-
-                            <input
-                                    id="password"
-                                    styleName={warningMessage === incorrectPassword ? 'incorrect' : null}
-                                    type="password"
-                                    disabled={processing}
-                                    placeholder="Password"
-                                    value={password}
-                                    onFocus={this._clearWarning}
-                                    onKeyDown={this._handleLoginKeyDown}
-                                    onChange={ (e) => this.setState({ password: e.target.value })}/>
-                        </section>
+                        <Input
+                                styleName="login-input"
+                                incorrect={error === LoginStatus.INCORRECT_PASSWORD}
+                                type="password"
+                                disabled={processing}
+                                placeholder="Password"
+                                value={password}
+                                onFocus={this._clearWarning}
+                                onKeyDown={this._handleLoginKeyDown}
+                                onChange={(e) => this.setState({ password: e.target.value })}/>
 
                         <Button
                                 disabled={!isLoginAvailable}
@@ -141,14 +121,3 @@ class Login extends React.Component {
 }
 
 export default Login;
-
-/*
-    TODO:
-    -   extract enhanced input line to separate component <Input>
-    -   make padding-top transition in <Input> +
-    -   clear error-state on login +
-    -   use LoginStatus instead string literals in render method +
-    -   get rid LinkedStateMixin +
-    -   make label-placeholder not possible to select and click on (like in target site) +
-    -   fix issue with label-placeholder incorrect appearance (doesn't appear when input is just focused)+
-*/
