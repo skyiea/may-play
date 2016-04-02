@@ -42,7 +42,7 @@ function requireUnauth(nextState, replace) {
 const ReduxProvider = (props) => (
     <Provider store={store}>
         <CarcassContainer>
-            { props.children }
+            {props.children}
         </CarcassContainer>
     </Provider>
 );

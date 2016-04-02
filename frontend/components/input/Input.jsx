@@ -32,7 +32,8 @@ class Input extends Component {
                         className={className}
                         styleName={incorrect ? 'incorrect' : null}
                         value={value}
-                        placeholder={placeholder}/>
+                        placeholder={placeholder}
+                />
             </section>
         );
     }

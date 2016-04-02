@@ -5,6 +5,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 import styles from './Signup.scss';
 
+/* eslint-disable */
 @CSSModules(styles, { allowMultiple: true })
 @mixin(LinkedStateMixin)
 @ReactClass
@@ -84,3 +85,4 @@ class Signup extends Component {
 }
 
 export default Signup;
+/* eslint-enable */

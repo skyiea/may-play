@@ -40,6 +40,14 @@ class Login extends Component {
         }
     };
 
+    _handleLoginInputChange = (e) => {
+        this.setState({ username: e.target.value });
+    };
+
+    _handlePasswordInputChange = (e) => {
+        this.setState({ password: e.target.value });
+    };
+
     _login = () => {
         const { username, password } = this.state;
 
@@ -88,7 +96,7 @@ class Login extends Component {
                     <section styleName="login-content">
                         {
                             !!error &&
-                                <div styleName="warning">{ Login.warnings[error] }</div>
+                                <div styleName="warning">{Login.warnings[error]}</div>
                         }
                         <Input
                                 styleName="login-input"
@@ -99,7 +107,8 @@ class Login extends Component {
                                 placeholder="Username"
                                 value={username}
                                 onFocus={this._clearWarning}
-                                onChange={(e) => this.setState({ username: e.target.value })}/>
+                                onChange={this._handleLoginInputChange}
+                        />
 
                         <Input
                                 styleName="login-input"
@@ -110,7 +119,8 @@ class Login extends Component {
                                 value={password}
                                 onFocus={this._clearWarning}
                                 onKeyDown={this._handleLoginKeyDown}
-                                onChange={(e) => this.setState({ password: e.target.value })}/>
+                                onChange={this._handlePasswordInputChange}
+                        />
 
                         <Button
                                 disabled={!isLoginAvailable}

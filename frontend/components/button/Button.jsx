@@ -81,11 +81,11 @@ class Button extends Component {
         ]);
 
         return (
-            <div { ...filteredProps }
+            <div {...filteredProps}
                     tabIndex={disabled ? null : tabIndex}
                     onClick={disabled ? null : this._handleClick}
                     onKeyDown={this._handleKeyDown}>
-                { children }
+                {children}
             </div>
         );
     }

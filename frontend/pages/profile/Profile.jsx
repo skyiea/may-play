@@ -53,6 +53,18 @@ class Profile extends Component {
         }
     };
 
+    _handleUsernameInputChange = (e) => {
+        this.setState({ username: e.target.value });
+    };
+
+    _handleEmailInputChange = (e) => {
+        this.setState({ email: e.target.value });
+    };
+
+    _handlePasswordInputChange = (e) => {
+        this.setState({ password: e.target.value });
+    };
+
     componentWillMount() {
         this.props.fetchData();
     }
@@ -97,19 +109,22 @@ class Profile extends Component {
                             type="text"
                             value={username}
                             placeholder="Username"
-                            onChange={(e) => this.setState({ username: e.target.value })}/>
+                            onChange={this._handleUsernameInputChange}
+                    />
                     <br/>
                     <input
                             type="email"
                             value={email}
                             placeholder="Email"
-                            onChange={(e) => this.setState({ email: e.target.value })}/>
+                            onChange={this._handleEmailInputChange}
+                    />
                     <br/>
                     <input
                             type="password"
                             value={password}
                             placeholder="Password"
-                            onChange={(e) => this.setState({ password: e.target.value })}/>
+                            onChange={this._handlePasswordInputChange}
+                    />
                     <br/>
                     <button onClick={this._handleChange}>
                         Change

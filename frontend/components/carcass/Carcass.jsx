@@ -28,7 +28,7 @@ class Carcass extends Component {
         return (
             <section styleName="carcass">
                 <HeaderContainer/>
-                { this.props.children }
+                {this.props.children}
             </section>
         );
     }
