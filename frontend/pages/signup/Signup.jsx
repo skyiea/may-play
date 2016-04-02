@@ -1,20 +1,37 @@
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import SignupStatus from '../../../universal/SignupStatus';
+import Loader from 'components/loader/Loader';
+import Button from 'components/button/Button';
+import Input from 'components/input/Input';
 
 import styles from './Signup.scss';
 
 @CSSModules(styles, { allowMultiple: true })
-@mixin(LinkedStateMixin)
 @ReactClass
 class Signup extends React.Component {
     static propTypes = {
+        error: PropTypes.string,
         signup: PropTypes.func.isRequired
+    };
+
+    static warnings = {
+        [ SignupStatus.USER_ALREADY_EXISTS ] : 'User already exists'
     };
     
     state = {
         username    : '',
         email       : '',
         password    : '',
-        repassword  : ''
+        repassword  : '',
+        error       : null
+    };
+
+    _handleLoginKeyDown = (e) => {
+        const { username, email, password, repassword } = this.state;
+        const ENTER_CODE = 13;
+
+        if (e.keyCode === ENTER_CODE && !!password && !!username && !!email && !!repassword) {
+            this._handleSubmit();
+        }
     };
 
     _handleSubmit = () => {
@@ -23,58 +40,67 @@ class Signup extends React.Component {
         this.props.signup({ username, email, password });
     };
 
+    componentWillReceiveProps(nextProps) {
+        console.log('+');
+        if (nextProps.error) {
+            this.setState({
+                error: nextProps.error
+            });
+        }
+    }
+
     render() {
+        const {
+            username,
+            email,
+            password,
+            repassword,
+            error
+        } = this.state;
+
+        const isSignupAvailable = !!username && !!email && !!password && !!repassword;
+
         return (
             <section styleName="page">
                 <section styleName="signup-popup">
-                    <h1 styleName="title">New Account</h1>
-                    <section styleName="input-line">
-                       <img src="https://cdn2.iconfinder.com/data/icons/website-icons/512/User_Avatar-512.png" />
-                       <input
-                               id="username"
-                               type="text"
-                               name="username"
-                               placeholder="Username"
-                               valueLink={this.linkState('username')}
-                               required />
-                    </section>
-                    <section styleName="input-line">
-                        <img src="https://cdn0.iconfinder.com/data/icons/seo-smart-pack/128/grey_new_seo-15-512.png" />
-                        <input
-                                id="email"
+                    <section styleName="signup-header">New Account</section>
+
+                    <section styleName="signup-content">
+                        <Input
+                                styleName="signup-input"
+                                incorrect={error === SignupStatus.USER_ALREADY_EXISTS}
                                 type="text"
-                                name="email"
+                                autoFocus
+                                placeholder="Username"
+                                value={username}
+                                onChange={(e) => this.setState({ username: e.target.value })} />
+                        <Input
+                                styleName="signup-input"
+                                type="text"
                                 placeholder="Email"
-                                valueLink={this.linkState('email')}
-                                required />
-                    </section>
-                    <section styleName="input-line">
-                        <img src="https://cdn2.iconfinder.com/data/icons/app-types-in-grey/512/lock_512pxGREY.png" />
-                        <input
-                                id="password"
+                                value={email}
+                                onChange={(e) => this.setState({ email: e.target.value })}/>
+                        <Input
+                                styleName="signup-input"
                                 type="password"
-                                name="password"
                                 placeholder="Password"
-                                valueLink={this.linkState('password')}
-                                required />
+                                value={password}
+                                onChange={(e) => this.setState({ password: e.target.value })} />
+                        <Input
+                                styleName="signup-input"
+                                type="password"
+                                placeholder="Confirm Password"
+                                value={repassword}
+                                onKeyDown={this._handleLoginKeyDown}
+                                onChange={(e) => this.setState({ repassword: e.target.value})} />
+                        <Button
+                                styleName={classnames('signup-button', !isSignupAvailable && 'disabled')}
+                                disabled={!isSignupAvailable}
+                                onClick={this._handleSubmit}>
+                            Sign in
+                        </Button>
                     </section>
-                    <section styleName="input-line">
-                       <img src="https://cdn2.iconfinder.com/data/icons/app-types-in-grey/512/lock_512pxGREY.png" />
-                       <input
-                               id="repassword"
-                               type="password"
-                               name="password"
-                               placeholder="Confirm Password"
-                               valueLink={this.linkState('repassword')}
-                               required />
                     </section>
-                    <br/>
-                    <input
-                            styleName="button"
-                            type="submit"
-                            value="Sign up!"
-                            onClick={this._handleSubmit}/>
-                </section>
             </section>
         );
     }
