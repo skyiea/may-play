@@ -1,0 +1,61 @@
+@mixin transition($duration, $delay) {
+    transition-duration: unquote($duration + 'ms');
+
+    > .wrapper {
+        $wrapper-transition-duration: $duration - $delay;
+
+        transition-duration: unquote($wrapper-transition-duration + 'ms');
+    }
+
+    // expanding
+    &.expanded {
+        > .wrapper {
+            opacity: 1;
+
+            transition-delay: unquote($delay + 'ms');
+        }
+    }
+
+    // collapsing
+    &:not(.expanded) {
+        transition-delay: unquote($delay + 'ms');
+    }
+}
+
+.expander {
+    $fast-dur: 250;
+    $fast-delay: 100;
+
+    $normal-dur: 4000;
+    $normal-delay: 2000;
+
+    $slow-dur: 1000;
+    $slow-delay: 400;
+
+    height: 0;
+    max-height: 0;
+
+    overflow: hidden;
+
+    transition-property: max-height, height;
+    transition-timing-function: ease;
+
+    &.fast-transition {
+        @include transition($fast-dur, $fast-delay);
+    }
+
+    &.normal-transition {
+        @include transition($normal-dur, $normal-delay);
+    }
+
+    &.slow-transition {
+        @include transition($slow-dur, $slow-delay);
+    }
+
+    > .wrapper {
+        opacity: 0;
+
+        transition-property: opacity;
+        transition-timing-function: ease;
+    }
+}
