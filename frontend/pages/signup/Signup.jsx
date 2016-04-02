@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import { ReactClass } from 'react-core-decorators';
 import CSSModules from 'react-css-modules';
+import { ReactClass } from 'react-core-decorators';
 
 import SignupStatus from '../../../universal/SignupStatus';
+import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
 import Input from 'components/input/Input';
 
@@ -13,7 +14,9 @@ import styles from './Signup.scss';
 @ReactClass
 class Signup extends Component {
     static propTypes = {
+        processing: PropTypes.bool,
         error: PropTypes.string,
+        
         signup: PropTypes.func.isRequired
     };
 
@@ -61,7 +64,6 @@ class Signup extends Component {
     };
 
     componentWillReceiveProps(nextProps) {
-        console.log('+');
         if (nextProps.error) {
             this.setState({
                 error: nextProps.error
@@ -70,6 +72,10 @@ class Signup extends Component {
     }
 
     render() {
+        const {
+            processing
+        } = this.props;
+        
         const {
             username,
             email,
@@ -83,6 +89,12 @@ class Signup extends Component {
         return (
             <section styleName="page">
                 <section styleName="signup-popup">
+                    {
+                        processing &&
+                            <section styleName="loader-container">
+                                <Loader/>
+                            </section>
+                    }
                     <section styleName="signup-header">New Account</section>
 
                     <section styleName="signup-content">

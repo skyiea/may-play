@@ -15,6 +15,22 @@
 
     background-color: $brand-white;
 
+    >.loader-container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        background-color: rgba($brand-woodsmoke, .4);
+    }
+
     >.signup-header {
         display: flex;
         height: 8rem;

@@ -8,6 +8,11 @@ import constants from 'utils/constants';
 const initialState = {
     loggedIn: !!window.localStorage.getItem(constants.lsLoggedKey),
     
+    signup: {
+        error: null,
+        processing: false
+    },
+    
     login: {
         error: null,
         processing: false

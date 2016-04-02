@@ -5,9 +5,38 @@ export default function rootReducer(state, action) {
     const { type, payload } = action;
 
     switch (type) {
+        case TYPES.SIGNUP_REQUEST:
+            return {
+                ...state,
+                signup: {
+                    ...state.signup,
+                    processing: true,
+                    error: null
+                }
+            };
         case TYPES.SIGNUP_SUCCESS:
             window.localStorage.setItem(constants.lsLoggedKey, true);
-            break;
+
+            return {
+                ...state,
+                signup: {
+                    ...state.signup,
+                    processing: false,
+                    error: null
+                }
+            };
+        case TYPES.SIGNUP_FAILURE: {
+            const errorMessage = payload.message;
+
+            return {
+                ...state,
+                signup: {
+                    ...state.signup,
+                    processing: false,
+                    error: errorMessage
+                }
+            };
+        }
         case TYPES.LOGIN_REQUEST:
             return {
                 ...state,
