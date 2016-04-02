@@ -1,3 +1,8 @@
+import React, { Component, PropTypes } from 'react';
+import { ReactClass } from 'react-core-decorators';
+import classnames from 'classnames';
+import CSSModules from 'react-css-modules';
+
 import LoginStatus from '../../../universal/LoginStatus';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
@@ -7,7 +12,7 @@ import styles from './Login.scss';
 
 @CSSModules(styles, { allowMultiple: true })
 @ReactClass
-class Login extends React.Component {
+class Login extends Component {
     static propTypes = {
         error: PropTypes.string,
         processing: PropTypes.bool.isRequired,
@@ -33,6 +38,14 @@ class Login extends React.Component {
         if (e.keyCode === ENTER_CODE && !!password && !!username) {
             this._login();
         }
+    };
+
+    _handleLoginInputChange = (e) => {
+        this.setState({ username: e.target.value });
+    };
+
+    _handlePasswordInputChange = (e) => {
+        this.setState({ password: e.target.value });
     };
 
     _login = () => {
@@ -83,7 +96,7 @@ class Login extends React.Component {
                     <section styleName="login-content">
                         {
                             !!error &&
-                                <div styleName="warning">{ Login.warnings[error] }</div>
+                                <div styleName="warning">{Login.warnings[error]}</div>
                         }
                         <Input
                                 styleName="login-input"
@@ -94,7 +107,8 @@ class Login extends React.Component {
                                 placeholder="Username"
                                 value={username}
                                 onFocus={this._clearWarning}
-                                onChange={(e) => this.setState({ username: e.target.value })}/>
+                                onChange={this._handleLoginInputChange}
+                        />
 
                         <Input
                                 styleName="login-input"
@@ -105,7 +119,8 @@ class Login extends React.Component {
                                 value={password}
                                 onFocus={this._clearWarning}
                                 onKeyDown={this._handleLoginKeyDown}
-                                onChange={(e) => this.setState({ password: e.target.value })}/>
+                                onChange={this._handlePasswordInputChange}
+                        />
 
                         <Button
                                 disabled={!isLoginAvailable}

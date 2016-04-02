@@ -1,10 +1,14 @@
+import React, { Component, PropTypes } from 'react';
+import { ReactClass } from 'react-core-decorators';
+import CSSModules from 'react-css-modules';
+
 import Loader from 'components/loader/Loader';
 
 import styles from './Profile.scss';
 
 @CSSModules(styles, { allowMultiple: true })
 @ReactClass
-class Profile extends React.Component {
+class Profile extends Component {
     static propTypes = {
         username: PropTypes.string,
         email: PropTypes.string,
@@ -47,6 +51,18 @@ class Profile extends React.Component {
         if (Object.keys(dataToBeSent).length) {
             this.props.updateProfile(dataToBeSent);
         }
+    };
+
+    _handleUsernameInputChange = (e) => {
+        this.setState({ username: e.target.value });
+    };
+
+    _handleEmailInputChange = (e) => {
+        this.setState({ email: e.target.value });
+    };
+
+    _handlePasswordInputChange = (e) => {
+        this.setState({ password: e.target.value });
     };
 
     componentWillMount() {
@@ -93,19 +109,22 @@ class Profile extends React.Component {
                             type="text"
                             value={username}
                             placeholder="Username"
-                            onChange={(e) => this.setState({ username: e.target.value })}/>
+                            onChange={this._handleUsernameInputChange}
+                    />
                     <br/>
                     <input
                             type="email"
                             value={email}
                             placeholder="Email"
-                            onChange={(e) => this.setState({ email: e.target.value })}/>
+                            onChange={this._handleEmailInputChange}
+                    />
                     <br/>
                     <input
                             type="password"
                             value={password}
                             placeholder="Password"
-                            onChange={(e) => this.setState({ password: e.target.value })}/>
+                            onChange={this._handlePasswordInputChange}
+                    />
                     <br/>
                     <button onClick={this._handleChange}>
                         Change

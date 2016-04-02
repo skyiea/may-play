@@ -1,5 +1,7 @@
 import 'babel-polyfill';
 
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 
@@ -40,7 +42,7 @@ function requireUnauth(nextState, replace) {
 const ReduxProvider = (props) => (
     <Provider store={store}>
         <CarcassContainer>
-            { props.children }
+            {props.children}
         </CarcassContainer>
     </Provider>
 );

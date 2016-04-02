@@ -78,9 +78,18 @@ module.exports = function (passport) {
 
     api.post('/profile', authAPI, (req, res) => {
         const { user, body } = req;
+        const promises = [];
 
         if (body.username) {
-            user.local.username = body.username;
+            promises.push(new Promise((resolve, reject) => {
+                User.findOne({ 'local.username': body.username }, (err, user) => {
+                    if (user) {
+                        reject();
+                    } else {
+                        resolve();
+                    }
+                });
+            }));
         }
 
         if (body.email) {

@@ -6,7 +6,7 @@ export default function rootReducer(state, action) {
 
     switch (type) {
         case TYPES.SIGNUP_SUCCESS:
-            window.localStorage.setItem(constants.LS_loggedKey, true);
+            window.localStorage.setItem(constants.lsLoggedKey, true);
             break;
         case TYPES.LOGIN_REQUEST:
             return {
@@ -18,7 +18,7 @@ export default function rootReducer(state, action) {
                 }
             };
         case TYPES.LOGIN_SUCCESS:
-            window.localStorage.setItem(constants.LS_loggedKey, true);
+            window.localStorage.setItem(constants.lsLoggedKey, true);
             break;
         case TYPES.LOGIN:
             return {
@@ -43,7 +43,7 @@ export default function rootReducer(state, action) {
             };
         }
         case TYPES.LOGOUT_SUCCESS:
-            window.localStorage.removeItem(constants.LS_loggedKey);
+            window.localStorage.removeItem(constants.lsLoggedKey);
             break;
         case TYPES.LOGOUT:
             return {

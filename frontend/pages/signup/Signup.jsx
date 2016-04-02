@@ -1,5 +1,9 @@
+import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
+import { ReactClass } from 'react-core-decorators';
+import CSSModules from 'react-css-modules';
+
 import SignupStatus from '../../../universal/SignupStatus';
-import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
 import Input from 'components/input/Input';
 
@@ -7,7 +11,7 @@ import styles from './Signup.scss';
 
 @CSSModules(styles, { allowMultiple: true })
 @ReactClass
-class Signup extends React.Component {
+class Signup extends Component {
     static propTypes = {
         error: PropTypes.string,
         signup: PropTypes.func.isRequired
@@ -38,6 +42,22 @@ class Signup extends React.Component {
         const { username, email, password } = this.state;
         
         this.props.signup({ username, email, password });
+    };
+
+    _handleUsernameInputChange = (e) => {
+        this.setState({ username: e.target.value });
+    };
+
+    _handleEmailInputChange = (e) => {
+        this.setState({ email: e.target.value });
+    };
+
+    _handlePasswordInputChange = (e) => {
+        this.setState({ password: e.target.value });
+    };
+
+    _handlePasswordConfirmInputChange = (e) => {
+        this.setState({ repassword: e.target.value });
     };
 
     componentWillReceiveProps(nextProps) {
@@ -73,26 +93,34 @@ class Signup extends React.Component {
                                 autoFocus
                                 placeholder="Username"
                                 value={username}
-                                onChange={(e) => this.setState({ username: e.target.value })} />
+                                onChange={this._handleUsernameInputChange}
+                        />
+
                         <Input
                                 styleName="signup-input"
                                 type="text"
                                 placeholder="Email"
                                 value={email}
-                                onChange={(e) => this.setState({ email: e.target.value })}/>
+                                onChange={this._handleEmailInputChange}
+                        />
+
                         <Input
                                 styleName="signup-input"
                                 type="password"
                                 placeholder="Password"
                                 value={password}
-                                onChange={(e) => this.setState({ password: e.target.value })} />
+                                onChange={this._handlePasswordInputChange}
+                        />
+
                         <Input
                                 styleName="signup-input"
                                 type="password"
                                 placeholder="Confirm Password"
                                 value={repassword}
                                 onKeyDown={this._handleLoginKeyDown}
-                                onChange={(e) => this.setState({ repassword: e.target.value})} />
+                                onChange={this._handlePasswordConfirmInputChange}
+                        />
+
                         <Button
                                 styleName={classnames('signup-button', !isSignupAvailable && 'disabled')}
                                 disabled={!isSignupAvailable}

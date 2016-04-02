@@ -1,8 +1,13 @@
+import React, { Component, PropTypes } from 'react';
+import { ReactClass } from 'react-core-decorators';
+import classnames from 'classnames';
+import CSSModules from 'react-css-modules';
+
 import styles from './Loader.scss';
 
 @CSSModules(styles, { allowMultiple: true })
 @ReactClass
-class Loader extends React.Component {
+class Loader extends Component {
     static propTypes = {
         className   : PropTypes.string,
         isDark      : PropTypes.bool,
