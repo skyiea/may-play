@@ -21,16 +21,24 @@ class Signup extends Component {
     };
 
     static warnings = {
-        [ SignupStatus.USER_ALREADY_EXISTS ] : 'User already exists'
+        [ SignupStatus.USER_ALREADY_EXISTS ] : 'User already exists',
+        'INVALID_EMAIL': 'Invalid email address entered'
     };
-    
+
+    initialErrorsState = {
+        username: null,
+        email   : null,
+        password: null
+    };
+
     state = {
         username    : '',
         email       : '',
         password    : '',
         repassword  : '',
-        error       : null,
-        emailErrorMessage  : null
+        errors: {
+            ...this.initialErrorsState
+        }
     };
 
     _handleLoginKeyDown = (e) => {
@@ -43,11 +51,10 @@ class Signup extends Component {
     };
 
     _handleSubmit = () => {
-        const { username, email, password, emailErrorMessage } = this.state;
+        const { username, email, password } = this.state;
 
-        this._checkEmail(email);
-        if (emailErrorMessage === null) {
-            this.props.signup({username, email, password});
+        if (this._validateForm()) {
+            this.props.signup({ username, email, password });
             this._clearWarning();
         }
     };
@@ -70,27 +77,41 @@ class Signup extends Component {
 
     _clearWarning = () => {
         this.setState({
-            error: null,
-            emailErrorMessage: null
+            errors: {
+                ...this.initialErrorsState
+            }
         });
     };
 
-    _checkEmail = (email) => {
-        const correctEmail = /\S+@\S+\.\S+/;
-        //const result = correctEmail.test(email);
-        //
-        //console.log(result);
-        if (correctEmail.test(email) === false) {
+    _validateForm = () => {
+        const {
+            email
+        } = this.state;
+
+        const emailPattern = /\S+@\S+\.\S+/;
+
+        if (!emailPattern.test(email)) {
             this.setState({
-                emailErrorMessage: "Incorrect email"
+                errors: {
+                    ...this.state.errors,
+                    email: Signup.warnings.INVALID_EMAIL
+                }
             });
+
+            return false;
         }
+
+        return true;
     };
 
     componentWillReceiveProps(nextProps) {
+        // for now it is only username-error
         if (nextProps.error) {
             this.setState({
-                error: nextProps.error
+                errors: {
+                    ...this.state.errors,
+                    username: nextProps.error
+                }
             });
         }
     }
@@ -105,8 +126,7 @@ class Signup extends Component {
             email,
             password,
             repassword,
-            error,
-            emailErrorMessage
+            errors
         } = this.state;
 
         const isSignupAvailable = !!username && !!email && !!password && !!repassword;
@@ -125,7 +145,7 @@ class Signup extends Component {
                     <section styleName="signup-content">
                         <Input
                                 styleName="signup-input"
-                                incorrect={error === SignupStatus.USER_ALREADY_EXISTS}
+                                incorrect={errors.username === SignupStatus.USER_ALREADY_EXISTS}
                                 type="text"
                                 autoFocus
                                 placeholder="Username"
@@ -134,13 +154,12 @@ class Signup extends Component {
                                 onFocus={this._clearWarning}
                         />
                         {
-                            !!error &&
-                                <div styleName="warning">{Signup.warnings[error]}</div>
+                            !!errors.username &&
+                                <div styleName="warning">{Signup.warnings[errors.username]}</div>
                         }
-
                         <Input
                                 styleName="signup-input"
-                                incorrect={emailErrorMessage === "Incorrect email"}
+                                incorrect={!!errors.email}
                                 type="text"
                                 placeholder="Email"
                                 value={email}
@@ -148,10 +167,9 @@ class Signup extends Component {
                                 onFocus={this._clearWarning}
                         />
                         {
-                            emailErrorMessage === "Incorrect email" &&
-                            <div styleName="warning">{emailErrorMessage}</div>
+                            !!errors.email &&
+                                <div styleName="warning">{errors.email}</div>
                         }
-
                         <Input
                                 styleName="signup-input"
                                 type="password"
