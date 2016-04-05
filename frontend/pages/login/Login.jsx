@@ -31,11 +31,10 @@ class Login extends Component {
         error: null
     };
 
-    _handleLoginKeyDown = (e) => {
-        const { username, password } = this.state;
+    _handleInputKeyDown = (e) => {
         const ENTER_CODE = 13;
 
-        if (e.keyCode === ENTER_CODE && !!password && !!username) {
+        if (e.keyCode === ENTER_CODE) {
             this._login();
         }
     };
@@ -48,11 +47,20 @@ class Login extends Component {
         this.setState({ password: e.target.value });
     };
 
-    _login = () => {
-        const { username, password } = this.state;
-
-        this.props.login(username, password);
+    _handleLoginBtnClick = () => {
         this._clearWarning();
+        this._login();
+    };
+
+    _login = () => {
+        const {
+            username,
+            password
+        } = this.state;
+
+        if (!!username && !!password) {
+            this.props.login(username, password);
+        }
     };
 
     _clearWarning = () => {
@@ -107,6 +115,7 @@ class Login extends Component {
                                 placeholder="Username"
                                 value={username}
                                 onFocus={this._clearWarning}
+                                onKeyDown={this._handleInputKeyDown}
                                 onChange={this._handleLoginInputChange}
                         />
 
@@ -118,14 +127,14 @@ class Login extends Component {
                                 placeholder="Password"
                                 value={password}
                                 onFocus={this._clearWarning}
-                                onKeyDown={this._handleLoginKeyDown}
+                                onKeyDown={this._handleInputKeyDown}
                                 onChange={this._handlePasswordInputChange}
                         />
 
                         <Button
                                 disabled={!isLoginAvailable}
                                 styleName={classnames('login-button', !isLoginAvailable && 'disabled')}
-                                onClick={this._login}>
+                                onClick={this._handleLoginBtnClick}>
                             Log in
                         </Button>
                     </section>
