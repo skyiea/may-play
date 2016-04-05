@@ -21,33 +21,32 @@ class Signup extends Component {
     };
 
     static warnings = {
-        [ SignupStatus.USER_ALREADY_EXISTS ] : 'User already exists',
-        'INVALID_EMAIL': 'Invalid email address entered',
-        'PASSWORD_CONFIRMATION_DOES_NOT_MATCH_PASSWORD': 'Password confirmation does not match Password'
+        [ SignupStatus.USER_ALREADY_EXISTS ]    : 'User already exists',
+        'INVALID_EMAIL'                         : 'Invalid email address entered',
+        'NOT_EQUAL_PASSWORDS'                   : 'Not equal passwords entered'
     };
 
     initialErrorsState = {
-        username    : null,
-        email       : null,
-        password    : null,
-        repassword  : null
+        username: null,
+        email   : null,
+        password: null
     };
 
     state = {
-        username    : '',
-        email       : '',
-        password    : '',
-        repassword  : '',
+        username        : '',
+        email           : '',
+        password        : '',
+        passwordConfirm : '',
         errors: {
             ...this.initialErrorsState
         }
     };
 
     _handleLoginKeyDown = (e) => {
-        const { username, email, password, repassword } = this.state;
+        const { username, email, password, passwordConfirm } = this.state;
         const ENTER_CODE = 13;
 
-        if (e.keyCode === ENTER_CODE && !!password && !!username && !!email && !!repassword) {
+        if (e.keyCode === ENTER_CODE && !!password && !!username && !!email && !!passwordConfirm) {
             this._handleSubmit();
         }
     };
@@ -74,7 +73,7 @@ class Signup extends Component {
     };
 
     _handlePasswordConfirmInputChange = (e) => {
-        this.setState({ repassword: e.target.value });
+        this.setState({ passwordConfirm: e.target.value });
     };
 
     _clearWarning = () => {
@@ -89,31 +88,31 @@ class Signup extends Component {
         const {
             email,
             password,
-            repassword
+            passwordConfirm
         } = this.state;
 
         const emailPattern = /\S+@\S+\.\S+/;
-
-        let isValid = true;
+        const newErrors = {};
 
         if (!emailPattern.test(email)) {
+            newErrors.email = Signup.warnings.INVALID_EMAIL;
+        }
+
+        if (password !== passwordConfirm) {
+            newErrors.password = Signup.warnings.NOT_EQUAL_PASSWORDS;
+        }
+
+        const isValid = Object.keys(newErrors).length === 0;
+
+        if (!isValid) {
             this.setState({
                 errors: {
                     ...this.state.errors,
-                    email: Signup.warnings.INVALID_EMAIL
+                    ...newErrors
                 }
             });
-            isValid = false;
         }
-        if (password !== repassword) {
-            this.setState({
-                errors: {
-                    ...this.state.errors,
-                    repassword: Signup.warnings.PASSWORD_CONFIRMATION_DOES_NOT_MATCH_PASSWORD
-                }
-            });
-            isValid = false;
-        }
+
         return isValid;
     };
 
@@ -138,11 +137,11 @@ class Signup extends Component {
             username,
             email,
             password,
-            repassword,
+            passwordConfirm,
             errors
         } = this.state;
 
-        const isSignupAvailable = !!username && !!email && !!password && !!repassword;
+        const isSignupAvailable = !!username && !!email && !!password && !!passwordConfirm;
 
         return (
             <section styleName="page">
@@ -196,14 +195,14 @@ class Signup extends Component {
                                 styleName="signup-input"
                                 type="password"
                                 placeholder="Confirm Password"
-                                value={repassword}
+                                value={passwordConfirm}
                                 onKeyDown={this._handleLoginKeyDown}
                                 onChange={this._handlePasswordConfirmInputChange}
                                 onFocus={this._clearWarning}
                         />
                         {
-                            !!errors.repassword &&
-                            <div styleName="warning">{errors.repassword}</div>
+                            !!errors.password &&
+                                <div styleName="warning">{errors.password}</div>
                         }
                         <Button
                                 styleName={classnames('signup-button', !isSignupAvailable && 'disabled')}
