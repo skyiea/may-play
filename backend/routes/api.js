@@ -1,10 +1,14 @@
 const express = require('express');
 
-const { authAPI } = require('./authMiddleware');
+const User                  = require('../models/user');
+const { authAPI }           = require('./authMiddleware');
+const ProfileChangeStatus   = require('../../universal/ProfileChangeStatus');
 
 const api = express.Router();
 
 module.exports = function (passport) {
+    'use strict';
+
     api.post('/signup',
         (req, res, next) => {
             passport.authenticate('local-signup', (err, user, payload) => {
@@ -78,35 +82,85 @@ module.exports = function (passport) {
 
     api.post('/profile', authAPI, (req, res) => {
         const { user, body } = req;
-        const promises = [];
 
-        if (body.username) {
-            promises.push(new Promise((resolve, reject) => {
-                User.findOne({ 'local.username': body.username }, (err, user) => {
-                    if (user) {
-                        reject();
-                    } else {
-                        resolve();
-                    }
-                });
-            }));
-        }
+        const {
+            username: newUsername,
+            email   : newEmail,
+            password: newPassword
+        } = body;
 
-        if (body.email) {
-            user.local.email = body.email;
-        }
-
-        if (body.password) {
-            user.local.password = user.generateHash(body.password);
-        }
-
-        user.save((err) => {
-            if (err) {
-                throw err;
+        function save() {
+            if (newUsername) {
+                user.local.username = newUsername;
             }
 
-            res.end();
-        });
+            if (newEmail) {
+                user.local.email = newEmail;
+            }
+
+            if (newPassword) {
+                user.local.password = user.generateHash(newPassword);
+            }
+
+            user.save((err) => {
+                if (err) {
+                    throw err;
+                }
+
+                res.json({
+                    username: user.local.username,
+                    email   : user.local.email
+                });
+            });
+        }
+
+        // first need to check if no username or email sent
+        if (newUsername || newEmail) {
+            const queryJSON = {
+                $or: []
+            };
+
+            if (newUsername) {
+                queryJSON.$or.push({ 'local.username': newUsername });
+            }
+
+            if (newEmail) {
+                queryJSON.$or.push({ 'local.email': newEmail });
+            }
+
+            User.findOne(queryJSON).exec((err, foundUser) => {
+                if (err) {
+                    return done(err);
+                }
+
+                if (foundUser) {
+                    let message;
+
+                    if (!!newUsername && foundUser.local.username === newUsername) {
+                        message = ProfileChangeStatus.USER_ALREADY_EXISTS;
+                    }
+
+                    if (!!newEmail && foundUser.local.email === newEmail) {
+                        const emailError = ProfileChangeStatus.EMAIL_ALREADY_USED;
+
+                        if (message) {
+                            message = [ message ];
+                            message.push(emailError);
+                        } else {
+                            message = emailError;
+                        }
+                    }
+
+                    return res.status(400).json({
+                        message
+                    });
+                }
+
+                save();
+            });
+        } else {
+            save();
+        }
     });
 
     return api;

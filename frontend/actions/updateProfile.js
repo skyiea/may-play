@@ -7,9 +7,10 @@ function profileUpdateRequest() {
     };
 }
 
-function profileUpdateSuccess() {
+function profileUpdateSuccess(payload) {
     return {
-        type: TYPES.PROFILE_UPDATE_SUCCESS
+        type: TYPES.PROFILE_UPDATE_SUCCESS,
+        payload
     };
 }
 
@@ -29,8 +30,8 @@ export default function updateProfile(data) {
             method: 'post',
             body: JSON.stringify(data)
         }).
-            then(() => {
-                dispatch(profileUpdateSuccess());
+            then((payload) => {
+                dispatch(profileUpdateSuccess(payload));
             }).
             catch((error) => {
                 dispatch(profileUpdateFailure(error));

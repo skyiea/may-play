@@ -97,6 +97,14 @@ export default function rootReducer(state, action) {
                     email: payload.email
                 }
             };
+        case TYPES.PROFILE_UPDATE_SUCCESS:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    ...payload // updated profile data
+                }
+            };
         default:
             break;
     }
