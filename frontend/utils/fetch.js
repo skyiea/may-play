@@ -17,12 +17,12 @@ export default function (url, options = {}) {
         }
     }).
         then((res) => {
-            const withResponseData = res.headers.get('content-length') !== '0';
+            const hasBody = res.headers.get('content-length') !== '0';
 
             if (res.ok) {   // error status 200..299
-                if (withResponseData) {
+                if (hasBody) {
                     return res.json().catch(() => {
-                        throw new Error('Error parsing server response as JSON.');
+                        return Promise.reject('Error parsing server response as JSON.');
                     });
                 }
             } else {    // all other error statuses
@@ -45,12 +45,12 @@ export default function (url, options = {}) {
                     default:
                 }
 
-                if (withResponseData) {
+                if (hasBody) {
                     return res.json().then(({ message }) => {
-                        throw new Error(message || res.statusText);
+                        return Promise.reject(message || res.statusText);
                     });
                 } else {
-                    throw new Error(res.statusText);
+                    return Promise.reject(res.statusText);
                 }
             }
         });

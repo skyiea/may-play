@@ -25,18 +25,15 @@ export default function rootReducer(state, action) {
                     error: null
                 }
             };
-        case TYPES.SIGNUP_FAILURE: {
-            const errorMessage = payload.message;
-
+        case TYPES.SIGNUP_FAILURE:
             return {
                 ...state,
                 signup: {
                     ...state.signup,
                     processing: false,
-                    error: errorMessage
+                    error: payload
                 }
             };
-        }
         case TYPES.LOGIN_REQUEST:
             return {
                 ...state,
@@ -59,18 +56,15 @@ export default function rootReducer(state, action) {
                     error: null
                 }
             };
-        case TYPES.LOGIN_FAILURE: {
-            const errorMessage = payload.message;
-
+        case TYPES.LOGIN_FAILURE:
             return {
                 ...state,
                 login: {
                     ...state.login,
                     processing: false,
-                    error: errorMessage
+                    error: payload
                 }
             };
-        }
         case TYPES.LOGOUT_SUCCESS:
             window.localStorage.removeItem(constants.lsLoggedKey);
             break;

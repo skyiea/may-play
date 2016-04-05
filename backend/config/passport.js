@@ -19,31 +19,39 @@ module.exports = function (passport) {
     passport.use('local-signup', new LocalStrategy({
         passReqToCallback: true
     }, (req, username, password, done) => {
-        const query = User.findOne({
-            $or: [
-                { 'local.username': username },
-                { 'local.email': req.body.email }
-            ]
+        const usernameExistsPromise = new Promise((resolve) => {
+            User.findOne({ 'local.username': username }, (error, user) => {
+                if (error) {
+                    done(error);
+                } else {
+                    resolve(!!user);
+                }
+            });
         });
 
-        query.exec((err, foundUser) => {
-            if (err) {
-                return done(err);
-            }
+        const emailExistsPromise = new Promise((resolve) => {
+            User.findOne({ 'local.email': req.body.email }, (error, user) => {
+                if (error) {
+                    done(error);
+                } else {
+                    resolve(!!user);
+                }
+            });
+        });
 
-            if (foundUser) {
+        Promise.all([ usernameExistsPromise, emailExistsPromise ]).then(([ usernameExists, emailExists ]) => {
+            if (usernameExists || emailExists) {
                 let message;
 
-                if (foundUser.local.username === username) {
+                if (usernameExists) {
                     message = SignupStatus.USER_ALREADY_EXISTS;
                 }
 
-                if (foundUser.local.email === req.body.email) {
+                if (emailExists) {
                     const emailError = SignupStatus.EMAIL_ALREADY_USED;
 
                     if (message) {
-                        message = [ message ];
-                        message.push(emailError);
+                        message = [ message, emailError ];
                     } else {
                         message = emailError;
                     }

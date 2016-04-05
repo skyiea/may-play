@@ -17,7 +17,7 @@ module.exports = function (passport) {
                 }
 
                 if (!user) {
-                    return res.status(400).json({
+                    return res.status(409).json({
                         message: payload
                     });
                 }
@@ -89,6 +89,8 @@ module.exports = function (passport) {
             password: newPassword
         } = body;
 
+        console.log(newUsername, newEmail, newPassword);
+
         function save() {
             if (newUsername) {
                 user.local.username = newUsername;
@@ -114,53 +116,55 @@ module.exports = function (passport) {
             });
         }
 
-        // first need to check if no username or email sent
-        if (newUsername || newEmail) {
-            const queryJSON = {
-                $or: []
-            };
-
-            if (newUsername) {
-                queryJSON.$or.push({ 'local.username': newUsername });
-            }
-
-            if (newEmail) {
-                queryJSON.$or.push({ 'local.email': newEmail });
-            }
-
-            User.findOne(queryJSON).exec((err, foundUser) => {
-                if (err) {
-                    return done(err);
-                }
-
-                if (foundUser) {
-                    let message;
-
-                    if (!!newUsername && foundUser.local.username === newUsername) {
-                        message = ProfileChangeStatus.USER_ALREADY_EXISTS;
+        const usernameExistsPromise = !newUsername ?
+            Promise.resolve(false) :
+            new Promise((resolve) => {
+                User.findOne({ 'local.username': newUsername }, (error, user) => {
+                    if (error) {
+                        done(error);
+                    } else {
+                        resolve(!!user);
                     }
-
-                    if (!!newEmail && foundUser.local.email === newEmail) {
-                        const emailError = ProfileChangeStatus.EMAIL_ALREADY_USED;
-
-                        if (message) {
-                            message = [ message ];
-                            message.push(emailError);
-                        } else {
-                            message = emailError;
-                        }
-                    }
-
-                    return res.status(400).json({
-                        message
-                    });
-                }
-
-                save();
+                });
             });
-        } else {
-            save();
-        }
+
+        const emailExistsPromise = !newEmail ?
+            Promise.resolve(false) :
+            new Promise((resolve) => {
+                User.findOne({ 'local.email': newEmail }, (error, user) => {
+                    if (error) {
+                        done(error);
+                    } else {
+                        resolve(!!user);
+                    }
+                });
+            });
+
+        Promise.all([ usernameExistsPromise, emailExistsPromise ]).then(([ usernameExists, emailExists ]) => {
+            if (usernameExists || emailExists) {
+                let message;
+
+                if (usernameExists) {
+                    message = ProfileChangeStatus.USER_ALREADY_EXISTS;
+                }
+
+                if (emailExists) {
+                    const emailError = ProfileChangeStatus.EMAIL_ALREADY_USED;
+
+                    if (message) {
+                        message = [ message, emailError ];
+                    } else {
+                        message = emailError;
+                    }
+                }
+
+                res.status(409).json({
+                    message
+                });
+            } else {
+                save();
+            }
+        });
     });
 
     return api;
