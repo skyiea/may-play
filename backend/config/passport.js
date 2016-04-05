@@ -4,6 +4,8 @@ const SignupStatus  = require('../../universal/SignupStatus');
 const LoginStatus   = require('../../universal/LoginStatus');
 
 module.exports = function (passport) {
+    'use strict';
+
     passport.serializeUser((user, done) => {
         done(null, user.id);
     });
@@ -17,15 +19,39 @@ module.exports = function (passport) {
     passport.use('local-signup', new LocalStrategy({
         passReqToCallback: true
     }, (req, username, password, done) => {
-        User.findOne({ 'local.username': username }, (err, user) => {
+        const query = User.findOne({
+            $or: [
+                { 'local.username': username },
+                { 'local.email': req.body.email }
+            ]
+        });
+
+        query.exec((err, foundUser) => {
             if (err) {
                 return done(err);
             }
 
-            if (user) {
-                return done(null, false, SignupStatus.USER_ALREADY_EXISTS);
+            if (foundUser) {
+                let message;
+
+                if (foundUser.local.username === username) {
+                    message = SignupStatus.USER_ALREADY_EXISTS;
+                }
+
+                if (foundUser.local.email === req.body.email) {
+                    const emailError = SignupStatus.EMAIL_ALREADY_USED;
+
+                    if (message) {
+                        message = [ message ];
+                        message.push(emailError);
+                    } else {
+                        message = emailError;
+                    }
+                }
+
+                return done(null, false, message);
             }
-            
+
             const newUser = new User();
 
             newUser.local.username  = username;
