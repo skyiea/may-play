@@ -22,13 +22,15 @@ class Signup extends Component {
 
     static warnings = {
         [ SignupStatus.USER_ALREADY_EXISTS ] : 'User already exists',
-        'INVALID_EMAIL': 'Invalid email address entered'
+        'INVALID_EMAIL': 'Invalid email address entered',
+        'PASSWORD_CONFIRMATION_DOES_NOT_MATCH_PASSWORD': 'Password confirmation does not match Password'
     };
 
     initialErrorsState = {
-        username: null,
-        email   : null,
-        password: null
+        username    : null,
+        email       : null,
+        password    : null,
+        repassword  : null
     };
 
     state = {
@@ -85,10 +87,14 @@ class Signup extends Component {
 
     _validateForm = () => {
         const {
-            email
+            email,
+            password,
+            repassword
         } = this.state;
 
         const emailPattern = /\S+@\S+\.\S+/;
+
+        let isValid = true;
 
         if (!emailPattern.test(email)) {
             this.setState({
@@ -97,11 +103,18 @@ class Signup extends Component {
                     email: Signup.warnings.INVALID_EMAIL
                 }
             });
-
-            return false;
+            isValid = false;
         }
-
-        return true;
+        if (password !== repassword) {
+            this.setState({
+                errors: {
+                    ...this.state.errors,
+                    repassword: Signup.warnings.PASSWORD_CONFIRMATION_DOES_NOT_MATCH_PASSWORD
+                }
+            });
+            isValid = false;
+        }
+        return isValid;
     };
 
     componentWillReceiveProps(nextProps) {
@@ -188,7 +201,10 @@ class Signup extends Component {
                                 onChange={this._handlePasswordConfirmInputChange}
                                 onFocus={this._clearWarning}
                         />
-
+                        {
+                            !!errors.repassword &&
+                            <div styleName="warning">{errors.repassword}</div>
+                        }
                         <Button
                                 styleName={classnames('signup-button', !isSignupAvailable && 'disabled')}
                                 disabled={!isSignupAvailable}
