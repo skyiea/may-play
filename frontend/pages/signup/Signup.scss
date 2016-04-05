@@ -62,6 +62,16 @@
             margin-bottom: 1rem;
         }
 
+        >.warning {
+            padding: 1rem;
+
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: $brand-woodsmoke;
+
+            background-color: $brand-school-bus-yellow;
+        }
+
         .signup-input {
             height: $line-height;
         }

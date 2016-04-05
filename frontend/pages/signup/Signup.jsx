@@ -29,7 +29,8 @@ class Signup extends Component {
         email       : '',
         password    : '',
         repassword  : '',
-        error       : null
+        error       : null,
+        emailErrorMessage  : null
     };
 
     _handleLoginKeyDown = (e) => {
@@ -42,9 +43,13 @@ class Signup extends Component {
     };
 
     _handleSubmit = () => {
-        const { username, email, password } = this.state;
-        
-        this.props.signup({ username, email, password });
+        const { username, email, password, emailErrorMessage } = this.state;
+
+        this._checkEmail(email);
+        if (emailErrorMessage === null) {
+            this.props.signup({username, email, password});
+            this._clearWarning();
+        }
     };
 
     _handleUsernameInputChange = (e) => {
@@ -61,6 +66,25 @@ class Signup extends Component {
 
     _handlePasswordConfirmInputChange = (e) => {
         this.setState({ repassword: e.target.value });
+    };
+
+    _clearWarning = () => {
+        this.setState({
+            error: null,
+            emailErrorMessage: null
+        });
+    };
+
+    _checkEmail = (email) => {
+        const correctEmail = /\S+@\S+\.\S+/;
+        //const result = correctEmail.test(email);
+        //
+        //console.log(result);
+        if (correctEmail.test(email) === false) {
+            this.setState({
+                emailErrorMessage: "Incorrect email"
+            });
+        }
     };
 
     componentWillReceiveProps(nextProps) {
@@ -81,7 +105,8 @@ class Signup extends Component {
             email,
             password,
             repassword,
-            error
+            error,
+            emailErrorMessage
         } = this.state;
 
         const isSignupAvailable = !!username && !!email && !!password && !!repassword;
@@ -106,15 +131,26 @@ class Signup extends Component {
                                 placeholder="Username"
                                 value={username}
                                 onChange={this._handleUsernameInputChange}
+                                onFocus={this._clearWarning}
                         />
+                        {
+                            !!error &&
+                                <div styleName="warning">{Signup.warnings[error]}</div>
+                        }
 
                         <Input
                                 styleName="signup-input"
+                                incorrect={emailErrorMessage === "Incorrect email"}
                                 type="text"
                                 placeholder="Email"
                                 value={email}
                                 onChange={this._handleEmailInputChange}
+                                onFocus={this._clearWarning}
                         />
+                        {
+                            emailErrorMessage === "Incorrect email" &&
+                            <div styleName="warning">{emailErrorMessage}</div>
+                        }
 
                         <Input
                                 styleName="signup-input"
@@ -122,6 +158,7 @@ class Signup extends Component {
                                 placeholder="Password"
                                 value={password}
                                 onChange={this._handlePasswordInputChange}
+                                onFocus={this._clearWarning}
                         />
 
                         <Input
@@ -131,6 +168,7 @@ class Signup extends Component {
                                 value={repassword}
                                 onKeyDown={this._handleLoginKeyDown}
                                 onChange={this._handlePasswordConfirmInputChange}
+                                onFocus={this._clearWarning}
                         />
 
                         <Button
