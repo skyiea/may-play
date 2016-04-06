@@ -58,22 +58,23 @@
 
         color: $brand-woodsmoke;
 
-        >:not(:last-child) {
+        >.input-line {
             margin-bottom: 1rem;
-        }
 
-        >.warning {
-            padding: 1rem;
+            .login-input {
+                height: $line-height;
+            }
 
-            font-size: 1.6rem;
-            font-weight: 400;
-            color: $brand-woodsmoke;
+            >.warning {
+                margin-top: .7rem;
+                padding: 1rem;
 
-            background-color: $brand-school-bus-yellow;
-        }
+                font-size: 1.6rem;
+                font-weight: 400;
+                color: $brand-woodsmoke;
 
-        .login-input {
-            height: $line-height;
+                background-color: $brand-school-bus-yellow;
+            }
         }
 
         >.login-button {
