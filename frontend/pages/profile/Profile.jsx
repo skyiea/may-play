@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { ReactClass } from 'react-core-decorators';
+import { Link } from 'react-router';
 import CSSModules from 'react-css-modules';
 
 import Loader from 'components/loader/Loader';
@@ -11,58 +12,12 @@ import styles from './Profile.scss';
 class Profile extends Component {
     static propTypes = {
         username: PropTypes.string,
-        email: PropTypes.string,
-
-        fetchData: PropTypes.func.isRequired
+        email: PropTypes.string
     };
 
     state = {
         username: '',
-        password: '',
         email: ''
-    };
-
-    _handleChange = () => {
-        const {
-            username: initialUsername,
-            email: initialEmail
-        } = this.props;
-
-        const {
-            username,
-            password,
-            email
-        } = this.state;
-
-        const dataToBeSent = {};
-
-        if (username && username !== initialUsername) {
-            dataToBeSent.username = username;
-        }
-
-        if (email && email !== initialEmail) {
-            dataToBeSent.email = email;
-        }
-
-        if (password) {
-            dataToBeSent.password = password;
-        }
-
-        if (Object.keys(dataToBeSent).length) {
-            this.props.updateProfile(dataToBeSent);
-        }
-    };
-
-    _handleUsernameInputChange = (e) => {
-        this.setState({ username: e.target.value });
-    };
-
-    _handleEmailInputChange = (e) => {
-        this.setState({ email: e.target.value });
-    };
-
-    _handlePasswordInputChange = (e) => {
-        this.setState({ password: e.target.value });
     };
 
     componentWillMount() {
@@ -89,9 +44,7 @@ class Profile extends Component {
         } = this.props;
 
         const {
-            username,
-            password,
-            email
+            username
         } = this.state;
 
         if (!fetched) {
@@ -104,31 +57,15 @@ class Profile extends Component {
 
         return (
             <section styleName="profile-page page">
-                <section>
-                    <input
-                            type="text"
-                            value={username}
-                            placeholder="Username"
-                            onChange={this._handleUsernameInputChange}
-                    />
-                    <br/>
-                    <input
-                            type="email"
-                            value={email}
-                            placeholder="Email"
-                            onChange={this._handleEmailInputChange}
-                    />
-                    <br/>
-                    <input
-                            type="password"
-                            value={password}
-                            placeholder="Password"
-                            onChange={this._handlePasswordInputChange}
-                    />
-                    <br/>
-                    <button onClick={this._handleChange}>
-                        Change
-                    </button>
+                <section styleName="container">
+                    <h2>Profile</h2>
+                    <p>Hello {username}!</p>
+                    
+                    <Link
+                            styleName="edit-link"
+                            to="profile/edit">
+                        Edit
+                    </Link>
                 </section>
             </section>
         );

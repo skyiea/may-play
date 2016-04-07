@@ -1,0 +1,13 @@
+@import '../../styles/colors';
+@import '../../styles/page';
+
+.profile-edit-page {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    >.container {
+        width: 60rem;
+    }
+}

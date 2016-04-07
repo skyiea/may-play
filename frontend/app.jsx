@@ -2,7 +2,7 @@ import 'babel-polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
+import { Router, Route, IndexRedirect, Redirect, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
 
 import { configureStore } from 'store';
@@ -11,6 +11,7 @@ import CarcassContainer from 'carcass/CarcassContainer';
 import LoginContainer from 'pages/login/LoginContainer';
 import SignupContainer from 'pages/signup/SignupContainer';
 import ProfileContainer from 'pages/profile/ProfileContainer';
+import ProfileEditContainer from 'pages/profile-edit/ProfileEditContainer';
 import LogoutContainer from 'pages/logout/LogoutContainer';
 
 import 'app.scss';
@@ -62,7 +63,10 @@ ReactDOM.render((
             /* Only for authorized users */
             <Route onEnter={requireAuth}>
                 <Route path="profile" component={ProfileContainer}/>
+                <Route path="profile/edit" component={ProfileEditContainer}/>
             </Route>
+
+            <Redirect path="*" to="/"/>
         </Route>
     </Router>
 ), document.getElementById('app'));

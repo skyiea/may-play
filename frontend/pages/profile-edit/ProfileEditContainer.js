@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 
 import fetchProfile from 'actions/fetchProfile';
-import Profile from './Profile';
+import updateProfile from 'actions/updateProfile';
+import ProfileEdit from './ProfileEdit';
 
 const mapStateToProps = ({ profile: { fetched, username, email }}) => ({
     fetched,
@@ -12,10 +13,14 @@ const mapStateToProps = ({ profile: { fetched, username, email }}) => ({
 const mapDispatchToProps = (dispatch) => ({
     fetchData() {
         dispatch(fetchProfile());
+    },
+    
+    updateProfile(data) {
+        dispatch(updateProfile(data));
     }
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Profile);
+)(ProfileEdit);

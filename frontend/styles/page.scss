@@ -11,13 +11,7 @@
 }
 
 .page {
-    display: flex;
-
     flex-grow: 1;
-    justify-content: center;
-    align-items: center;
-
-    color: $brand-white;
 
     animation: fade-in .4s;
 }

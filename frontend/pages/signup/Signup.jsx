@@ -144,7 +144,7 @@ class Signup extends Component {
         const isSignupAvailable = !!username && !!email && !!password && !!passwordConfirm;
 
         return (
-            <section styleName="page">
+            <section styleName="signup-page page">
                 <section styleName="signup-popup">
                     {
                         processing &&

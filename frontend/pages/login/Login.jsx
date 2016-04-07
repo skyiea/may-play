@@ -115,7 +115,7 @@ class Login extends Component {
         const isLoginAvailable = !!username && !!password && !processing;
 
         return (
-            <section styleName="page">
+            <section styleName="login-page page">
                 <section styleName="login-popup">
                     {
                         processing &&

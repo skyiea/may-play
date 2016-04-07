@@ -2,5 +2,23 @@
 @import '../../styles/page';
 
 .profile-page {
-    color: $brand-woodsmoke;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    >.container {
+        text-align: center;
+
+        >h2 {
+            margin: 1rem 0;
+
+            font-size: 3.2rem;
+        }
+
+        >.edit-link {
+            display: block;
+            margin-top: 2rem;
+        }
+    }
 }
