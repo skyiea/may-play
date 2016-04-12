@@ -24,6 +24,15 @@ class Login extends Component {
         [ LoginStatus.NO_USER_FOUND ]       : 'Incorrect username entered',
         [ LoginStatus.INCORRECT_PASSWORD ]  : 'Incorrect password entered'
     };
+
+    static warningTypes = {
+        username: [
+            LoginStatus.NO_USER_FOUND
+        ],
+        password: [
+            LoginStatus.INCORRECT_PASSWORD
+        ]
+    };
     
     state = {
         username: '',
@@ -55,10 +64,12 @@ class Login extends Component {
 
     _handleLoginInputChange = (e) => {
         this.setState({ username: e.target.value });
+        this._clearWarning();
     };
 
     _handlePasswordInputChange = (e) => {
         this.setState({ password: e.target.value });
+        this._clearWarning();
     };
 
     _handleLoginBtnClick = () => {
@@ -77,27 +88,25 @@ class Login extends Component {
 
     componentWillReceiveProps(nextProps) {
         const { error: newError } = nextProps;
+        const newErrorAppear = newError && newError !== this.props.error;
 
-        if (newError) {
-            let field;
+        if (newErrorAppear) {
+            let errorFieldName;
 
-            switch (newError) {
-                case LoginStatus.NO_USER_FOUND:
-                    field = 'username';
-                    break;
-                case LoginStatus.INCORRECT_PASSWORD:
-                    field = 'password';
-                    break;
-                default:
-                    field = 'username';
+            if (Login.warningTypes.username.indexOf(newError) !== -1) {
+                errorFieldName = 'username';
+            } else if (Login.warningTypes.password.indexOf(newError) !== -1) {
+                errorFieldName = 'password';
             }
 
-            this.setState({
-                error: {
-                    field,
-                    message: Login.warnings[newError]
-                }
-            });
+            if (errorFieldName) {
+                this.setState({
+                    error: {
+                        field: errorFieldName,
+                        message: Login.warnings[newError]
+                    }
+                });
+            }
         }
     }
 
