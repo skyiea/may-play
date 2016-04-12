@@ -29,6 +29,17 @@ class Signup extends Component {
         'NOT_EQUAL_PASSWORDS'                   : 'Not equal passwords entered'
     };
 
+    // Used to determine to what input type warning is related
+    static warningTypes = {
+        username: [
+            SignupStatus.USER_ALREADY_EXISTS
+            // could be extended with, for instance, USERNAME_IS_TOO_SHORT, or anything else
+        ],
+        email: [
+            SignupStatus.EMAIL_ALREADY_USED
+        ]
+    };
+
     initialErrorsState = {
         username        : null,
         email           : null,
@@ -158,38 +169,38 @@ class Signup extends Component {
     componentWillUpdate(nextProps, nextState) {
         const { error: newError } = nextProps;
         const newErrorAppear = newError && newError !== this.props.error;
-        const newErrors = {};
 
-        if (Array.isArray(newError)) {
-            for (let i = 0; i < newError.length; i++) {
-                if (newErrorAppear) {
-                    const fieldName = newError[i] === SignupStatus.USER_ALREADY_EXISTS ? 'username' : 'email';
+        // No need to do anything if there was no new error
+        if (newErrorAppear) {
+            const newErrorsState = {};
+            // To avoid code duplication let's make it an array even if it doesn't, and cycle over it
+            const newErrorArr = Array.isArray(newError) ? newError : [ newError ];
 
-                    switch (fieldName) {
-                        case 'username':
-                            newErrors.username = Signup.warnings.USER_ALREADY_EXISTS;
-                            break;
-                        case 'email':
-                            newErrors.email = Signup.warnings.EMAIL_ALREADY_USED;
-                            break;
-                    }
-                    this.setState({
-                        errors: {
-                            ...nextState.errors,
-                            ...newErrors
-                        }
-                    });
+            for (const currentError of newErrorArr) {
+                let errorFieldName;
+
+                if (Signup.warningTypes.username.indexOf(currentError) !== -1) {
+                    errorFieldName = 'username';
+                } else if (Signup.warningTypes.email.indexOf(currentError) !== -1) {
+                    errorFieldName = 'email';
+                }
+
+                // There might be some unknown error returned from backend, and then this variable might be empty
+                // which is not what we want
+                if (errorFieldName) {
+                    newErrorsState[errorFieldName] = Signup.warnings[currentError];
                 }
             }
-        } else if (newErrorAppear) {
-            const fieldName = newError === SignupStatus.USER_ALREADY_EXISTS ? 'username' : 'email';
 
-            this.setState({
-                errors: {
-                    ...nextState.errors,
-                    [ fieldName ]: Signup.warnings[newError]
-                }
-            });
+            // Ensure that there are new errors to be set
+            if (Object.keys(newErrorsState).length !== 0) {
+                this.setState({
+                    errors: {
+                        ...nextState.errors,
+                        ...newErrorsState
+                    }
+                });
+            }
         }
     }
 
