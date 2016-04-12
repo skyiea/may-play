@@ -25,6 +25,7 @@
         padding: 7px 1.5rem;
         border: none;
         outline: 1px solid $brand-nevada;
+        outline-offset: -1px;   // to make it look like border
 
         font-size: 1.6rem;
 

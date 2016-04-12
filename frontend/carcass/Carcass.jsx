@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ReactClass } from 'react-core-decorators';
 import CSSModules from 'react-css-modules';
 
-import HeaderContainer from 'components/header/HeaderContainer';
+import HeaderContainer from './header/HeaderContainer';
 import constants from 'utils/constants';
 
 import styles from './Carcass.scss';

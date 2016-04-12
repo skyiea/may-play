@@ -28,7 +28,10 @@ class Login extends Component {
     state = {
         username: '',
         password: '',
-        error: null
+        error: {
+            field: null,
+            message: null
+        }
     };
 
     _login() {
@@ -65,14 +68,35 @@ class Login extends Component {
 
     _clearWarning = () => {
         this.setState({
-            error: null
+            error: {
+                field: null,
+                message: null
+            }
         });
     };
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.error) {
+        const { error: newError } = nextProps;
+
+        if (newError) {
+            let field;
+
+            switch (newError) {
+                case LoginStatus.NO_USER_FOUND:
+                    field = 'username';
+                    break;
+                case LoginStatus.INCORRECT_PASSWORD:
+                    field = 'password';
+                    break;
+                default:
+                    field = 'username';
+            }
+
             this.setState({
-                error: nextProps.error
+                error: {
+                    field,
+                    message: Login.warnings[newError]
+                }
             });
         }
     }
@@ -91,7 +115,7 @@ class Login extends Component {
         const isLoginAvailable = !!username && !!password && !processing;
 
         return (
-            <section styleName="page">
+            <section styleName="login-page page">
                 <section styleName="login-popup">
                     {
                         processing &&
@@ -102,34 +126,42 @@ class Login extends Component {
                     <section styleName="login-header">Log in</section>
 
                     <section styleName="login-content">
-                        {
-                            !!error &&
-                                <div styleName="warning">{Login.warnings[error]}</div>
-                        }
-                        <Input
-                                styleName="login-input"
-                                incorrect={error === LoginStatus.NO_USER_FOUND}
-                                type="text"
-                                autoFocus
-                                disabled={processing}
-                                placeholder="Username"
-                                value={username}
-                                onFocus={this._clearWarning}
-                                onKeyDown={this._handleInputKeyDown}
-                                onChange={this._handleLoginInputChange}
-                        />
+                        <section styleName="input-line">
+                            <Input
+                                    styleName="login-input"
+                                    incorrect={error.field === 'username'}
+                                    type="text"
+                                    autoFocus
+                                    disabled={processing}
+                                    placeholder="Username"
+                                    value={username}
+                                    onFocus={this._clearWarning}
+                                    onKeyDown={this._handleInputKeyDown}
+                                    onChange={this._handleLoginInputChange}
+                            />
+                            {
+                                error.field === 'username' &&
+                                    <div styleName="warning">{error.message}</div>
+                            }
+                        </section>
 
-                        <Input
-                                styleName="login-input"
-                                incorrect={error === LoginStatus.INCORRECT_PASSWORD}
-                                type="password"
-                                disabled={processing}
-                                placeholder="Password"
-                                value={password}
-                                onFocus={this._clearWarning}
-                                onKeyDown={this._handleInputKeyDown}
-                                onChange={this._handlePasswordInputChange}
-                        />
+                        <section styleName="input-line">
+                            <Input
+                                    styleName="login-input"
+                                    incorrect={error.field === 'password'}
+                                    type="password"
+                                    disabled={processing}
+                                    placeholder="Password"
+                                    value={password}
+                                    onFocus={this._clearWarning}
+                                    onKeyDown={this._handleInputKeyDown}
+                                    onChange={this._handlePasswordInputChange}
+                            />
+                            {
+                                error.field === 'password' &&
+                                    <div styleName="warning">{error.message}</div>
+                            }
+                        </section>
 
                         <Button
                                 disabled={!isLoginAvailable}

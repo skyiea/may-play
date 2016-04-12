@@ -9,10 +9,10 @@ module.exports = function (app, passport) {
     app.use('/public', express.static('public'));
     app.use('/api', api);
 
-    app.get('/profile', authPage, (req, res, next) => {
+    app.get('/profile*', authPage, (req, res, next) => {
         next();
     });
-
+    
     app.get('/favicon.png', (req, res) => {
         res.sendFile(path.resolve('favicon.png'));
     });
