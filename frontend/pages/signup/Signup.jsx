@@ -23,10 +23,10 @@ class Signup extends Component {
     };
 
     static warnings = {
-        [ SignupStatus.USER_ALREADY_EXISTS ]    : 'User already exists',
-        [ SignupStatus.EMAIL_ALREADY_USED ]     : 'Email already used',
-        'INVALID_EMAIL'                         : 'Invalid email address entered',
-        'NOT_EQUAL_PASSWORDS'                   : 'Not equal passwords entered'
+        [ SignupStatus.USER_ALREADY_EXISTS ]: 'User already exists',
+        [ SignupStatus.EMAIL_ALREADY_USED ] : 'Email already used',
+        'INVALID_EMAIL'                     : 'Invalid email address entered',
+        'NOT_EQUAL_PASSWORDS'               : 'Not equal passwords entered'
     };
 
     // Used to determine to what input type warning is related
@@ -55,30 +55,25 @@ class Signup extends Component {
             ...this.initialErrorsState
         }
     };
-    
-    _signup() {
+
+    _signup = () => {
         const {
             username,
             email,
             password
         } = this.state;
-        
-        this.props.signup({ username, email, password });
-    }
 
-    _handleLoginKeyDown = (e) => {
-        const { username, email, password, passwordConfirm } = this.state;
-        const ENTER_CODE = 13;
-
-        if (e.keyCode === ENTER_CODE && !!password && !!username && !!email && !!passwordConfirm) {
-            this._handleSubmitClick();
-        }
-    };
-
-    _handleSubmitClick = () => {
         this._clearWarnings();
 
         if (this._validateForm()) {
+            this.props.signup({ username, email, password });
+        }
+    };
+    
+    _handleInputKeyDown = (e) => {
+        const ENTER_CODE = 13;
+
+        if (e.keyCode === ENTER_CODE) {
             this._signup();
         }
     };
@@ -136,10 +131,17 @@ class Signup extends Component {
 
     _validateForm = () => {
         const {
+            username,
             email,
             password,
             passwordConfirm
         } = this.state;
+
+        if (!password || !username || !email || !passwordConfirm) {
+            // No need to show any error if some field is empty, since "Sign in" button is disabled, which is
+            // sufficient indicator.
+            return false;
+        }
 
         const emailPattern = /\S+@\S+\.\S+/;
         const newErrors = {};
@@ -238,7 +240,7 @@ class Signup extends Component {
                                 autoFocus
                                 placeholder="Username"
                                 value={username}
-                                onKeyDown={this._handleLoginKeyDown}
+                                onKeyDown={this._handleInputKeyDown}
                                 onChange={this._handleUsernameInputChange}
                                 onFocus={this._clearUsernameWarning}
                         />
@@ -252,7 +254,7 @@ class Signup extends Component {
                                 type="text"
                                 placeholder="Email"
                                 value={email}
-                                onKeyDown={this._handleLoginKeyDown}
+                                onKeyDown={this._handleInputKeyDown}
                                 onChange={this._handleEmailInputChange}
                                 onFocus={this._clearEmailWarning}
                         />
@@ -265,7 +267,7 @@ class Signup extends Component {
                                 type="password"
                                 placeholder="Password"
                                 value={password}
-                                onKeyDown={this._handleLoginKeyDown}
+                                onKeyDown={this._handleInputKeyDown}
                                 onChange={this._handlePasswordInputChange}
                         />
 
@@ -275,7 +277,7 @@ class Signup extends Component {
                                 type="password"
                                 placeholder="Confirm Password"
                                 value={passwordConfirm}
-                                onKeyDown={this._handleLoginKeyDown}
+                                onKeyDown={this._handleInputKeyDown}
                                 onChange={this._handlePasswordConfirmInputChange}
                                 onFocus={this._clearPasswordConfirmWarning}
                         />
@@ -286,7 +288,7 @@ class Signup extends Component {
                         <Button
                                 styleName={classnames('signup-button', !isSignupAvailable && 'disabled')}
                                 disabled={!isSignupAvailable}
-                                onClick={this._handleSubmitClick}>
+                                onClick={this._signup}>
                             Sign in
                         </Button>
                     </section>
