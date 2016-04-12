@@ -31,6 +31,17 @@ class Login extends Component {
         error: null
     };
 
+    _login() {
+        const {
+            username,
+            password
+        } = this.state;
+
+        if (!!username && !!password) {
+            this.props.login(username, password);
+        }
+    }
+
     _handleInputKeyDown = (e) => {
         const ENTER_CODE = 13;
 
@@ -50,17 +61,6 @@ class Login extends Component {
     _handleLoginBtnClick = () => {
         this._clearWarning();
         this._login();
-    };
-
-    _login = () => {
-        const {
-            username,
-            password
-        } = this.state;
-
-        if (!!username && !!password) {
-            this.props.login(username, password);
-        }
     };
 
     _clearWarning = () => {

@@ -15,48 +15,61 @@ import styles from './Signup.scss';
 class Signup extends Component {
     static propTypes = {
         processing: PropTypes.bool,
-        error: PropTypes.string,
-        
+        error: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.array
+        ]),
         signup: PropTypes.func.isRequired
     };
 
     static warnings = {
         [ SignupStatus.USER_ALREADY_EXISTS ]    : 'User already exists',
+        [ SignupStatus.EMAIL_ALREADY_USED ]     : 'Email already used',
         'INVALID_EMAIL'                         : 'Invalid email address entered',
         'NOT_EQUAL_PASSWORDS'                   : 'Not equal passwords entered'
     };
 
     initialErrorsState = {
-        username: null,
-        email   : null,
-        password: null
+        username        : null,
+        email           : null,
+        password        : null,
+        passwordConfirm : null
     };
 
     state = {
-        username        : '',
-        email           : '',
-        password        : '',
-        passwordConfirm : '',
+        username        : '1',
+        email           : '1@1.2',
+        password        : '1',
+        passwordConfirm : '1',
         errors: {
             ...this.initialErrorsState
         }
     };
+    
+    _signup() {
+        const {
+            username,
+            email,
+            password
+        } = this.state;
+        
+        this.props.signup({ username, email, password });
+    }
 
     _handleLoginKeyDown = (e) => {
         const { username, email, password, passwordConfirm } = this.state;
         const ENTER_CODE = 13;
 
         if (e.keyCode === ENTER_CODE && !!password && !!username && !!email && !!passwordConfirm) {
-            this._handleSubmit();
+            this._handleSubmitClick();
         }
     };
 
-    _handleSubmit = () => {
-        const { username, email, password } = this.state;
+    _handleSubmitClick = () => {
+        this._clearWarnings();
 
         if (this._validateForm()) {
-            this.props.signup({ username, email, password });
-            this._clearWarning();
+            this._signup();
         }
     };
 
@@ -76,7 +89,43 @@ class Signup extends Component {
         this.setState({ passwordConfirm: e.target.value });
     };
 
-    _clearWarning = () => {
+    _clearUsernameWarning = () => {
+        this.setState({
+            errors: {
+                ...this.state.errors,
+                username: null
+            }
+        });
+    };
+
+    _clearEmailWarning = () => {
+        this.setState({
+            errors: {
+                ...this.state.errors,
+                email: null
+            }
+        });
+    };
+
+    _clearPasswordWarning = () => {
+        this.setState({
+            errors: {
+                ...this.state.errors,
+                password: null
+            }
+        });
+    };
+    
+    _clearPasswordConfirmWarning = () => {
+        this.setState({
+            errors: {
+                ...this.state.errors,
+                passwordConfirm: null
+            }
+        });
+    };
+    
+    _clearWarnings = () => {
         this.setState({
             errors: {
                 ...this.initialErrorsState
@@ -99,7 +148,7 @@ class Signup extends Component {
         }
 
         if (password !== passwordConfirm) {
-            newErrors.password = Signup.warnings.NOT_EQUAL_PASSWORDS;
+            newErrors.passwordConfirm = Signup.warnings.NOT_EQUAL_PASSWORDS;
         }
 
         const isValid = Object.keys(newErrors).length === 0;
@@ -116,13 +165,39 @@ class Signup extends Component {
         return isValid;
     };
 
-    componentWillReceiveProps(nextProps) {
-        // for now it is only username-error
-        if (nextProps.error) {
+    componentWillUpdate(nextProps, nextState) {
+        const { error: newError } = nextProps;
+        const newErrorAppear = newError && newError !== this.props.error;
+        const newErrors = {};
+
+        if (Array.isArray(newError)) {
+            for (let i = 0; i < newError.length; i++) {
+                if (newErrorAppear) {
+                    const fieldName = newError[i] === SignupStatus.USER_ALREADY_EXISTS ? 'username' : 'email';
+
+                    switch (fieldName) {
+                        case 'username':
+                            newErrors.username = Signup.warnings.USER_ALREADY_EXISTS;
+                            break;
+                        case 'email':
+                            newErrors.email = Signup.warnings.EMAIL_ALREADY_USED;
+                            break;
+                    }
+                    this.setState({
+                        errors: {
+                            ...nextState.errors,
+                            ...newErrors
+                        }
+                    });
+                }
+            }
+        } else if (newErrorAppear) {
+            const fieldName = newError === SignupStatus.USER_ALREADY_EXISTS ? 'username' : 'email';
+
             this.setState({
                 errors: {
-                    ...this.state.errors,
-                    username: nextProps.error
+                    ...nextState.errors,
+                    [ fieldName ]: Signup.warnings[newError]
                 }
             });
         }
@@ -157,17 +232,18 @@ class Signup extends Component {
                     <section styleName="signup-content">
                         <Input
                                 styleName="signup-input"
-                                incorrect={errors.username === SignupStatus.USER_ALREADY_EXISTS}
+                                incorrect={!!errors.username}
                                 type="text"
                                 autoFocus
                                 placeholder="Username"
                                 value={username}
+                                onKeyDown={this._handleLoginKeyDown}
                                 onChange={this._handleUsernameInputChange}
-                                onFocus={this._clearWarning}
+                                onFocus={this._clearUsernameWarning}
                         />
                         {
                             !!errors.username &&
-                                <div styleName="warning">{Signup.warnings[errors.username]}</div>
+                                <div styleName="warning">{errors.username}</div>
                         }
                         <Input
                                 styleName="signup-input"
@@ -175,8 +251,9 @@ class Signup extends Component {
                                 type="text"
                                 placeholder="Email"
                                 value={email}
+                                onKeyDown={this._handleLoginKeyDown}
                                 onChange={this._handleEmailInputChange}
-                                onFocus={this._clearWarning}
+                                onFocus={this._clearEmailWarning}
                         />
                         {
                             !!errors.email &&
@@ -187,27 +264,29 @@ class Signup extends Component {
                                 type="password"
                                 placeholder="Password"
                                 value={password}
+                                onKeyDown={this._handleLoginKeyDown}
                                 onChange={this._handlePasswordInputChange}
-                                onFocus={this._clearWarning}
+                                onFocus={this._clearPasswordWarning}
                         />
 
                         <Input
                                 styleName="signup-input"
+                                incorrect={!!errors.passwordConfirm}
                                 type="password"
                                 placeholder="Confirm Password"
                                 value={passwordConfirm}
                                 onKeyDown={this._handleLoginKeyDown}
                                 onChange={this._handlePasswordConfirmInputChange}
-                                onFocus={this._clearWarning}
+                                onFocus={this._clearPasswordConfirmWarning}
                         />
                         {
-                            !!errors.password &&
-                                <div styleName="warning">{errors.password}</div>
+                            !!errors.passwordConfirm &&
+                                <div styleName="warning">{errors.passwordConfirm}</div>
                         }
                         <Button
                                 styleName={classnames('signup-button', !isSignupAvailable && 'disabled')}
                                 disabled={!isSignupAvailable}
-                                onClick={this._handleSubmit}>
+                                onClick={this._handleSubmitClick}>
                             Sign in
                         </Button>
                     </section>
