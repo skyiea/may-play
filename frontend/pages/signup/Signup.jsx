@@ -32,15 +32,14 @@ class Signup extends Component {
     initialErrorsState = {
         username        : null,
         email           : null,
-        password        : null,
         passwordConfirm : null
     };
 
     state = {
-        username        : '1',
-        email           : '1@1.2',
-        password        : '1',
-        passwordConfirm : '1',
+        username        : '',
+        email           : '',
+        password        : '',
+        passwordConfirm : '',
         errors: {
             ...this.initialErrorsState
         }
@@ -106,16 +105,7 @@ class Signup extends Component {
             }
         });
     };
-
-    _clearPasswordWarning = () => {
-        this.setState({
-            errors: {
-                ...this.state.errors,
-                password: null
-            }
-        });
-    };
-    
+        
     _clearPasswordConfirmWarning = () => {
         this.setState({
             errors: {
@@ -266,7 +256,6 @@ class Signup extends Component {
                                 value={password}
                                 onKeyDown={this._handleLoginKeyDown}
                                 onChange={this._handlePasswordInputChange}
-                                onFocus={this._clearPasswordWarning}
                         />
 
                         <Input
