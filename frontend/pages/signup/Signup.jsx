@@ -19,6 +19,7 @@ class Signup extends Component {
             PropTypes.string,
             PropTypes.array
         ]),
+
         signup: PropTypes.func.isRequired
     };
 
@@ -71,27 +72,29 @@ class Signup extends Component {
     };
     
     _handleInputKeyDown = (e) => {
-        const ENTER_CODE = 13;
-
-        if (e.keyCode === ENTER_CODE) {
+        if (e.key === 'Enter') {
             this._signup();
         }
     };
 
     _handleUsernameInputChange = (e) => {
         this.setState({ username: e.target.value });
+        this._clearUsernameWarning();
     };
 
     _handleEmailInputChange = (e) => {
         this.setState({ email: e.target.value });
+        this._clearEmailWarning();
     };
 
     _handlePasswordInputChange = (e) => {
         this.setState({ password: e.target.value });
+        this._clearPasswordConfirmWarning();
     };
 
     _handlePasswordConfirmInputChange = (e) => {
         this.setState({ passwordConfirm: e.target.value });
+        this._clearPasswordConfirmWarning();
     };
 
     _clearUsernameWarning = () => {
