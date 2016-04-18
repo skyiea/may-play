@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import fetchProfile from 'actions/fetchProfile';
 import Profile from './Profile';
 
-const mapStateToProps = ({ profile: { fetched, username, email }}) => ({
+const mapStateToProps = ({ profile: { fetched, username }}) => ({
     fetched,
-    username,
-    email
+    username
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -12,40 +12,19 @@ import styles from './Profile.scss';
 class Profile extends Component {
     static propTypes = {
         username: PropTypes.string,
-        email: PropTypes.string
-    };
 
-    state = {
-        username: '',
-        email: ''
+        fetchData: PropTypes.func.isRequired
     };
 
     componentWillMount() {
         this.props.fetchData();
     }
 
-    componentWillReceiveProps(nextProps) {
-        const {
-            username,
-            email
-        } = nextProps;
-
-        if (!this.props.fetched && nextProps.fetched) {
-            this.setState({
-                username,
-                email
-            });
-        }
-    }
-
     render() {
         const {
-            fetched
-        } = this.props;
-
-        const {
+            fetched,
             username
-        } = this.state;
+        } = this.props;
 
         if (!fetched) {
             return (
