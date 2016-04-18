@@ -29,7 +29,8 @@
 
         font-size: 1.6rem;
 
-        transition: padding 150ms linear;
+        transition: padding 150ms linear,
+                    outline-color 100ms;
 
         &:focus {
             outline-width: 2px;

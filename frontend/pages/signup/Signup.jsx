@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules';
 import { ReactClass } from 'react-core-decorators';
 
 import SignupStatus from '../../../universal/SignupStatus';
+import Expander from 'components/expander/Expander';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
 import Input from 'components/input/Input';
@@ -48,10 +49,10 @@ class Signup extends Component {
     };
 
     state = {
-        username        : '',
-        email           : '',
-        password        : '',
-        passwordConfirm : '',
+        username        : 'user',
+        email           : 'user@mail.com',
+        password        : '1',
+        passwordConfirm : '12',
         errors: {
             ...this.initialErrorsState
         }
@@ -227,11 +228,10 @@ class Signup extends Component {
         return (
             <section styleName="signup-page page">
                 <section styleName="signup-popup">
-                    {
-                        processing &&
-                            <section styleName="loader-container">
-                                <Loader/>
-                            </section>
+                    {processing &&
+                        <section styleName="loader-container">
+                            <Loader/>
+                        </section>
                     }
                     <section styleName="signup-header">New Account</section>
 
@@ -247,10 +247,14 @@ class Signup extends Component {
                                 onChange={this._handleUsernameInputChange}
                                 onFocus={this._clearUsernameWarning}
                         />
-                        {
-                            !!errors.username &&
-                                <div styleName="warning">{errors.username}</div>
-                        }
+
+                        <Expander
+                                captureChildrenOnCollapse
+                                speed="fast"
+                                expanded={!!errors.username}>
+                            <div styleName="warning">{errors.username}</div>
+                        </Expander>
+
                         <Input
                                 styleName="signup-input"
                                 incorrect={!!errors.email}
@@ -261,10 +265,14 @@ class Signup extends Component {
                                 onChange={this._handleEmailInputChange}
                                 onFocus={this._clearEmailWarning}
                         />
-                        {
-                            !!errors.email &&
-                                <div styleName="warning">{errors.email}</div>
-                        }
+
+                        <Expander
+                                captureChildrenOnCollapse
+                                speed="fast"
+                                expanded={!!errors.email}>
+                            <div styleName="warning">{errors.email}</div>
+                        </Expander>
+
                         <Input
                                 styleName="signup-input"
                                 type="password"
@@ -284,10 +292,14 @@ class Signup extends Component {
                                 onChange={this._handlePasswordConfirmInputChange}
                                 onFocus={this._clearPasswordConfirmWarning}
                         />
-                        {
-                            !!errors.passwordConfirm &&
-                                <div styleName="warning">{errors.passwordConfirm}</div>
-                        }
+                        
+                        <Expander
+                                captureChildrenOnCollapse
+                                speed="fast"
+                                expanded={!!errors.passwordConfirm}>
+                            <div styleName="warning">{errors.passwordConfirm}</div>
+                        </Expander>
+                        
                         <Button
                                 styleName={classnames('signup-button', !isSignupAvailable && 'disabled')}
                                 disabled={!isSignupAvailable}
@@ -295,7 +307,7 @@ class Signup extends Component {
                             Sign in
                         </Button>
                     </section>
-                    </section>
+                </section>
             </section>
         );
     }

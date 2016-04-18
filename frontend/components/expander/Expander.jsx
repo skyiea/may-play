@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { ReactClass, mixin } from 'react-core-decorators';
 import classnames from 'classnames';
@@ -9,13 +9,14 @@ import styles from './Expander.scss';
 @CSSModules(styles, { allowMultiple: true })
 @mixin(PureRenderMixin)
 @ReactClass
-class Expander extends React.Component {
+class Expander extends Component {
     static propTypes = {
-        className       : React.PropTypes.string,
-        wrapperClassName: React.PropTypes.string,
-        visible         : React.PropTypes.bool.isRequired,
+        className                   : PropTypes.string,
+        wrapperClassName            : PropTypes.string,
+        expanded                    : PropTypes.bool.isRequired,
+        captureChildrenOnCollapse   : PropTypes.bool,
 
-        speed: React.PropTypes.oneOf([
+        speed: PropTypes.oneOf([
             'fast',
             'normal',
             'slow'
@@ -23,15 +24,21 @@ class Expander extends React.Component {
     };
     
     static defaultProps = {
-        speed: 'normal'
+        speed: 'normal',
+        captureChildrenOnCollapse: false
     };
 
     resizeEndTimeout = 250;
     resizeEndTimeoutHandler = null;
 
-    state = {
-        height: null
-    };
+    constructor(...args) {
+        super(...args);
+
+        this.state = {
+            height: null,
+            capturedChildren: this.props.captureChildrenOnCollapse ? this.props.children : null
+        };
+    }
 
     _handleResize = () => {
         this.resizeEndTimeoutHandler !== null && window.clearTimeout(this.resizeEndTimeoutHandler);
@@ -39,7 +46,7 @@ class Expander extends React.Component {
         // In performance regard, updating content height happens only when resize action is over, rather
         // than on each resize event fire, which will lead to a bunch of render calls and lags as a result.
         this.resizeEndTimeoutHandler = window.setTimeout(() => {
-            this.updateHeight();
+            this._updateHeight();
             this.resizeEndTimeoutHandler = null;
         }, this.resizeEndTimeout);
     };
@@ -74,8 +81,30 @@ class Expander extends React.Component {
     componentDidMount() {
         window.addEventListener('resize', this._handleResize);
 
-        if (this.props.visible) {
+        if (this.props.expanded) {
             this._updateHeight();
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const {
+            expanded,
+            captureChildrenOnCollapse,
+            children
+        } = this.props;
+
+        const willExpand = nextProps.expanded && !expanded;
+        const willCollapse = !nextProps.expanded && expanded;
+
+        if (willExpand && children !== nextProps.children) {
+            this.setState({ height: null }, this._updateHeight);
+        }
+
+        // Need to save (capture) children *before* collapse will occur, otherwise children might be already emptied
+        if (captureChildrenOnCollapse && !willCollapse) {
+            this.setState({
+                capturedChildren: nextProps.children
+            });
         }
     }
 
@@ -84,45 +113,43 @@ class Expander extends React.Component {
         window.removeEventListener('resize', this._handleResize);
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.visible && !this.props.visible && this.props.children !== nextProps.children) {
-            this.setState({ height: null }, this._updateHeight);
-        }
-    }
-
     render() {
         const {
             className,
             wrapperClassName,
-            visible,
+            captureChildrenOnCollapse,
+            expanded,
             children
         } = this.props;
 
-        const { height } = this.state;
+        const {
+            height,
+            capturedChildren
+        } = this.state;
 
         const expanderStyleNames = classnames(
             'expander',
-            visible && 'expanded',
-            height && this._getTransitionSpeed()
+            height && this._getTransitionSpeed(),
+            { expanded }
         );
 
         const expanderStyles = {
-            height: visible ? height : null,
-            maxHeight: visible ? height : null
+            height      : expanded ? height : null,
+            maxHeight   : expanded ? height : null
         };
 
         return (
-            <div
+            <section
                     className={className}
                     styleName={expanderStyleNames}
                     style={expanderStyles}>
-                <div
+                <section
                         ref="wrapper"
                         className={wrapperClassName}
                         styleName="wrapper">
-                    {children}
-                </div>
-            </div>
+                    {captureChildrenOnCollapse ? capturedChildren : children}
+                </section>
+            </section>
         );
     }
 }

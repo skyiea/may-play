@@ -7,6 +7,7 @@ import LoginStatus from '../../../universal/LoginStatus';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
 import Input from 'components/input/Input';
+import Expander from 'components/expander/Expander';
 
 import styles from './Login.scss';
 
@@ -126,11 +127,10 @@ class Login extends Component {
         return (
             <section styleName="login-page page">
                 <section styleName="login-popup">
-                    {
-                        processing &&
-                            <section styleName="loader-container">
-                                <Loader/>
-                            </section>
+                    {processing &&
+                        <section styleName="loader-container">
+                            <Loader/>
+                        </section>
                     }
                     <section styleName="login-header">Log in</section>
 
@@ -148,10 +148,13 @@ class Login extends Component {
                                     onKeyDown={this._handleInputKeyDown}
                                     onChange={this._handleLoginInputChange}
                             />
-                            {
-                                error.field === 'username' &&
-                                    <div styleName="warning">{error.message}</div>
-                            }
+
+                            <Expander
+                                    captureChildrenOnCollapse
+                                    speed="fast"
+                                    expanded={error.field === 'username'}>
+                                <div styleName="warning">{error.message}</div>
+                            </Expander>
                         </section>
 
                         <section styleName="input-line">
@@ -166,10 +169,13 @@ class Login extends Component {
                                     onKeyDown={this._handleInputKeyDown}
                                     onChange={this._handlePasswordInputChange}
                             />
-                            {
-                                error.field === 'password' &&
-                                    <div styleName="warning">{error.message}</div>
-                            }
+
+                            <Expander
+                                    captureChildrenOnCollapse
+                                    speed="fast"
+                                    expanded={error.field === 'password'}>
+                                <div styleName="warning">{error.message}</div>
+                            </Expander>
                         </section>
 
                         <Button
