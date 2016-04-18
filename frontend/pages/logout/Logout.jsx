@@ -6,7 +6,7 @@ import Loader from 'components/loader/Loader';
 
 import styles from './Logout.scss';
 
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 @ReactClass
 class Logout extends Component {
     static propTypes = {
@@ -19,7 +19,7 @@ class Logout extends Component {
 
     render() {
         return (
-            <section styleName="page">
+            <section styleName="logout-page page">
                 <Loader/>
             </section>
         );
