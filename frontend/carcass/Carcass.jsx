@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { ReactClass } from 'react-core-decorators';
-import CSSModules from 'react-css-modules';
 
+import CSSModules from 'utils/css-modules';
 import HeaderContainer from './header/HeaderContainer';
 import constants from 'utils/constants';
 
 import styles from './Carcass.scss';
 
-@CSSModules(styles, { allowMultiple: true })
 @ReactClass
+@CSSModules(styles)
 class Carcass extends Component {
     _listenToLogin = (e) => {
         if (e.key === constants.lsLoggedKey) {

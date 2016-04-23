@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { ReactClass } from 'react-core-decorators';
 import { Link } from 'react-router';
-import CSSModules from 'react-css-modules';
 
+import CSSModules from 'utils/css-modules';
 import Loader from 'components/loader/Loader';
 
 import styles from './Profile.scss';
 
-@CSSModules(styles, { allowMultiple: true })
 @ReactClass
+@CSSModules(styles)
 class Profile extends Component {
     static propTypes = {
         username: PropTypes.string,
@@ -25,17 +25,19 @@ class Profile extends Component {
             fetched,
             username
         } = this.props;
+        
+        const rootStyleName = 'profile-page';
 
         if (!fetched) {
             return (
-                <section styleName="page">
+                <section styleName={rootStyleName}>
                     <Loader/>
                 </section>
             );
         }
 
         return (
-            <section styleName="profile-page page">
+            <section styleName={rootStyleName}>
                 <section styleName="container">
                     <h2>Profile</h2>
                     <p>Hello {username}!</p>

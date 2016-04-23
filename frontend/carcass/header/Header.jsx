@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { ReactClass } from 'react-core-decorators';
 import classnames from 'classnames';
-import CSSModules from 'react-css-modules';
 import { Link } from 'react-router';
+
+import CSSModules from 'utils/css-modules';
 
 import styles from './Header.scss';
 
-@CSSModules(styles, { allowMultiple: true })
 @ReactClass
+@CSSModules(styles)
 class Header extends Component {
     render() {
         const {

@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { ReactClass } from 'react-core-decorators';
 import classnames from 'classnames';
-import CSSModules from 'react-css-modules';
 
+import CSSModules from 'utils/css-modules';
 import LoginStatus from '../../../universal/LoginStatus';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
@@ -11,8 +11,8 @@ import Expander from 'components/expander/Expander';
 
 import styles from './Login.scss';
 
-@CSSModules(styles, { allowMultiple: true })
 @ReactClass
+@CSSModules(styles)
 class Login extends Component {
     static propTypes = {
         error: PropTypes.string,
@@ -125,16 +125,17 @@ class Login extends Component {
         const isLoginAvailable = !!username && !!password && !processing;
 
         return (
-            <section styleName="login-page page">
-                <section styleName="login-popup">
-                    {processing &&
-                        <section styleName="loader-container">
-                            <Loader/>
-                        </section>
+            <section styleName="login-page">
+                <section styleName="popup">
+                    {
+                        processing &&
+                            <section styleName="container">
+                                <Loader/>
+                            </section>
                     }
-                    <section styleName="login-header">Log in</section>
+                    <section styleName="header">Log in</section>
 
-                    <section styleName="login-content">
+                    <section styleName="content">
                         <section styleName="input-line">
                             <Input
                                     styleName="login-input"
@@ -180,7 +181,7 @@ class Login extends Component {
 
                         <Button
                                 disabled={!isLoginAvailable}
-                                styleName={classnames('login-button', !isLoginAvailable && 'disabled')}
+                                styleName={classnames('submit-button', !isLoginAvailable && 'disabled')}
                                 onClick={this._handleLoginBtnClick}>
                             Log in
                         </Button>

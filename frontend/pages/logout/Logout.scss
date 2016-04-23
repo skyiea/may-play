@@ -1,8 +1,7 @@
 @import '../../styles/page';
+@import '../../styles/layout';
 
 .logout-page {
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
+    @include page();
+    @include flex-centered();
 }

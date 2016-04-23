@@ -1,11 +1,9 @@
-@import '../../styles/colors';
 @import '../../styles/page';
+@import '../../styles/layout';
 
 .profile-edit-page {
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
+    @include page();
+    @include flex-centered();
 
     >.container {
         width: 60rem;

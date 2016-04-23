@@ -1,121 +1,16 @@
 @import '../../styles/page';
-@import '../../styles/colors';
-@import '../../styles/breakpoints';
 
 .login-page {
-    display: flex;
+    @include form-page();
 
-    justify-content: center;
-    align-items: center;
+    $line-height: 5.5rem;
 
-    color: $brand-white;
+    .input-line {
+        margin-bottom: 1rem;
 
-    > .login-popup {
-        position: relative;
-
-        width: 40rem;
-        border: {
-            width: 1rem;
-            style: solid;
-            color: rgba($brand-woodsmoke, .25);
-            radius: 5px;
-        }
-
-        background-color: $brand-white;
-
-        >.loader-container {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 1;
-
-            display: flex;
-
-            justify-content: center;
-            align-items: center;
-
-            background-color: rgba($brand-woodsmoke, .4);
-        }
-
-        >.login-header {
-            display: flex;
-            height: 8rem;
-
-            justify-content: center;
-            align-items: center;
-
-            font-size: 3.2rem;
-            font-weight: 500;
-            color: $brand-white;
-
-            background-color: $brand-woodsmoke;
-
-            @media ($device-mobile) {
-                height: 6rem;
-
-                font-size: 2.4rem;
-            }
-        }
-
-        >.login-content {
-            $line-height: 5.5rem;
-
-            padding: 3rem;
-
-            color: $brand-woodsmoke;
-
-            >.input-line {
-                margin-bottom: 1rem;
-
-                .login-input {
-                    height: $line-height;
-                    margin-bottom: .7rem;
-                }
-
-                .warning {
-                    padding: 1rem;
-
-                    font-size: 1.6rem;
-                    font-weight: 400;
-                    color: $brand-woodsmoke;
-
-                    background-color: $brand-school-bus-yellow;
-                }
-            }
-
-            >.login-button {
-                display: flex;
-                width: 100%;
-                height: $line-height;
-                border: {
-                    style: solid;
-                    width: 1px;
-                    radius: 4px;
-                    color: darken($brand-observatory, 10%);
-                }
-
-                justify-content: center;
-                align-items: center;
-
-                font-size: 2rem;
-                font-weight: 400;
-                color: $brand-white;
-
-                background-color: $brand-observatory;
-
-                transition-property: opacity, background-color;
-                transition-duration: 150ms;
-                transition-timing-function: linear;
-
-                &.disabled {
-                    border-color: darken($brand-aluminium, 20%);
-
-                    background-color: $brand-aluminium;
-                    opacity: .7;
-                }
-            }
+        .login-input {
+            height: $line-height;
+            margin-bottom: .7rem;
         }
     }
 }

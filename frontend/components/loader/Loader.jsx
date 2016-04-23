@@ -1,12 +1,15 @@
 import React, { Component, PropTypes } from 'react';
-import { ReactClass } from 'react-core-decorators';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { ReactClass, mixin } from 'react-core-decorators';
 import classnames from 'classnames';
-import CSSModules from 'react-css-modules';
+
+import CSSModules from 'utils/css-modules';
 
 import styles from './Loader.scss';
 
-@CSSModules(styles, { allowMultiple: true })
+@mixin(PureRenderMixin)
 @ReactClass
+@CSSModules(styles)
 class Loader extends Component {
     static propTypes = {
         className   : PropTypes.string,
@@ -32,17 +35,14 @@ class Loader extends Component {
             size
         } = this.props;
 
-        const styleNames = classnames(
+        const rootStyleName = classnames(
             'loader',
             size,
             isDark && 'dark'
         );
 
         return (
-            <div
-                    className={className}
-                    styleName={styleNames}>
-            </div>
+            <div className={className} styleName={rootStyleName}></div>
         );
     }
 }

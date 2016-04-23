@@ -1,11 +1,10 @@
 @import '../../styles/colors';
+@import '../../styles/layout';
 
 .app-footer {
-    display: flex;
-    height: 4.5rem;
+    @include flex-centered();
 
-    justify-content: center;
-    align-items: center;
+    height: 4.5rem;
 
     font-size: 1.2rem;
     font-weight: 600;

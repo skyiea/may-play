@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
-import CSSModules from 'react-css-modules';
 import { ReactClass } from 'react-core-decorators';
 import omit from 'lodash.omit';
 
+import CSSModules from 'utils/css-modules';
+
 import styles from './Button.scss';
 
-@CSSModules(styles, { allowMultiple: true })
 @ReactClass
+@CSSModules(styles)
 class Button extends Component {
     static propTypes = {
         disabled: PropTypes.bool,
@@ -101,24 +102,26 @@ class Button extends Component {
             children,
             disabled,
             tabIndex,
+            
             ...otherProps
         } = this.props;
 
-        const filteredProps = omit(otherProps, [
+        const passedProps = omit(otherProps, [
             'styles',
-            'onClick',
-            'onKeyDown',
-            'onMouseDown',
             'blurOnEscape',
             'blurOnEnter',
-            'blurOnClick'
+            'blurOnClick',
+            
+            'onClick',
+            'onKeyDown',
+            'onMouseDown'
         ]);
         
-        const styleNames = classnames('button', { disabled });
+        const rootStyleName = classnames('button', { disabled });
 
         return (
-            <div {...filteredProps}
-                    styleName={styleNames}
+            <div {...passedProps}
+                    styleName={rootStyleName}
                     tabIndex={disabled ? null : tabIndex}
                     onMouseDown={this._handleMouseDown}
                     onClick={disabled ? null : this._handleClick}

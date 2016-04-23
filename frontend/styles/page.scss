@@ -1,4 +1,6 @@
 @import './colors';
+@import './breakpoints';
+@import './layout';
 
 @keyframes fade-in {
     from {
@@ -10,8 +12,110 @@
     }
 }
 
-.page {
+@mixin page {
     flex-grow: 1;
 
     animation: fade-in .4s;
+}
+
+@mixin form-page {
+    @include page();
+    @include flex-centered();
+
+    color: $brand-white;
+
+    >.popup {
+        position: relative;
+
+        width: 40rem;
+        border: {
+            width: 1rem;
+            style: solid;
+            color: rgba($brand-woodsmoke, .25);
+            radius: 5px;
+        }
+
+        background-color: $brand-white;
+
+        >.container {
+            @include flex-centered();
+            @include absolute-overlay();
+
+            background-color: rgba($brand-woodsmoke, .4);
+        }
+
+        >.header {
+            @include flex-centered();
+
+            height: 8rem;
+
+            font: {
+                size: 3.2rem;
+                weight: 500;
+            }
+            color: $brand-white;
+
+            background-color: $brand-woodsmoke;
+
+            @media ($device-mobile) {
+                height: 6rem;
+
+                font-size: 2.4rem;
+            }
+        }
+
+        >.content {
+            $line-height: 5.5rem;
+
+            padding: 3rem;
+
+            color: $brand-woodsmoke;
+
+            .warning {
+                padding: 1rem;
+
+                font: {
+                    size: 1.6rem;
+                    weight: 400;
+                }
+                color: $brand-woodsmoke;
+
+                background-color: $brand-school-bus-yellow;
+            }
+
+            >.submit-button {
+                @include flex-centered();
+
+                width: 100%;
+                height: $line-height;
+                border: {
+                    style: solid;
+                    width: 1px;
+                    radius: 4px;
+                    color: darken($brand-observatory, 10%);
+                }
+
+                font: {
+                    size: 2rem;
+                    weight: 400;
+                }
+                color: $brand-white;
+
+                background-color: $brand-observatory;
+
+                transition: {
+                    property: opacity, background-color;
+                    duration: 150ms;
+                    timing-function: linear;
+                }
+
+                &.disabled {
+                    border-color: darken($brand-aluminium, 20%);
+
+                    background-color: $brand-aluminium;
+                    opacity: .7;
+                }
+            }
+        }
+    }
 }

@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { ReactClass } from 'react-core-decorators';
-import CSSModules from 'react-css-modules';
 import { Link } from 'react-router';
 
+import CSSModules from 'utils/css-modules';
 import Loader from 'components/loader/Loader';
 import Input from 'components/input/Input';
 
 import styles from './ProfileEdit.scss';
 
-@CSSModules(styles, { allowMultiple: true })
 @ReactClass
+@CSSModules(styles)
 class ProfileEdit extends Component {
     static propTypes = {
         username: PropTypes.string,
@@ -95,17 +95,19 @@ class ProfileEdit extends Component {
             password,
             email
         } = this.state;
+        
+        const rootStyleName = 'profile-edit-page';
 
         if (!fetched) {
             return (
-                <section styleName="page">
+                <section styleName={rootStyleName}>
                     <Loader/>
                 </section>
             );
         }
 
         return (
-            <section styleName="profile-edit-page page">
+            <section styleName={rootStyleName}>
                 <section styleName="container">
                     <Input
                             type="text"

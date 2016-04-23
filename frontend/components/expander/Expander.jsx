@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { ReactClass, mixin } from 'react-core-decorators';
 import classnames from 'classnames';
-import CSSModules from 'react-css-modules';
+
+import CSSModules from 'utils/css-modules';
 
 import styles from './Expander.scss';
 
-@CSSModules(styles, { allowMultiple: true })
 @mixin(PureRenderMixin)
 @ReactClass
+@CSSModules(styles)
 class Expander extends Component {
     static propTypes = {
         className                   : PropTypes.string,
@@ -127,7 +128,7 @@ class Expander extends Component {
             capturedChildren
         } = this.state;
 
-        const expanderStyleNames = classnames(
+        const rootStyleName = classnames(
             'expander',
             height && this._getTransitionSpeed(),
             { expanded }
@@ -141,7 +142,7 @@ class Expander extends Component {
         return (
             <section
                     className={className}
-                    styleName={expanderStyleNames}
+                    styleName={rootStyleName}
                     style={expanderStyles}>
                 <section
                         ref="wrapper"

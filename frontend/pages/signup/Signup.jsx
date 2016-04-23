@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import CSSModules from 'react-css-modules';
 import { ReactClass } from 'react-core-decorators';
 
+import CSSModules from 'utils/css-modules';
 import SignupStatus from '../../../universal/SignupStatus';
 import Expander from 'components/expander/Expander';
 import Loader from 'components/loader/Loader';
@@ -11,8 +11,8 @@ import Input from 'components/input/Input';
 
 import styles from './Signup.scss';
 
-@CSSModules(styles, { allowMultiple: true })
 @ReactClass
+@CSSModules(styles)
 class Signup extends Component {
     static propTypes = {
         processing: PropTypes.bool,
@@ -226,16 +226,16 @@ class Signup extends Component {
         const isSignupAvailable = !!username && !!email && !!password && !!passwordConfirm;
 
         return (
-            <section styleName="signup-page page">
-                <section styleName="signup-popup">
+            <section styleName="signup-page">
+                <section styleName="popup">
                     {processing &&
-                        <section styleName="loader-container">
+                        <section styleName="container">
                             <Loader/>
                         </section>
                     }
-                    <section styleName="signup-header">New Account</section>
+                    <section styleName="header">New Account</section>
 
-                    <section styleName="signup-content">
+                    <section styleName="content">
                         <Input
                                 styleName="signup-input"
                                 incorrect={!!errors.username}
@@ -301,7 +301,7 @@ class Signup extends Component {
                         </Expander>
                         
                         <Button
-                                styleName={classnames('signup-button', !isSignupAvailable && 'disabled')}
+                                styleName={classnames('submit-button', !isSignupAvailable && 'disabled')}
                                 disabled={!isSignupAvailable}
                                 onClick={this._signup}>
                             Sign in
