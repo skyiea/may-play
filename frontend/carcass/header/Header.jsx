@@ -27,29 +27,38 @@ class Header extends Component {
                     }
                 </Link>
 
-                {
-                    !loggedIn ?
-                        <section styleName="sign-area">
-                            <Link
-                                    styleName="link"
-                                    to="login">
-                                Login
-                            </Link>
-                            <Link
-                                    styleName="link"
-                                    to="signup">
-                                Sign up
-                            </Link>
-                        </section> :
-                            
-                        <section styleName="account-area">
-                            <Link
-                                    styleName="link"
-                                    to="logout">
-                                Logout
-                            </Link>
-                        </section>
-                }
+                <section styleName="account-area">
+                    {
+                        !loggedIn ?
+                            [
+                                <Link
+                                        key="login"
+                                        styleName="link"
+                                        to="login">
+                                    Login
+                                </Link>,
+                                <Link
+                                        key="signup"
+                                        styleName="link"
+                                        to="signup">
+                                    Sign up
+                                </Link>
+                            ] : [
+                                <Link
+                                        key="profile"
+                                        styleName="link"
+                                        to="profile">
+                                    Profile
+                                </Link>,
+                                <Link
+                                        key="logout"
+                                        styleName="link"
+                                        to="logout">
+                                    Logout
+                                </Link>
+                            ]
+                    }
+                </section>
             </header>
         );
     }

@@ -1,0 +1,5 @@
+@import '../../styles/page';
+
+.home-page {
+    @include page();
+}

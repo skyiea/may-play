@@ -6,10 +6,12 @@ import { Router, Route, IndexRedirect, Redirect, browserHistory } from 'react-ro
 import { Provider } from 'react-redux';
 
 import { configureStore } from 'store';
+import constants from '../universal/constants';
 
 import CarcassContainer from 'carcass/CarcassContainer';
 import LoginContainer from 'pages/login/LoginContainer';
 import SignupContainer from 'pages/signup/SignupContainer';
+import HomeContainer from 'pages/home/HomeContainer';
 import ProfileContainer from 'pages/profile/ProfileContainer';
 import ProfileEditContainer from 'pages/profile-edit/ProfileEditContainer';
 import LogoutContainer from 'pages/logout/LogoutContainer';
@@ -21,7 +23,7 @@ const store = configureStore();
 function requireAuth(nextState, replace) {
     if (!store.getState().loggedIn) {
         replace({
-            pathname: '/login',
+            pathname: constants.INDEX_ROUTE.GUEST,
             state: {
                 nextPathname: nextState.location.pathname
             }
@@ -32,7 +34,7 @@ function requireAuth(nextState, replace) {
 function requireUnauth(nextState, replace) {
     if (store.getState().loggedIn) {
         replace({
-            pathname: '/profile',
+            pathname: constants.INDEX_ROUTE.USER,
             state: {
                 nextPathname: nextState.location.pathname
             }
@@ -62,6 +64,7 @@ ReactDOM.render((
 
             /* Only for authorized users */
             <Route onEnter={requireAuth}>
+                <Route path="home" component={HomeContainer}/>
                 <Route path="profile" component={ProfileContainer}/>
                 <Route path="profile/edit" component={ProfileEditContainer}/>
             </Route>
