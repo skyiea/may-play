@@ -3,7 +3,7 @@ const express = require('express');
 const User                  = require('../models/user');
 const { authAPI }           = require('./authMiddleware');
 const ProfileChangeStatus   = require('../../universal/ProfileChangeStatus');
-const constants             = require('../../universal/constants');
+const Constants             = require('../../universal/Constants');
 
 const api = express.Router();
 
@@ -29,7 +29,7 @@ module.exports = function (passport) {
                     }
 
                     return res.status(302).json({
-                        location: constants.INDEX_ROUTE.USER
+                        location: Constants.INDEX_ROUTE.USER
                     });
                 });
             })(req, res, next);
@@ -55,7 +55,7 @@ module.exports = function (passport) {
                     }
 
                     return res.status(302).json({
-                        location: constants.INDEX_ROUTE.USER
+                        location: Constants.INDEX_ROUTE.USER
                     });
                 });
             })(req, res, next);

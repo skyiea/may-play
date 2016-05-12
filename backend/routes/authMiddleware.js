@@ -5,7 +5,7 @@ module.exports = {
         }
     
         console.log('Unauthenticated request to Page:', req.url);
-        res.redirect('/');
+        res.redirect('/logout');
     },
     
     authAPI(req, res, next) {

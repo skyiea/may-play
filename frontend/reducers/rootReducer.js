@@ -1,5 +1,5 @@
 import TYPES from 'actions/actionTypes';
-import constants from 'utils/constants';
+import FEConstants from 'utils/Constants';
 
 export default function rootReducer(state, action) {
     const { type, payload } = action;
@@ -15,7 +15,7 @@ export default function rootReducer(state, action) {
                 }
             };
         case TYPES.SIGNUP_SUCCESS:
-            window.localStorage.setItem(constants.lsLoggedKey, true);
+            window.localStorage.setItem(FEConstants.LS_LOGGED_KEY, true);
 
             return {
                 ...state,
@@ -44,7 +44,7 @@ export default function rootReducer(state, action) {
                 }
             };
         case TYPES.LOGIN_SUCCESS:
-            window.localStorage.setItem(constants.lsLoggedKey, true);
+            window.localStorage.setItem(FEConstants.LS_LOGGED_KEY, true);
             break;
         case TYPES.LOGIN:
             return {
@@ -66,7 +66,7 @@ export default function rootReducer(state, action) {
                 }
             };
         case TYPES.LOGOUT_SUCCESS:
-            window.localStorage.removeItem(constants.lsLoggedKey);
+            window.localStorage.removeItem(FEConstants.LS_LOGGED_KEY);
             break;
         case TYPES.LOGOUT:
             return {

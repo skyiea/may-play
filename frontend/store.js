@@ -3,10 +3,10 @@ import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 
 import rootReducer from 'reducers/rootReducer';
-import constants from 'utils/constants';
+import FEConstants from 'utils/Constants';
 
 const initialState = {
-    loggedIn: !!window.localStorage.getItem(constants.lsLoggedKey),
+    loggedIn: !!window.localStorage.getItem(FEConstants.LS_LOGGED_KEY),
     
     signup: {
         error: null,
