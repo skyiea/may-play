@@ -6,13 +6,13 @@ const { authPage } = require('./authMiddleware');
 module.exports = function (app, passport) {
     const api = require('./api')(passport);
 
+    app.use('/public', express.static('public'));
+    app.use('/api', api);
+
     const securedRoutes = [
         'profile(\/*)*',
         'home'
     ];
-
-    app.use('/public', express.static('public'));
-    app.use('/api', api);
 
     app.get(new RegExp(`\/(${securedRoutes.join('|')})` ), authPage, (req, res, next) => {
         next();

@@ -1,8 +1,8 @@
-const http      = require('http');
 const path      = require('path');
 const express   = require('express');
 const mongoose  = require('mongoose');
 const passport  = require('passport');
+const socketIO  = require('socket.io');
 
 // Express middleware
 const morgan       = require('morgan');
@@ -14,6 +14,7 @@ const app = express();
 const PORT = 3000;
 
 const router            = require('./routes/routes');
+const wsService         = require('./ws/wsService');
 const configDB          = require('./config/database');
 const configPassport    = require('./config/passport');
 
@@ -35,6 +36,10 @@ app.use(passport.session());
 
 router(app, passport);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log('Server listening on: http://localhost:%s', PORT);
 });
+
+const io = socketIO(server);
+
+wsService(io);

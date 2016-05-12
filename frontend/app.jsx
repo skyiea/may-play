@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRedirect, Redirect, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
+import io from 'socket.io-client';
 
 import { configureStore } from 'store';
 import Constants from '../universal/Constants';
@@ -56,6 +57,12 @@ window.addEventListener('storage', (e) => {
     if (e.key === FEConstants.LS_LOGGED_KEY) {
         document.location.reload();
     }
+});
+
+const Socket = io();
+
+Socket.on('hello', () => {
+    console.debug('hello message from WS');
 });
 
 ReactDOM.render((
