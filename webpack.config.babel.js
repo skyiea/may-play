@@ -6,6 +6,7 @@ const APP_PATH = path.join(__dirname, 'frontend');
 const isCamelCasedSCSS = /([A-Z][a-z0-9]*)+\.scss$/;
 
 export default {
+    devtool: 'eval',
     entry: {
         app: path.join(APP_PATH, 'app.jsx')
     },
