@@ -28,15 +28,15 @@ export function doLogout() {
     };
 }
 
-export default function processLogout() {
+export default function () {
     return function (dispatch) {
         dispatch(logoutRequest());
 
         fetch('/api/logout', {
             method: 'post'
         }).
-            then((result) => {
-                dispatch(logoutSuccess(result));
+            then(() => {
+                dispatch(logoutSuccess());
                 dispatch(doLogout());
             }).
             catch((error) => {

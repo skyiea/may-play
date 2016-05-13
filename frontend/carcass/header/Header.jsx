@@ -17,6 +17,17 @@ class Header extends Component {
 
         return (
             <header styleName="app-header">
+                {
+                    DEBUG &&
+                        <ul styleName="links">
+                            <Link styleName="link" to="/">Index</Link>
+                            <Link styleName="link" to="/home">home</Link>
+                            <Link styleName="link" to="/login">login</Link>
+                            <Link styleName="link" to="/signup">signup</Link>
+                            <Link styleName="link" to="/profile">profile</Link>
+                            <Link styleName="link" to="/profile/edit">profile edit</Link>
+                        </ul>
+                }
                 <Link
                         styleName="logo link"
                         to="/">

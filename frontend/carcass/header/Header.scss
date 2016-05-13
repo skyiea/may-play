@@ -9,6 +9,17 @@ header.app-header {
     background-color: $brand-woodsmoke;
     transition: all .3s ease-out;
 
+    >.links {
+        position: absolute;
+
+        height: 5rem;
+
+        >* {
+            display: block;
+            font-size: 1.2rem;
+        }
+    }
+
     .link {
         color: $brand-white;
         font-weight: 500;

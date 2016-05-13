@@ -10,7 +10,7 @@ import { configureStore } from 'store';
 import Constants from '../universal/Constants';
 import FEConstants from 'utils/Constants';
 
-import CarcassContainer from 'carcass/CarcassContainer';
+import Carcass from 'carcass/Carcass';
 import LoginContainer from 'pages/login/LoginContainer';
 import SignupContainer from 'pages/signup/SignupContainer';
 import HomeContainer from 'pages/home/HomeContainer';
@@ -46,9 +46,9 @@ function requireUnauth(nextState, replace) {
 
 const ReduxProvider = (props) => (
     <Provider store={store}>
-        <CarcassContainer>
+        <Carcass>
             {props.children}
-        </CarcassContainer>
+        </Carcass>
     </Provider>
 );
 

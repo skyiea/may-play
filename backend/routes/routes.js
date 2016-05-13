@@ -14,7 +14,7 @@ module.exports = function (app, passport) {
         'home'
     ];
 
-    app.get(new RegExp(`\/(${securedRoutes.join('|')})` ), authPage, (req, res, next) => {
+    app.get(new RegExp(`\/(${securedRoutes.join('|')})`), authPage, (req, res, next) => {
         next();
     });
 
