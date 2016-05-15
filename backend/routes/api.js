@@ -1,9 +1,10 @@
 const express = require('express');
 
 const User                  = require('../models/user');
-const { authAPI }           = require('./authMiddleware');
+const { authAPI }           = require('../middlewares/authMiddleware');
 const ProfileChangeStatus   = require('../../universal/ProfileChangeStatus');
 const Constants             = require('../../universal/Constants');
+const wsUsers               = require('../ws/wsUsers');
 
 const api = express.Router();
 
@@ -53,6 +54,8 @@ module.exports = function (passport) {
                     if (err) {
                         return next(err);
                     }
+
+                    wsUsers.setName(req.sessionID, req.user.local.username);
 
                     return res.status(302).json({
                         location: Constants.INDEX_ROUTE.USER
