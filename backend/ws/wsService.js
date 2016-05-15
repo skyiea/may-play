@@ -22,13 +22,13 @@ module.exports = function (server) {
                 const signedSID = cookie.parse(reqCookie)['connect.sid'];
     
                 if (cookieParser.signedCookie(signedSID, secret) !== socket.request.sessionID) {
-                    console.log('[WS] Not authorized request'.err);
+                    console.log('[WS] Not authorized request: invalid cookie'.err);
                     next(new Error('Not authorized'));
                 } else {
                     next();
                 }
             } else {
-                console.log('[WS] Not authorized request'.err);
+                console.log('[WS] Not authorized request: no cookie'.err);
                 next(new Error('Not authorized'));
             }
         }).

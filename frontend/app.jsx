@@ -61,9 +61,13 @@ window.addEventListener('storage', (e) => {
 
 const Socket = io();
 
-Socket.on('hello', () => {
-    console.debug('hello message from WS');
-});
+Socket.
+    on('hello', () => {
+        console.debug('hello message from WS');
+    }).
+    on('disconnect', () => {
+        window.localStorage.removeItem(FEConstants.LS_LOGGED_KEY);
+    });
 
 ReactDOM.render((
     <Router history={browserHistory}>

@@ -19,8 +19,8 @@ class SocketsCollection {
                 sockets: []
             };
 
-            console.log('[WS] [%s] New user connected. Total connected users: %s'.ws,
-                        this.items[sid].name, Object.keys(this.items).length);
+            console.log('[WS] [%s] New user connected'.ws, this.items[sid].name);
+            console.log('[WS] Total connected users: %s'.ws.bold, Object.keys(this.items).length);
         }
 
         const { sockets } = this.items[sid];
@@ -45,12 +45,16 @@ class SocketsCollection {
                             this.items[sid].name, sockets.length);
 
                 if (sockets.length === 0) {
-                    console.log('[WS] [%s] User removed from collection. Total connected users: %s'.ws,
-                                this.items[sid].name, Object.keys(this.items).length);
+                    console.log('[WS] [%s] User removed from collection'.ws, this.items[sid].name);
                     delete this.items[sid];
+                    console.log('[WS] Total connected users: %s'.ws.bold, Object.keys(this.items).length);
                 }
             }
         }
+    }
+
+    getUserSockets(sid) {
+        return this.items[sid];
     }
 }
 
