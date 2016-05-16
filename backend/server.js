@@ -1,5 +1,4 @@
 const express   = require('express');
-const mongoose  = require('mongoose');
 const passport  = require('passport');
 
 // Middlewares
@@ -13,12 +12,11 @@ const PORT = 3000;
 
 const router            = require('./routes/routes');
 const wsService         = require('./ws/wsService');
-const configDB          = require('./config/database');
 const configPassport    = require('./config/passport');
 
+require('./config/mongoose');
 require('./utils/consoleColors');
 
-mongoose.connect(configDB.url);
 configPassport(passport);
 
 app.use(morgan('dev'));
