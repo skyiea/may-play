@@ -4,7 +4,6 @@ const User                  = require('../models/user');
 const { authAPI }           = require('../middlewares/authMiddleware');
 const ProfileChangeStatus   = require('../../universal/ProfileChangeStatus');
 const Constants             = require('../../universal/Constants');
-const wsUsers               = require('../ws/wsUsers');
 
 const api = express.Router();
 
@@ -55,8 +54,6 @@ module.exports = function (passport) {
                         return next(err);
                     }
 
-                    wsUsers.setName(req.sessionID, req.user.local.username);
-
                     return res.status(302).json({
                         location: Constants.INDEX_ROUTE.USER
                     });
@@ -67,8 +64,6 @@ module.exports = function (passport) {
 
     api.post('/logout', (req, res) => {
         req.logout();
-        // not cleared automatically
-        res.clearCookie('connect.sid', '/');
 
         res.status(302).json({
             location: '/'

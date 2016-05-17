@@ -7,7 +7,14 @@ const secret = require('../config/secret');
 
 module.exports = session({
     secret,
-    resave: false,
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000
+    },
+    rolling: true,
+    resave: true,
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongooseDb.connection })
+    store: new MongoStore({
+        mongooseConnection: mongooseDb.connection,
+        autoRemove: 'interval'
+    })
 });

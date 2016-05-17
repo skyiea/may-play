@@ -66,9 +66,9 @@ class SmartPassword extends Component {
         masked: true
     };
 
-    updatePwStrTimeoutHandler = null;
+    _updatePwStrTimeoutHandler = null;
     
-    handleChange = (e) => {
+    _handleChange = (e) => {
         const {
             updatePwStrDelay,
             allowUnmask,
@@ -92,9 +92,9 @@ class SmartPassword extends Component {
             ensureZxcvbn();
 
             // In performance regard password strength will be calculated only after {updatePwStrTimeout}ms idle time
-            this.updatePwStrTimeoutHandler !== null && clearTimeout(this.updatePwStrTimeoutHandler);
+            this._updatePwStrTimeoutHandler !== null && clearTimeout(this._updatePwStrTimeoutHandler);
 
-            this.updatePwStrTimeoutHandler = setTimeout(() => {
+            this._updatePwStrTimeoutHandler = setTimeout(() => {
                 // It's possible that 'zxcvbn' won't be loaded yet when this callback is fired, thus promise is used
                 ensureZxcvbn().then((zxcvbn) => {
                     onStrengthChange(zxcvbn(value).score);
@@ -103,7 +103,7 @@ class SmartPassword extends Component {
         }
     };
 
-    handleBlur = () => {
+    _handleBlur = () => {
         // to know next focused element we'll need to make timeout
         setTimeout(() => {
             if (!ReactDOM.findDOMNode(this).contains(document.activeElement)) {
@@ -114,7 +114,7 @@ class SmartPassword extends Component {
         }, 0);
     };
 
-    handleToggle = () => {
+    _handleToggle = () => {
         this.setState({
             masked: !this.state.masked
         });
@@ -149,14 +149,14 @@ class SmartPassword extends Component {
             <section
                     styleName={classnames('smart-pw', allowUnmask && 'with-toggle')}
                     className={className}
-                    onBlur={this.handleBlur}>
+                    onBlur={this._handleBlur}>
                 <Input {...passedProps}
                         className={inputClassName}
                         ref="input"
                         type={masked ? 'password' : 'text'}
                         value={value}
                         disabled={disabled}
-                        onChange={this.handleChange}
+                        onChange={this._handleChange}
                 />
                 {
                     allowUnmask && !!value &&
@@ -165,7 +165,7 @@ class SmartPassword extends Component {
                                 disabled={disabled}
                                 title={`${masked ? 'Show' : 'Hide'} password`}
                                 styleName={classnames('toggle', !masked && 'unmasked')}
-                                onClick={this.handleToggle}
+                                onClick={this._handleToggle}
                         />
                 }
             </section>

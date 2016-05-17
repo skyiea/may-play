@@ -19,7 +19,7 @@ class SocketsCollection {
                 sockets: []
             };
 
-            console.log('[WS] [%s] New user connected'.ws, this.items[sid].name);
+            console.log('[WS] [%s] New user connected. SID: %s'.ws, this.items[sid].name, socket.request.sessionID);
             console.log('[WS] Total connected users: %s'.ws.bold, Object.keys(this.items).length);
         }
 

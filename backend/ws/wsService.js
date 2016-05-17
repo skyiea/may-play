@@ -20,12 +20,16 @@ module.exports = function (server) {
     
             if (reqCookie) {
                 const signedSID = cookie.parse(reqCookie)['connect.sid'];
-    
-                if (cookieParser.signedCookie(signedSID, secret) !== socket.request.sessionID) {
-                    console.log('[WS] Not authorized request: invalid cookie'.err);
-                    next(new Error('Not authorized'));
+
+                if (signedSID) {
+                    if (cookieParser.signedCookie(signedSID, secret) !== socket.request.sessionID) {
+                        console.log('[WS] Not authorized request: invalid cookie'.err);
+                        next(new Error('Not authorized'));
+                    } else {
+                        next();
+                    }
                 } else {
-                    next();
+                    console.log('[WS] Not authorized request: no sessionID found in cookie'.err);
                 }
             } else {
                 console.log('[WS] Not authorized request: no cookie'.err);
