@@ -2,16 +2,4 @@
 
 .signup-page {
     @include form-page();
-
-    .content {
-        $line-height: 5.5rem;
-
-        >:not(:last-child) {
-            margin-bottom: 1rem;
-        }
-
-        .signup-input {
-            height: $line-height;
-        }
-    }
 }

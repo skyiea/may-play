@@ -139,7 +139,7 @@ class Login extends Component {
                     <section styleName="content">
                         <section styleName="input-line">
                             <Input
-                                    styleName="login-input"
+                                    styleName="input-element"
                                     incorrect={error.field === 'username'}
                                     type="text"
                                     autoFocus
@@ -161,7 +161,7 @@ class Login extends Component {
 
                         <section styleName="input-line">
                             <SmartPassword
-                                    styleName="login-input"
+                                    styleName="input-element"
                                     incorrect={error.field === 'password'}
                                     disabled={processing}
                                     placeholder="Password"

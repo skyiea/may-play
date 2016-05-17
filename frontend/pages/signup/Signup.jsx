@@ -236,70 +236,78 @@ class Signup extends Component {
                     <section styleName="header">New Account</section>
 
                     <section styleName="content">
-                        <Input
-                                styleName="signup-input"
-                                incorrect={!!errors.username}
-                                type="text"
-                                autoFocus
-                                placeholder="Username"
-                                value={username}
-                                onKeyDown={this._handleInputKeyDown}
-                                onChange={this._handleUsernameInputChange}
-                                onFocus={this._clearUsernameWarning}
-                        />
+                        <section styleName="input-line">
+                            <Input
+                                    styleName="input-element"
+                                    incorrect={!!errors.username}
+                                    type="text"
+                                    autoFocus
+                                    placeholder="Username"
+                                    value={username}
+                                    onKeyDown={this._handleInputKeyDown}
+                                    onChange={this._handleUsernameInputChange}
+                                    onFocus={this._clearUsernameWarning}
+                            />
 
-                        <Expander
-                                captureChildrenOnCollapse
-                                speed="fast"
-                                expanded={!!errors.username}>
-                            <div styleName="warning">{errors.username}</div>
-                        </Expander>
+                            <Expander
+                                    captureChildrenOnCollapse
+                                    speed="fast"
+                                    expanded={!!errors.username}>
+                                <div styleName="warning">{errors.username}</div>
+                            </Expander>
+                        </section>
 
-                        <Input
-                                styleName="signup-input"
-                                incorrect={!!errors.email}
-                                type="text"
-                                placeholder="Email"
-                                value={email}
-                                onKeyDown={this._handleInputKeyDown}
-                                onChange={this._handleEmailInputChange}
-                                onFocus={this._clearEmailWarning}
-                        />
+                        <section styleName="input-line">
+                            <Input
+                                    styleName="input-element"
+                                    incorrect={!!errors.email}
+                                    type="text"
+                                    placeholder="Email"
+                                    value={email}
+                                    onKeyDown={this._handleInputKeyDown}
+                                    onChange={this._handleEmailInputChange}
+                                    onFocus={this._clearEmailWarning}
+                            />
 
-                        <Expander
-                                captureChildrenOnCollapse
-                                speed="fast"
-                                expanded={!!errors.email}>
-                            <div styleName="warning">{errors.email}</div>
-                        </Expander>
+                            <Expander
+                                    captureChildrenOnCollapse
+                                    speed="fast"
+                                    expanded={!!errors.email}>
+                                <div styleName="warning">{errors.email}</div>
+                            </Expander>
+                        </section>
 
-                        <Input
-                                styleName="signup-input"
-                                type="password"
-                                placeholder="Password"
-                                value={password}
-                                onKeyDown={this._handleInputKeyDown}
-                                onChange={this._handlePasswordInputChange}
-                        />
-
-                        <Input
-                                styleName="signup-input"
-                                incorrect={!!errors.passwordConfirm}
-                                type="password"
-                                placeholder="Confirm Password"
-                                value={passwordConfirm}
-                                onKeyDown={this._handleInputKeyDown}
-                                onChange={this._handlePasswordConfirmInputChange}
-                                onFocus={this._clearPasswordConfirmWarning}
-                        />
+                        <section styleName="input-line">
+                            <Input
+                                    styleName="input-element"
+                                    type="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onKeyDown={this._handleInputKeyDown}
+                                    onChange={this._handlePasswordInputChange}
+                            />    
+                        </section>
                         
-                        <Expander
-                                captureChildrenOnCollapse
-                                speed="fast"
-                                expanded={!!errors.passwordConfirm}>
-                            <div styleName="warning">{errors.passwordConfirm}</div>
-                        </Expander>
-                        
+                        <section styleName="input-line">
+                            <Input
+                                    styleName="input-element"
+                                    incorrect={!!errors.passwordConfirm}
+                                    type="password"
+                                    placeholder="Confirm Password"
+                                    value={passwordConfirm}
+                                    onKeyDown={this._handleInputKeyDown}
+                                    onChange={this._handlePasswordConfirmInputChange}
+                                    onFocus={this._clearPasswordConfirmWarning}
+                            />
+
+                            <Expander
+                                    captureChildrenOnCollapse
+                                    speed="fast"
+                                    expanded={!!errors.passwordConfirm}>
+                                <div styleName="warning">{errors.passwordConfirm}</div>
+                            </Expander>
+                        </section>
+
                         <Button
                                 styleName={classnames('submit-button', !isSignupAvailable && 'disabled')}
                                 disabled={!isSignupAvailable}

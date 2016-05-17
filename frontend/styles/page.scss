@@ -71,16 +71,25 @@
 
             color: $brand-woodsmoke;
 
-            .warning {
-                padding: 1rem;
+            >.input-line {
+                margin-bottom: .7rem;
 
-                font: {
-                    size: 1.6rem;
-                    weight: 400;
+                .input-element {
+                    height: 5.5rem;
+                    margin-bottom: .7rem;
                 }
-                color: $brand-woodsmoke;
 
-                background-color: $brand-school-bus-yellow;
+                .warning {
+                    padding: 1rem;
+
+                    font: {
+                        size: 1.6rem;
+                        weight: 400;
+                    }
+                    color: $brand-woodsmoke;
+
+                    background-color: $brand-school-bus-yellow;
+                }
             }
 
             >.submit-button {

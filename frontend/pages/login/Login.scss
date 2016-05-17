@@ -2,15 +2,4 @@
 
 .login-page {
     @include form-page();
-
-    $line-height: 5.5rem;
-
-    .input-line {
-        margin-bottom: 1rem;
-
-        .login-input {
-            height: $line-height;
-            margin-bottom: .7rem;
-        }
-    }
 }
