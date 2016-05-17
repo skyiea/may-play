@@ -12,10 +12,11 @@ export default {
         app: path.join(APP_PATH, 'app.jsx')
     },
     output: {
-        path: 'public/',
-        publicPath: 'public/',
-        sourceMapFilename: '[file].map',
-        filename: '[name].min.js'
+        path                : 'public/',
+        publicPath          : 'public/',
+        sourceMapFilename   : '[file].map',
+        filename            : '[name].min.js',
+        chunkFilename       : 'mp.[id].[hash].js'
     },
     module: {
         loaders: [

@@ -7,6 +7,7 @@ import LoginStatus from '../../../universal/LoginStatus';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
 import Input from 'components/input/Input';
+import SmartPassword from 'components/smart-password/SmartPassword';
 import Expander from 'components/expander/Expander';
 
 import styles from './Login.scss';
@@ -159,10 +160,9 @@ class Login extends Component {
                         </section>
 
                         <section styleName="input-line">
-                            <Input
+                            <SmartPassword
                                     styleName="login-input"
                                     incorrect={error.field === 'password'}
-                                    type="password"
                                     disabled={processing}
                                     placeholder="Password"
                                     value={password}

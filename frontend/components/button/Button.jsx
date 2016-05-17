@@ -64,18 +64,28 @@ class Button extends Component {
 
     _handleMouseDown = (e) => {
         const {
+            blurOnClick,
+
             onMouseDown
         } = this.props;
 
-        // this is necessary because even if tabIndex is -1 it is still possible to focus button via pointer
-        e.preventDefault();
-
-        // still need to blur from previously focused element
-        if (document.activeElement) {
-            document.activeElement.blur();
-        }
-
         onMouseDown && onMouseDown(e);
+
+        if (blurOnClick) {
+            // instead of making blur() after click (will cause 'outline-blink' effect, since there will be period
+            // of time between MouseDown and Click events where CSS outline prop will appear)
+            // prevent button from receiving focus at all (click still will be fired)
+
+            // default behaviour would be blur on active element, and focus on current button
+            e.preventDefault();
+
+            // do blur manually and skip focus
+            if (document.activeElement) {
+                document.activeElement.blur();
+            }
+        } else if (e.target !== document.activeElement) {
+            e.preventDefault();
+        }
     };
 
     _handleClick = (e) => {

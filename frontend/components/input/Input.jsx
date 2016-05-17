@@ -10,15 +10,17 @@ import styles from './Input.scss';
 @CSSModules(styles)
 class Input extends Component {
     static PropTypes = {
-        className   : PropTypes.string,
         value       : PropTypes.string,
         placeholder : PropTypes.string,
         incorrect   : PropTypes.bool
     };
+    
+    focus() {
+        this.refs.input.focus();
+    }
 
     render() {
         const {
-            className,
             value,
             placeholder,
             incorrect,
@@ -31,7 +33,7 @@ class Input extends Component {
                 <label>{placeholder}</label>
 
                 <input {...otherProps}
-                        className={className}
+                        ref="input"
                         styleName={incorrect ? 'incorrect' : null}
                         value={value}
                         placeholder={placeholder}
