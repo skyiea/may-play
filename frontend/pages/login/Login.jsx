@@ -152,6 +152,7 @@ class Login extends Component {
                             />
 
                             <Expander
+                                    wrapperClassName={styles['warning-wrapper']}
                                     captureChildrenOnCollapse
                                     speed="fast"
                                     expanded={error.field === 'username'}>
@@ -172,6 +173,7 @@ class Login extends Component {
                             />
 
                             <Expander
+                                    wrapperClassName={styles['warning-wrapper']}
                                     captureChildrenOnCollapse
                                     speed="fast"
                                     expanded={error.field === 'password'}>

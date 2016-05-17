@@ -8,6 +8,7 @@ import Expander from 'components/expander/Expander';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
 import Input from 'components/input/Input';
+import SmartPassword from 'components/smart-password/SmartPassword';
 
 import styles from './Signup.scss';
 
@@ -27,8 +28,7 @@ class Signup extends Component {
     static warnings = {
         [ SignupStatus.USER_ALREADY_EXISTS ]: 'User already exists',
         [ SignupStatus.EMAIL_ALREADY_USED ] : 'Email already used',
-        'INVALID_EMAIL'                     : 'Invalid email address entered',
-        'NOT_EQUAL_PASSWORDS'               : 'Not equal passwords entered'
+        'INVALID_EMAIL'                     : 'Invalid email address entered'
     };
 
     // Used to determine to what input type warning is related
@@ -43,16 +43,14 @@ class Signup extends Component {
     };
 
     initialErrorsState = {
-        username        : null,
-        email           : null,
-        passwordConfirm : null
+        username: null,
+        email   : null
     };
 
     state = {
-        username        : 'user',
-        email           : 'user@mail.com',
-        password        : '1',
-        passwordConfirm : '12',
+        username: 'user',
+        email   : 'user@mail.com',
+        password: '1',
         errors: {
             ...this.initialErrorsState
         }
@@ -90,12 +88,6 @@ class Signup extends Component {
 
     _handlePasswordInputChange = (e) => {
         this.setState({ password: e.target.value });
-        this._clearPasswordConfirmWarning();
-    };
-
-    _handlePasswordConfirmInputChange = (e) => {
-        this.setState({ passwordConfirm: e.target.value });
-        this._clearPasswordConfirmWarning();
     };
 
     _clearUsernameWarning = () => {
@@ -116,15 +108,6 @@ class Signup extends Component {
         });
     };
         
-    _clearPasswordConfirmWarning = () => {
-        this.setState({
-            errors: {
-                ...this.state.errors,
-                passwordConfirm: null
-            }
-        });
-    };
-    
     _clearWarnings = () => {
         this.setState({
             errors: {
@@ -137,11 +120,10 @@ class Signup extends Component {
         const {
             username,
             email,
-            password,
-            passwordConfirm
+            password
         } = this.state;
 
-        if (!password || !username || !email || !passwordConfirm) {
+        if (!password || !username || !email) {
             // No need to show any error if some field is empty, since "Sign in" button is disabled, which is
             // sufficient indicator.
             return false;
@@ -152,10 +134,6 @@ class Signup extends Component {
 
         if (!emailPattern.test(email)) {
             newErrors.email = Signup.warnings.INVALID_EMAIL;
-        }
-
-        if (password !== passwordConfirm) {
-            newErrors.passwordConfirm = Signup.warnings.NOT_EQUAL_PASSWORDS;
         }
 
         const isValid = Object.keys(newErrors).length === 0;
@@ -219,19 +197,19 @@ class Signup extends Component {
             username,
             email,
             password,
-            passwordConfirm,
             errors
         } = this.state;
 
-        const isSignupAvailable = !!username && !!email && !!password && !!passwordConfirm;
+        const isSignupAvailable = !!username && !!email && !!password;
 
         return (
             <section styleName="signup-page">
                 <section styleName="popup">
-                    {processing &&
-                        <section styleName="container">
-                            <Loader/>
-                        </section>
+                    {
+                        processing &&
+                            <section styleName="container">
+                                <Loader/>
+                            </section>
                     }
                     <section styleName="header">New Account</section>
 
@@ -250,6 +228,7 @@ class Signup extends Component {
                             />
 
                             <Expander
+                                    wrapperClassName={styles['warning-wrapper']}
                                     captureChildrenOnCollapse
                                     speed="fast"
                                     expanded={!!errors.username}>
@@ -270,6 +249,7 @@ class Signup extends Component {
                             />
 
                             <Expander
+                                    wrapperClassName={styles['warning-wrapper']}
                                     captureChildrenOnCollapse
                                     speed="fast"
                                     expanded={!!errors.email}>
@@ -278,34 +258,14 @@ class Signup extends Component {
                         </section>
 
                         <section styleName="input-line">
-                            <Input
+                            <SmartPassword
                                     styleName="input-element"
                                     type="password"
                                     placeholder="Password"
                                     value={password}
                                     onKeyDown={this._handleInputKeyDown}
                                     onChange={this._handlePasswordInputChange}
-                            />    
-                        </section>
-                        
-                        <section styleName="input-line">
-                            <Input
-                                    styleName="input-element"
-                                    incorrect={!!errors.passwordConfirm}
-                                    type="password"
-                                    placeholder="Confirm Password"
-                                    value={passwordConfirm}
-                                    onKeyDown={this._handleInputKeyDown}
-                                    onChange={this._handlePasswordConfirmInputChange}
-                                    onFocus={this._clearPasswordConfirmWarning}
                             />
-
-                            <Expander
-                                    captureChildrenOnCollapse
-                                    speed="fast"
-                                    expanded={!!errors.passwordConfirm}>
-                                <div styleName="warning">{errors.passwordConfirm}</div>
-                            </Expander>
                         </section>
 
                         <Button
