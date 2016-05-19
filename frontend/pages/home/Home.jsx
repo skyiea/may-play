@@ -13,8 +13,6 @@ class Home extends Component {
     render() {
         return (
             <section styleName="home-page">
-                <h2>Home</h2>
-                
                 <section styleName="chat-container">
                     <Chat/>
                 </section>

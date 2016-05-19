@@ -18,7 +18,7 @@ class Header extends Component {
         return (
             <header styleName="app-header">
                 {
-                    DEBUG &&
+                    false && DEBUG &&
                         <ul styleName="links">
                             <Link styleName="link" to="/">Index</Link>
                             <Link styleName="link" to="/home">home</Link>
