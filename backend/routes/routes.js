@@ -4,7 +4,7 @@ const path      = require('path');
 const { authPage } = require('../middlewares/authMiddleware');
 
 module.exports = function (app, passport) {
-    const api = require('./api')(passport);
+    const api = require('./apiRoutes')(passport);
 
     app.use('/public', express.static('public'));
     app.use('/api', api);

@@ -1,9 +1,9 @@
 const session = require('express-session');
 
 const MongoStore = require('connect-mongo')(session);
-const mongooseDb = require('../config/mongoose');
+const mongooseInst = require('./mongooseInst');
 
 module.exports = new MongoStore({
-    mongooseConnection: mongooseDb.connection,
+    mongooseConnection: mongooseInst.connection,
     autoRemove: 'interval'
 });

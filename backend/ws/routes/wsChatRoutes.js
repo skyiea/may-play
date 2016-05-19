@@ -1,8 +1,8 @@
 const omit = require('lodash.omit');
 
-const wsConnections = require('./wsConnections');
-const SessionSockets = require('./SessionSockets');
-const getUsername = require('../utils/getUsername');
+const wsConnections = require('./../wsConnections');
+const SessionSockets = require('./../SessionSockets');
+const getUsername = require('../../utils/getUsername');
 
 const chatUsers = new SessionSockets;
 

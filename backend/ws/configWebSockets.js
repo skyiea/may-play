@@ -3,10 +3,8 @@ const cookie        = require('cookie');
 const cookieParser  = require('cookie-parser');
 
 const sessionMiddleware = require('../middlewares/sessionMiddleware');
-const wsConnections = require('./wsConnections');
-const wsChatService = require('./wsChatService');
+const wsRoutes = require('./routes/wsRoutes');
 const secret = require('../config/secret');
-const getUsername = require('../utils/getUsername');
 
 module.exports = function (server) {
     const io = socketIO(server);
@@ -35,18 +33,7 @@ module.exports = function (server) {
                 console.log('[WS] Not authorized request: no cookie'.err);
                 next(new Error('Not authorized'));
             }
-        }).
-        on('connection', (socket) => {
-            const sid = socket.request.sessionID;
-
-            getUsername(sid).then((userName) => {
-                wsConnections.add(sid, socket, userName);
-            });
-
-            socket.on('disconnect', () => {
-                wsConnections.remove(sid, socket);
-            });
-        
-            wsChatService(socket);
         });
+    
+    wsRoutes(io);
 };
