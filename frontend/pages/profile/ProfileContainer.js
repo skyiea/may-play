@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import fetchProfile from 'actions/fetchProfile';
+import fetchProfile from 'actions/fetchProfileAction';
 import Profile from './Profile';
 
 const mapStateToProps = ({ profile: { fetched, username }}) => ({

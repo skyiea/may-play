@@ -1,8 +1,5 @@
 {
     "restartable": "rs",
-    "execMap": {
-        "js": "node --harmony_destructuring"
-    },
     "events": {
         "restart": "osascript -e 'display notification \"May Play restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
     },

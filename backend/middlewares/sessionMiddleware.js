@@ -1,9 +1,7 @@
 const session = require('express-session');
 
-const MongoStore = require('connect-mongo')(session);
-const mongooseDb = require('../config/mongoose');
-
 const secret = require('../config/secret');
+const mongoStore = require('../modules/mongoStore');
 
 module.exports = session({
     secret,
@@ -13,8 +11,5 @@ module.exports = session({
     rolling: true,
     resave: true,
     saveUninitialized: true,
-    store: new MongoStore({
-        mongooseConnection: mongooseDb.connection,
-        autoRemove: 'interval'
-    })
+    store: mongoStore
 });

@@ -23,6 +23,10 @@ const initialState = {
         updating: false,
         username: null,
         email: null
+    },
+    
+    chat: {
+        log: []
     }
 };
 
@@ -38,18 +42,15 @@ if (DEBUG) {
 }
 
 const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore);
+const store = createStoreWithMiddleware(rootReducer, initialState);
 
-export function configureStore() {
-    const store = createStoreWithMiddleware(rootReducer, initialState);
+if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('reducers/rootReducer', () => {
+        const nextReducer = require('reducers/rootReducer');
 
-    if (module.hot) {
-        // Enable Webpack hot module replacement for reducers
-        module.hot.accept('reducers/rootReducer', () => {
-            const nextReducer = require('reducers/rootReducer');
-
-            store.replaceReducer(nextReducer);
-        });
-    }
-
-    return store;
+        store.replaceReducer(nextReducer);
+    });
 }
+
+module.exports = store;

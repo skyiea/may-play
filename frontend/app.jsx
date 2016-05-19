@@ -4,9 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRedirect, Redirect, browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import io from 'socket.io-client';
 
-import { configureStore } from 'store';
+import store from 'store';
 import Constants from '../universal/Constants';
 import FEConstants from 'utils/Constants';
 
@@ -19,8 +18,6 @@ import ProfileEditContainer from 'pages/profile-edit/ProfileEditContainer';
 import LogoutContainer from 'pages/logout/LogoutContainer';
 
 import 'app.scss';
-
-const store = configureStore();
 
 function requireAuth(nextState, replace) {
     if (!store.getState().loggedIn) {
@@ -58,13 +55,6 @@ window.addEventListener('storage', (e) => {
         document.location.reload();
     }
 });
-
-const Socket = io();
-
-Socket.
-    on('hello', () => {
-        console.debug('hello message from WS');
-    });
 
 ReactDOM.render((
     <Router history={browserHistory}>

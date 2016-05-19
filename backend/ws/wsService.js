@@ -1,12 +1,12 @@
-'use strict';
-
 const socketIO      = require('socket.io');
 const cookie        = require('cookie');
 const cookieParser  = require('cookie-parser');
 
 const sessionMiddleware = require('../middlewares/sessionMiddleware');
-const users = require('./wsUsers');
+const wsConnections = require('./wsConnections');
+const wsChatService = require('./wsChatService');
 const secret = require('../config/secret');
+const getUsername = require('../utils/getUsername');
 
 module.exports = function (server) {
     const io = socketIO(server);
@@ -17,7 +17,7 @@ module.exports = function (server) {
         }).
         use((socket, next) => {
             const { cookie: reqCookie } = socket.request.headers;
-    
+
             if (reqCookie) {
                 const signedSID = cookie.parse(reqCookie)['connect.sid'];
 
@@ -39,11 +39,14 @@ module.exports = function (server) {
         on('connection', (socket) => {
             const sid = socket.request.sessionID;
 
-            users.add(sid, socket);
-            socket.emit('hello');
+            getUsername(sid).then((userName) => {
+                wsConnections.add(sid, socket, userName);
+            });
 
             socket.on('disconnect', () => {
-                users.remove(sid, socket);
+                wsConnections.remove(sid, socket);
             });
+        
+            wsChatService(socket);
         });
 };

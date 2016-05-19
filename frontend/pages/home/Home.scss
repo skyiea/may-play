@@ -2,4 +2,13 @@
 
 .home-page {
     @include page();
+
+    >.chat-container {
+        width: 50rem;
+        height: 50rem;
+        margin: 5rem;
+        border: 1px solid orange;
+
+        background-color: white;
+    }
 }

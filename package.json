@@ -14,7 +14,7 @@
   "homepage": "https://github.com/skyiea/may-play",
   "scripts": {
     "preinstall": "npm i -g webpack webpack-dev-server npm-run",
-    "start": "node --harmony_destructuring ./backend/server.js",
+    "start": "node ./backend/server.js",
     "build": "NODE_ENV=production webpack -p --bail",
     "watch": "webpack --progress --watch",
     "watchs": "npm run watch -- --devtool source-map",

@@ -1,7 +1,7 @@
 import fetch from 'utils/fetch';
 import TYPES from './actionTypes';
 
-import { doLogin } from 'actions/login';
+import { doLogin } from 'actions/loginActions';
 
 function signupRequest() {
     return {
@@ -24,7 +24,7 @@ function signupFailure(payload) {
     };
 }
 
-export default function signup(data) {
+export default function (data) {
     return function (dispatch) {
         dispatch(signupRequest());
 

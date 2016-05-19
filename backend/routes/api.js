@@ -4,12 +4,11 @@ const User                  = require('../models/user');
 const { authAPI }           = require('../middlewares/authMiddleware');
 const ProfileChangeStatus   = require('../../universal/ProfileChangeStatus');
 const Constants             = require('../../universal/Constants');
+const wsConnections         = require('../ws/wsConnections');
 
 const api = express.Router();
 
 module.exports = function (passport) {
-    'use strict';
-
     api.post('/signup',
         (req, res, next) => {
             passport.authenticate('local-signup', (err, user, payload) => {
@@ -54,6 +53,8 @@ module.exports = function (passport) {
                         return next(err);
                     }
 
+                    wsConnections.setName(req.sessionID, user.local.username);
+
                     return res.status(302).json({
                         location: Constants.INDEX_ROUTE.USER
                     });
@@ -64,6 +65,7 @@ module.exports = function (passport) {
 
     api.post('/logout', (req, res) => {
         req.logout();
+        wsConnections.unsetName(req.sessionID);
 
         res.status(302).json({
             location: '/'
@@ -87,8 +89,6 @@ module.exports = function (passport) {
             email   : newEmail,
             password: newPassword
         } = body;
-
-        console.log(newUsername, newEmail, newPassword);
 
         function save() {
             if (newUsername) {

@@ -99,6 +99,44 @@ export default function rootReducer(state, action) {
                     ...payload // updated profile data
                 }
             };
+        // split reducer
+        case TYPES.CHAT.LEAVE:
+            return {
+                ...state,
+                chat: {
+                    ...state.chat,
+                    log: []
+                }
+            };
+        case TYPES.CHAT.SEND_MESSAGE:
+            return {
+                ...state,
+                chat: {
+                    ...state.chat,
+                    log: [
+                        ...state.chat.log,
+                        {
+                            type: 'user-message',
+                            payload: {
+                                user: state.profile.username,
+                                message: payload,
+                                date: Date.now()
+                            }
+                        }
+                    ]
+                }
+            };
+        case TYPES.CHAT.RECEIVE_MESSAGE:
+            return {
+                ...state,
+                chat: {
+                    ...state.chat,
+                    log: [
+                        ...state.chat.log,
+                        payload
+                    ]
+                }
+            };
         default:
             break;
     }

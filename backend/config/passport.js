@@ -4,8 +4,6 @@ const SignupStatus  = require('../../universal/SignupStatus');
 const LoginStatus   = require('../../universal/LoginStatus');
 
 module.exports = function (passport) {
-    'use strict';
-
     passport.serializeUser((user, done) => {
         done(null, user.id);
     });

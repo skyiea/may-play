@@ -1,0 +1,44 @@
+.chat {
+    display: flex;
+    height: 100%;
+
+    flex-direction: column;
+
+    >.messages {
+        padding: 10px;
+
+        flex-grow: 1;
+
+        line-height: 24px;
+
+        >.message {
+            >.server {
+                font-size: .9em;
+                color: #888;
+                font-style: italic;
+            }
+
+            >.user {
+                >.time {
+                    font-size: .9em;
+                    color: #666;
+                }
+
+                >.name {
+                    font-size: .9em;
+                    color: #2f6fad;
+
+                    &:after {
+                        content: ': ';
+                    }
+                }
+            }
+        }
+    }
+
+    >.text-input {
+        height: 24px;
+
+        font-size: 20px;
+    }
+}

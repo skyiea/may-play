@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import fetchProfile from 'actions/fetchProfile';
-import updateProfile from 'actions/updateProfile';
+import fetchProfile from 'actions/fetchProfileAction';
+import updateProfile from 'actions/updateProfileAction';
 import ProfileEdit from './ProfileEdit';
 
 const mapStateToProps = ({ profile: { fetched, username, email }}) => ({

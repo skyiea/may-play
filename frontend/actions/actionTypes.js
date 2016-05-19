@@ -19,5 +19,12 @@ export default {
     
     PROFILE_UPDATE_REQUEST   : Symbol('Profile update request'),
     PROFILE_UPDATE_SUCCESS   : Symbol('Profile successfully updated'),
-    PROFILE_UPDATE_FAILURE   : Symbol('Profile update failure')
+    PROFILE_UPDATE_FAILURE   : Symbol('Profile update failure'),
+    
+    CHAT: {
+        ENTER: Symbol('Enter chat'),
+        LEAVE: Symbol('Leave chat'),
+        SEND_MESSAGE: Symbol('Send message'),
+        RECEIVE_MESSAGE: Symbol('Receive message')
+    }
 };

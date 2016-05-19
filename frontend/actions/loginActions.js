@@ -28,7 +28,7 @@ export function doLogin() {
     };
 }
 
-export default function processLogin(username, password) {
+export default function (username, password) {
     return function (dispatch) {
         dispatch(loginRequest());
 

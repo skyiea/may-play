@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import signup from 'actions/signup';
+import signup from 'actions/signupAction';
 import Signup from './Signup';
 
 const mapStateToProps = ({ signup: { processing, error }}) => ({

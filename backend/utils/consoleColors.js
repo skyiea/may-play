@@ -1,6 +1,6 @@
 const colors = require('colors');
 
 colors.setTheme({
-    ws: 'magenta',
+    ws: 'cyan',
     err: 'red'
 });

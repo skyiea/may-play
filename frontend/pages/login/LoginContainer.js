@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import processLogin from 'actions/login';
+import processLogin from 'actions/loginActions';
 import Login from './Login';
 
 const mapStateToProps = ({ login: { error, processing } }) => ({
