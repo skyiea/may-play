@@ -89,8 +89,6 @@ class Chat extends Component {
 
     render() {
         const {
-            userName,
-            online,
             log
         } = this.props;
 
@@ -98,7 +96,7 @@ class Chat extends Component {
             inputMessage
         } = this.state;
         
-        if (!userName || !online) {
+        if (!this._isOnline()) {
             return (
                 <section styleName="loader-container">
                     <Loader isDark/>

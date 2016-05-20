@@ -41,6 +41,19 @@ module.exports = function (socket) {
                 if (!chatUsers.sessionExists(sid)) {
                     broadcastSessionEmit(socket, 'chat/server-message', `${userName} left chat.`);
                 }
+
+                socket.
+                    removeListener('chat/user-message', handleUserMessage).
+                    removeListener('chat/leave', handleChatLeave).
+                    removeListener('disconnect', handleChatLeave);
+            }
+
+            function handleUserMessage(message) {
+                broadcastSocketEmit(socket, 'chat/user-message', {
+                    user: userName,
+                    message,
+                    date: Date.now()
+                });
             }
 
             chatUsers.add(sid, socket);
@@ -52,13 +65,7 @@ module.exports = function (socket) {
             }
 
             socket.
-                on('chat/user-message', (message) => {
-                    broadcastSocketEmit(socket, 'chat/user-message', {
-                        user: userName,
-                        message,
-                        date: Date.now()
-                    });
-                }).
+                on('chat/user-message', handleUserMessage).
                 on('chat/leave', handleChatLeave).
                 on('disconnect', handleChatLeave);
         });
