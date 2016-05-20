@@ -10,9 +10,10 @@ import styles from './Input.scss';
 @CSSModules(styles)
 class Input extends Component {
     static PropTypes = {
-        value       : PropTypes.string,
-        placeholder : PropTypes.string,
-        incorrect   : PropTypes.bool
+        wrapperClassName: PropTypes.string,
+        value           : PropTypes.string,
+        placeholder     : PropTypes.string,
+        incorrect       : PropTypes.bool
     };
     
     focus() {
@@ -21,6 +22,7 @@ class Input extends Component {
 
     render() {
         const {
+            wrapperClassName,
             value,
             placeholder,
             incorrect,
@@ -29,7 +31,9 @@ class Input extends Component {
         } = this.props;
 
         return (
-            <section styleName={classnames('input', value && 'filled')}>
+            <section
+                    className={wrapperClassName}
+                    styleName={classnames('input', value && 'filled')}>
                 <label>{placeholder}</label>
 
                 <input {...otherProps}

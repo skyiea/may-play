@@ -6,12 +6,13 @@ const PORT = 3000;
 require('./config/configConsoleColors');
 require('./config/configPassport')(passport);
 
-app.use(require('morgan')('dev'));
-app.use(require('cookie-parser')());
-app.use(require('body-parser').json());
-app.use(require('./middlewares/sessionMiddleware'));
-app.use(passport.initialize());
-app.use(passport.session());
+app.
+    use(require('morgan')('dev')).
+    use(require('cookie-parser')()).
+    use(require('body-parser').json()).
+    use(require('./middlewares/sessionMiddleware')).
+    use(passport.initialize()).
+    use(passport.session());
 
 require('./routes/routes')(app, passport);
 

@@ -48,11 +48,25 @@ class Chat extends Component {
         return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
     }
 
+    scrollToBottom() {
+        const logEl = this.refs.log;
+
+        logEl.scrollTop = logEl.scrollHeight;
+    }
+
     componentWillMount() {
         this.props.fetchData();
         this.props.enterChat();
 
         wsChat.listenMessages();
+    }
+
+    componentDidUpdate(prevProps) {
+        const logUpdated = prevProps.log.length !== this.props.log.length;
+
+        if (logUpdated) {
+            this.scrollToBottom();
+        }
     }
 
     componentWillUnmount() {
@@ -72,7 +86,9 @@ class Chat extends Component {
 
         return (
             <section styleName="chat">
-                <section styleName="messages">
+                <section
+                        ref="log"
+                        styleName="log">
                     {
                         log.map((messageData, index) => {
                             const { type, payload } = messageData;
@@ -98,7 +114,7 @@ class Chat extends Component {
                 </section>
                 
                 <Input
-                        styleName="text-input"
+                        wrapperClassName={styles['text-input']}
                         type="text"
                         placeholder="Message"
                         value={enteredMessage}

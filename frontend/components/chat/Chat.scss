@@ -4,12 +4,14 @@
 
     flex-direction: column;
 
-    >.messages {
-        padding: 10px;
+    >.log {
+        padding: 1rem 1rem 0;
 
         flex-grow: 1;
 
-        line-height: 24px;
+        line-height: 2.4rem;
+
+        overflow-y: auto;
 
         >.message {
             >.server {
@@ -37,8 +39,6 @@
     }
 
     >.text-input {
-        height: 24px;
-
-        font-size: 20px;
+        margin-top: 1rem;
     }
 }

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const User                  = require('../models/user');
+const User                  = require('../models/userModel');
 const { authAPI }           = require('../middlewares/authMiddleware');
 const ProfileChangeStatus   = require('../../universal/ProfileChangeStatus');
 const Constants             = require('../../universal/Constants');
