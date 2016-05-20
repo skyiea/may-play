@@ -2,7 +2,7 @@ import TYPES from 'actions/actionTypes';
 import FEConstants from 'utils/Constants';
 
 export default function rootReducer(state, action) {
-    const { type, payload } = action;
+    const { type, payload, status } = action;
 
     switch (type) {
         case TYPES.SIGNUP_REQUEST:
@@ -99,12 +99,25 @@ export default function rootReducer(state, action) {
                     ...payload // updated profile data
                 }
             };
-        // split reducer
+        // TODO: separate Chat reducer
+        case TYPES.CHAT.ENTER:
+            if (status === 'success') {
+                return {
+                    ...state,
+                    chat: {
+                        ...state.chat,
+                        online: true
+                    }
+                };
+            }
+            
+            break;
         case TYPES.CHAT.LEAVE:
             return {
                 ...state,
                 chat: {
                     ...state.chat,
+                    online: false,
                     log: []
                 }
             };

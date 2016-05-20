@@ -6,10 +6,11 @@ import { enterChat, leaveChat, sendMessage } from 'actions/chatActions';
 import Chat from './Chat';
 
 const mapStateToProps = ({
-    profile: { username },
-    chat: { log }
+    profile: { username: userName },
+    chat: { log, online }
 }) => ({
-    username,
+    userName,
+    online,
     log
 });
 

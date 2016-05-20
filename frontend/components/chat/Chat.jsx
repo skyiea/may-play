@@ -4,6 +4,7 @@ import { ReactClass } from 'react-core-decorators';
 import CSSModules from 'utils/css-modules';
 import wsChat from 'ws/wsChat';
 
+import Loader from 'components/loader/Loader';
 import Input from 'components/input/Input';
 
 import styles from './Chat.scss';
@@ -20,35 +21,46 @@ class Chat extends Component {
     };
     
     state = {
-        enteredMessage: ''
+        inputMessage: ''
     };
 
     _handleInputKeyDown = (e) => {
-        const { enteredMessage } = this.state;
+        const {
+            inputMessage
+        } = this.state;
 
-        if (e.key === 'Enter' && enteredMessage.length) {
+        if (e.key === 'Enter' && inputMessage.length) {
             this.setState({
-                enteredMessage: ''
+                inputMessage: ''
             });
 
-            this.props.sendMessage(enteredMessage);
+            this.props.sendMessage(inputMessage);
         }
     };
 
     _handleInputChange = (e) => {
         this.setState({
-            enteredMessage: e.target.value
+            inputMessage: e.target.value
         });
     };
 
-    convertDateToTime(timestamp) {
+    _convertDateToTime(timestamp) {
         const date = new Date(timestamp);
 
         // TODO: smarter version
         return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
     }
 
-    scrollToBottom() {
+    _isOnline() {
+        const {
+            online,
+            userName
+        } = this.props;
+
+        return online && !!userName;
+    }
+
+    _scrollToBottom() {
         const logEl = this.refs.log;
 
         logEl.scrollTop = logEl.scrollHeight;
@@ -62,10 +74,10 @@ class Chat extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const logUpdated = prevProps.log.length !== this.props.log.length;
+        const logUpdated = this._isOnline() && prevProps.log.length !== this.props.log.length;
 
         if (logUpdated) {
-            this.scrollToBottom();
+            this._scrollToBottom();
         }
     }
 
@@ -77,12 +89,22 @@ class Chat extends Component {
 
     render() {
         const {
+            userName,
+            online,
             log
         } = this.props;
 
         const {
-            enteredMessage
+            inputMessage
         } = this.state;
+        
+        if (!userName || !online) {
+            return (
+                <section styleName="loader-container">
+                    <Loader isDark/>
+                </section>
+            );
+        }
 
         return (
             <section styleName="chat">
@@ -99,7 +121,7 @@ class Chat extends Component {
                                         type === 'user-message' ?
                                             <span styleName="user">
                                                 <span styleName="time">
-                                                    {`[${this.convertDateToTime(payload.date)}] `}
+                                                    {`[${this._convertDateToTime(payload.date)}] `}
                                                 </span>
 
                                                 <span styleName="name">{payload.user}</span>
@@ -117,7 +139,7 @@ class Chat extends Component {
                         wrapperClassName={styles['text-input']}
                         type="text"
                         placeholder="Message"
-                        value={enteredMessage}
+                        value={inputMessage}
                         onKeyDown={this._handleInputKeyDown}
                         onChange={this._handleInputChange}
                 />

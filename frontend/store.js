@@ -26,6 +26,7 @@ const initialState = {
     },
     
     chat: {
+        online: false,
         log: []
     }
 };

@@ -1,3 +1,11 @@
+@import '../../styles/layout';
+
+.loader-container {
+    @include flex-centered();
+
+    height: 100%;
+}
+
 .chat {
     display: flex;
     height: 100%;
