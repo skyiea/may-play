@@ -2,8 +2,8 @@ const express = require('express');
 
 const User                  = require('../models/userModel');
 const { authAPI }           = require('../middlewares/authMiddleware');
-const ProfileChangeStatus   = require('../../universal/ProfileChangeStatus');
-const Constants             = require('../../universal/Constants');
+const ProfileChangeStatus   = require('../../uniend/ProfileChangeStatus');
+const Constants             = require('../../uniend/Constants');
 const wsConnections         = require('../ws/wsConnections');
 
 const api = express.Router();

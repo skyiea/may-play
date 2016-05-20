@@ -3,7 +3,7 @@ import { ReactClass } from 'react-core-decorators';
 import classnames from 'classnames';
 
 import CSSModules from 'utils/css-modules';
-import LoginStatus from '../../../universal/LoginStatus';
+import LoginStatus from '../../../uniend/LoginStatus';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';
 import Input from 'components/input/Input';

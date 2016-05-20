@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
 const User          = require('../models/userModel');
-const SignupStatus  = require('../../universal/SignupStatus');
-const LoginStatus   = require('../../universal/LoginStatus');
+const SignupStatus  = require('../../uniend/SignupStatus');
+const LoginStatus   = require('../../uniend/LoginStatus');
 
 module.exports = function (passport) {
     passport.serializeUser((user, done) => {

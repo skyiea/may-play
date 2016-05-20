@@ -21,6 +21,9 @@
     "hot": "webpack-dev-server --inline --hot --progress",
     "hots": "npm run hot -- --devtool source-map"
   },
+  "engines": {
+    "node": ">=6.2.0"
+  },
   "dependencies": {
     "autoprefixer": "^6.3.4",
     "babel": "^6.5.2",

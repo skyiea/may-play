@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { ReactClass } from 'react-core-decorators';
 
 import CSSModules from 'utils/css-modules';
-import SignupStatus from '../../../universal/SignupStatus';
+import SignupStatus from '../../../uniend/SignupStatus';
 import Expander from 'components/expander/Expander';
 import Loader from 'components/loader/Loader';
 import Button from 'components/button/Button';

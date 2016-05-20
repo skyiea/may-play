@@ -6,7 +6,7 @@ import { Router, Route, IndexRedirect, Redirect, browserHistory } from 'react-ro
 import { Provider } from 'react-redux';
 
 import store from 'store';
-import Constants from '../universal/Constants';
+import Constants from '../uniend/Constants';
 import FEConstants from 'utils/Constants';
 
 import Carcass from 'carcass/Carcass';
