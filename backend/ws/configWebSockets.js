@@ -3,12 +3,13 @@ const cookie        = require('cookie');
 const cookieParser  = require('cookie-parser');
 
 const sessionMiddleware = require('../middlewares/sessionMiddleware');
-const wsRoutes = require('./routes/wsRoutes');
+const configNamespaces = require('./namespaces/configNamespaces');
 const secret = require('../config/secret');
 
 module.exports = function (server) {
     const io = socketIO(server);
 
+    // middlewares
     io.
         use((socket, next) => {
             sessionMiddleware(socket.request, socket.request.res, next);
@@ -35,5 +36,5 @@ module.exports = function (server) {
             }
         });
     
-    wsRoutes(io);
+    configNamespaces(io);
 };

@@ -1,4 +1,4 @@
-import ws from 'ws/ws';
+import chatSocket from '../ws/chatSocket';
 import TYPES from './actionTypes';
 
 export function enterChatAC(status) {
@@ -31,19 +31,19 @@ export function receiveMessageAC(payload) {
 }
 
 export function enterChat() {
-    ws.emit('chat/enter');
+    chatSocket.open();
 
     return enterChatAC('request');
 }
 
 export function leaveChat() {
-    ws.emit('chat/leave');
+    chatSocket.close();
 
     return leaveChatAC('request');
 }
 
 export function sendMessage(message) {
-    ws.emit('chat/user-message', message);
+    chatSocket.emit('user-message', message);
     
     return sendMessageAC('request', message);
 }

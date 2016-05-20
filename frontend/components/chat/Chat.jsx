@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { ReactClass } from 'react-core-decorators';
 
 import CSSModules from 'utils/css-modules';
-import wsChat from 'ws/wsChat';
 
 import Loader from 'components/loader/Loader';
 import Input from 'components/input/Input';
@@ -67,10 +66,18 @@ class Chat extends Component {
     }
 
     componentWillMount() {
-        this.props.fetchData();
-        this.props.enterChat();
-
-        wsChat.listenMessages();
+        const {
+            userName,
+            
+            enterChat,
+            fetchData
+        } = this.props;
+        
+        enterChat();
+        
+        if (!userName) {
+            fetchData();
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -83,8 +90,6 @@ class Chat extends Component {
 
     componentWillUnmount() {
         this.props.leaveChat();
-        
-        wsChat.unlistenMessages();
     }
 
     render() {
