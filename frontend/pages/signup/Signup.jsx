@@ -48,9 +48,9 @@ class Signup extends Component {
     };
 
     state = {
-        username: 'user',
-        email   : 'user@mail.com',
-        password: '1',
+        username: '',
+        email   : '',
+        password: '',
         errors: {
             ...this.initialErrorsState
         }
