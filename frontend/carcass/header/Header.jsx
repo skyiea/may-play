@@ -58,7 +58,7 @@ class Header extends Component {
                                 <Link
                                         key="profile"
                                         styleName="link"
-                                        to="profile">
+                                        to="/profile">
                                     Profile
                                 </Link>,
                                 <Link
