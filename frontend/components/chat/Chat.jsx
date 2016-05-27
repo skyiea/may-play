@@ -45,9 +45,19 @@ class Chat extends Component {
 
     _convertDateToTime(timestamp) {
         const date = new Date(timestamp);
+        const hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
 
-        // TODO: smarter version
-        return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+        if (minutes < 10) {
+            minutes = `0${minutes}`;
+        }
+
+        if (seconds < 10) {
+            seconds = `0${seconds}`;
+        }
+
+        return `${hours}:${minutes}:${seconds}`;
     }
 
     _isOnline() {
