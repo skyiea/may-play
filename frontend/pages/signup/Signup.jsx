@@ -53,7 +53,9 @@ class Signup extends Component {
         password: '',
         errors: {
             ...this.initialErrorsState
-        }
+        },
+        passwordStrengthGradation: null,
+        passwordLength: 0
     };
 
     _signup = () => {
@@ -87,7 +89,21 @@ class Signup extends Component {
     };
 
     _handlePasswordInputChange = (e) => {
-        this.setState({ password: e.target.value });
+        this.setState({
+            password: e.target.value,
+            passwordLength: e.target.value.length
+        });
+        if (e.target.value.length === 0) {
+            this.setState({
+                passwordStrengthGradation: null
+            });
+        }
+    };
+
+    _handlePasswordStrengthChange = (score) => {
+        if (this.state.passwordLength !== 0) {
+            this.setState({passwordStrengthGradation: SmartPassword.strengthGradation[score]});
+        }
     };
 
     _clearUsernameWarning = () => {
@@ -192,12 +208,13 @@ class Signup extends Component {
         const {
             processing
         } = this.props;
-        
+
         const {
             username,
             email,
             password,
-            errors
+            errors,
+            passwordStrengthGradation
         } = this.state;
 
         const isSignupAvailable = !!username && !!email && !!password;
@@ -265,7 +282,16 @@ class Signup extends Component {
                                     value={password}
                                     onKeyDown={this._handleInputKeyDown}
                                     onChange={this._handlePasswordInputChange}
+                                    onStrengthChange={this._handlePasswordStrengthChange}
                             />
+
+                            <Expander
+                                    wrapperClassName={styles['warning-wrapper']}
+                                    captureChildrenOnCollapse
+                                    speed="fast"
+                                    expanded={!!passwordStrengthGradation}>
+                                <div styleName="info">Password strength: {passwordStrengthGradation}</div>
+                            </Expander>
                         </section>
 
                         <Button
