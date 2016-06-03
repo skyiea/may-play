@@ -6,6 +6,18 @@
     height: 100%;
 }
 
+.disconnected-message-container {
+    @include flex-centered();
+
+    height: 100%;
+
+    flex-direction: column;
+
+    >.message {
+        margin-bottom: 2rem;
+    }
+}
+
 .chat {
     display: flex;
     height: 100%;

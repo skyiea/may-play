@@ -62,11 +62,11 @@ class Chat extends Component {
 
     _isOnline() {
         const {
-            online,
+            status,
             userName
         } = this.props;
 
-        return online && !!userName;
+        return status === 'online' && !!userName;
     }
 
     _scrollToBottom() {
@@ -104,12 +104,22 @@ class Chat extends Component {
 
     render() {
         const {
-            log
+            log,
+            status
         } = this.props;
 
         const {
             inputMessage
         } = this.state;
+
+        if (status === 'disconnected') {
+            return (
+                <section styleName="disconnected-message-container">
+                    <div styleName="message">Lost connection with server. Reconnecting..</div>
+                    <Loader isDark/>
+                </section>
+            );
+        }
         
         if (!this._isOnline()) {
             return (
@@ -152,6 +162,7 @@ class Chat extends Component {
                         wrapperClassName={styles['text-input']}
                         type="text"
                         placeholder="Message"
+                        autoFocus
                         value={inputMessage}
                         onKeyDown={this._handleInputKeyDown}
                         onChange={this._handleInputChange}

@@ -25,6 +25,7 @@ export default {
         ENTER: Symbol('Enter chat'),
         LEAVE: Symbol('Leave chat'),
         SEND_MESSAGE: Symbol('Send message'),
-        RECEIVE_MESSAGE: Symbol('Receive message')
+        RECEIVE_MESSAGE: Symbol('Receive message'),
+        DISCONNECTED: Symbol('Disconnected from server')
     }
 };

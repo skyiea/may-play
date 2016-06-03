@@ -15,6 +15,12 @@ export function leaveChatAC(status) {
     };
 }
 
+export function disconnectedAC() {
+    return {
+        type: TYPES.CHAT.DISCONNECTED
+    };
+}
+
 export function sendMessageAC(status, message) {
     return {
         type: TYPES.CHAT.SEND_MESSAGE,

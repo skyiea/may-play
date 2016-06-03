@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import store from 'store';
-import { enterChatAC, receiveMessageAC } from '../actions/chatActions';
+import { enterChatAC, receiveMessageAC, disconnectedAC } from '../actions/chatActions';
 
 let chatSocket;
 
@@ -23,6 +23,9 @@ function listenEventsFromServer() {
         }).
         on('users-online', (userNames) => {
             console.debug(userNames);
+        }).
+        on('disconnect', () => {
+            store.dispatch(disconnectedAC());
         });
 }
 

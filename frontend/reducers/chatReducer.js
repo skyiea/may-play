@@ -8,7 +8,7 @@ export default function (state, domainState, action) {
             if (status === 'success') {
                 return {
                     ...domainState,
-                    online: true
+                    status: 'online'
                 };
             }
 
@@ -16,7 +16,7 @@ export default function (state, domainState, action) {
         case TYPES.CHAT.LEAVE:
             return {
                 ...domainState,
-                online: false,
+                status: 'offline',
                 log: []
             };
         case TYPES.CHAT.SEND_MESSAGE:
@@ -41,6 +41,12 @@ export default function (state, domainState, action) {
                     ...domainState.log,
                     payload
                 ]
+            };
+        case TYPES.CHAT.DISCONNECTED:
+            return {
+                ...domainState,
+                log: [],
+                status: 'disconnected'
             };
         default:
             break;
