@@ -1,10 +1,9 @@
 const omit = require('lodash.omit');
 
-const wsConnections = require('./../wsConnections');
-const SessionSockets = require('./../SessionSockets');
-const getUsername = require('../../utils/getUsername');
+const ChatSessionSockets = require('./ChatSessionSockets');
+const getUsername = require('../../../utils/getUsername');
 
-const chatUsers = new SessionSockets;
+const chatUsers = new ChatSessionSockets;
 
 const broadcastSessionEmit = (socket, eventName, payload) => {
     const sid = socket.request.sessionID;
@@ -37,12 +36,14 @@ module.exports = function (nsp) {
             if (socket.connected) {
                 const isNewUser = !chatUsers.sessionExists(sid);
 
-                chatUsers.add(sid, socket);
+                chatUsers.add(userName, sid, socket);
                 socket.emit('entered');
-                socket.emit('server-message', `${chatUsers.getSessionsSids().length - 1} users online.`);
+                socket.emit('users-online', chatUsers.getUserNames());
+                socket.emit('server-message', `${chatUsers.getUserNames().length - 1} users online.`);
 
                 if (isNewUser) {
                     broadcastSessionEmit(socket, 'server-message', `${userName} entered chat.`);
+                    broadcastSessionEmit(socket, 'users-online', chatUsers.getUserNames());
                 }
 
                 socket.
@@ -58,6 +59,7 @@ module.exports = function (nsp) {
 
                         if (!chatUsers.sessionExists(sid)) {
                             broadcastSessionEmit(socket, 'server-message', `${userName} left chat.`);
+                            broadcastSessionEmit(socket, 'users-online', chatUsers.getUserNames());
                         }
                     });
             }

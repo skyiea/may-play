@@ -20,6 +20,9 @@ function listenEventsFromServer() {
                 type: 'server-message',
                 payload
             }));
+        }).
+        on('users-online', (userNames) => {
+            console.debug(userNames);
         });
 }
 
