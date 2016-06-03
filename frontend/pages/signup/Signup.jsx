@@ -53,7 +53,8 @@ class Signup extends Component {
         password: '',
         errors: {
             ...this.initialErrorsState
-        }
+        },
+        pwStrScore: null
     };
 
     _signup = () => {
@@ -87,7 +88,15 @@ class Signup extends Component {
     };
 
     _handlePasswordInputChange = (e) => {
-        this.setState({ password: e.target.value });
+        this.setState({
+            password: e.target.value
+        });
+    };
+
+    _handlePasswordStrengthChange = (score) => {
+        this.setState({
+            pwStrScore: score
+        });
     };
 
     _clearUsernameWarning = () => {
@@ -192,15 +201,17 @@ class Signup extends Component {
         const {
             processing
         } = this.props;
-        
+
         const {
             username,
             email,
             password,
-            errors
+            errors,
+            pwStrScore
         } = this.state;
 
         const isSignupAvailable = !!username && !!email && !!password;
+        const isPasswordStrengthAvailable = !!password && pwStrScore !== null;
 
         return (
             <section styleName="signup-page">
@@ -265,7 +276,19 @@ class Signup extends Component {
                                     value={password}
                                     onKeyDown={this._handleInputKeyDown}
                                     onChange={this._handlePasswordInputChange}
+                                    onStrengthChange={this._handlePasswordStrengthChange}
                             />
+
+                            <Expander
+                                    wrapperClassName={styles['warning-wrapper']}
+                                    captureChildrenOnCollapse
+                                    speed="fast"
+                                    expanded={isPasswordStrengthAvailable}>
+                                <div styleName="info">
+                                    Password strength:&nbsp;
+                                    {isPasswordStrengthAvailable && SmartPassword.strengthGradation[pwStrScore]}
+                                </div>
+                            </Expander>
                         </section>
 
                         <Button
