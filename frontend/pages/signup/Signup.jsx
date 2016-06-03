@@ -54,8 +54,7 @@ class Signup extends Component {
         errors: {
             ...this.initialErrorsState
         },
-        passwordStrengthGradation: null,
-        passwordLength: 0
+        pwStrScore: null
     };
 
     _signup = () => {
@@ -90,20 +89,14 @@ class Signup extends Component {
 
     _handlePasswordInputChange = (e) => {
         this.setState({
-            password: e.target.value,
-            passwordLength: e.target.value.length
+            password: e.target.value
         });
-        if (e.target.value.length === 0) {
-            this.setState({
-                passwordStrengthGradation: null
-            });
-        }
     };
 
     _handlePasswordStrengthChange = (score) => {
-        if (this.state.passwordLength !== 0) {
-            this.setState({passwordStrengthGradation: SmartPassword.strengthGradation[score]});
-        }
+        this.setState({
+            pwStrScore: score
+        });
     };
 
     _clearUsernameWarning = () => {
@@ -214,10 +207,11 @@ class Signup extends Component {
             email,
             password,
             errors,
-            passwordStrengthGradation
+            pwStrScore
         } = this.state;
 
         const isSignupAvailable = !!username && !!email && !!password;
+        const isPasswordStrengthAvailable = !!password && pwStrScore !== null;
 
         return (
             <section styleName="signup-page">
@@ -289,8 +283,11 @@ class Signup extends Component {
                                     wrapperClassName={styles['warning-wrapper']}
                                     captureChildrenOnCollapse
                                     speed="fast"
-                                    expanded={!!passwordStrengthGradation}>
-                                <div styleName="info">Password strength: {passwordStrengthGradation}</div>
+                                    expanded={isPasswordStrengthAvailable}>
+                                <div styleName="info">
+                                    Password strength:&nbsp;
+                                    {isPasswordStrengthAvailable && SmartPassword.strengthGradation[pwStrScore]}
+                                </div>
                             </Expander>
                         </section>
 

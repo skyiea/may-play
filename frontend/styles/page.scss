@@ -81,22 +81,24 @@
                 .warning-wrapper {
                     padding-top: .7rem;
 
-                    .warning, .info {
+                    .warning,
+                    .info {
                         padding: 1rem;
 
-                        font: {
-                            size: 1.6rem;
-                            weight: 400;
-                        }
+                        font-weight: 400;
                         color: $brand-woodsmoke;
                     }
 
                     .warning {
+                        font-size: 1.6rem;
+
                         background-color: $brand-school-bus-yellow;
                     }
 
                     .info {
-                        background-color: $green-light;
+                        font-size: 1.4rem;
+
+                        background-color: $brand-gin;
                     }
                 }
             }
