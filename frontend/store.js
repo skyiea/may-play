@@ -27,7 +27,8 @@ const initialState = {
     
     chat: {
         status: null,
-        log: []
+        log: [],
+        onlineUsers: []
     }
 };
 

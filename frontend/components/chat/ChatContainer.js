@@ -7,11 +7,12 @@ import Chat from './Chat';
 
 const mapStateToProps = ({
     profile: { username: userName },
-    chat: { log, status }
+    chat: { log, status, onlineUsers }
 }) => ({
     userName,
     status,
-    log
+    log,
+    onlineUsers
 });
 
 const mapDispatchToProps = (dispatch) => ({

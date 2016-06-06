@@ -13,6 +13,7 @@ import styles from './Chat.scss';
 class Chat extends Component {
     static PropTypes = {
         log: PropTypes.array.isRequired,
+        onlineUsers: PropTypes.array.isRequired,
 
         fetchData: PropTypes.func.isRequired,
         enterChat: PropTypes.func.isRequired,
@@ -105,7 +106,9 @@ class Chat extends Component {
     render() {
         const {
             log,
-            status
+            status,
+            onlineUsers,
+            userName
         } = this.props;
 
         const {
@@ -131,42 +134,56 @@ class Chat extends Component {
 
         return (
             <section styleName="chat">
-                <section
-                        ref="log"
-                        styleName="log">
+                <section styleName="online-list">
+                    <div>Online users:</div>
                     {
-                        log.map((messageData, index) => {
-                            const { type, payload } = messageData;
-
-                            return (
-                                <div key={index} styleName="message">
-                                    {
-                                        type === 'user-message' ?
-                                            <span styleName="user">
-                                                <span styleName="time">
-                                                    {`[${this._convertDateToTime(payload.date)}] `}
-                                                </span>
-
-                                                <span styleName="name">{payload.user}</span>
-                                                <span styleName="message">{payload.message}</span>
-                                            </span> :
-                                            <span styleName="server">{payload}</span>
-                                    }
-                                </div>
-                            );
+                        onlineUsers.map((name, index) => {
+                            if (name !== userName) {
+                                return (
+                                    <li key={index}>{name}</li>
+                                );
+                            }
                         })
                     }
                 </section>
-                
-                <Input
-                        wrapperClassName={styles['text-input']}
-                        type="text"
-                        placeholder="Message"
-                        autoFocus
-                        value={inputMessage}
-                        onKeyDown={this._handleInputKeyDown}
-                        onChange={this._handleInputChange}
-                />
+                <section styleName="message-container">
+                    <section
+                            ref="log"
+                            styleName="log">
+                        {
+                            log.map((messageData, index) => {
+                                const { type, payload } = messageData;
+    
+                                return (
+                                    <div key={index} styleName="message">
+                                        {
+                                            type === 'user-message' ?
+                                                <span styleName="user">
+                                                    <span styleName="time">
+                                                        {`[${this._convertDateToTime(payload.date)}] `}
+                                                    </span>
+    
+                                                    <span styleName="name">{payload.user}</span>
+                                                    <span styleName="message">{payload.message}</span>
+                                                </span> :
+                                                <span styleName="server">{payload}</span>
+                                        }
+                                    </div>
+                                );
+                            })
+                        }
+                    </section>
+    
+                    <Input
+                            wrapperClassName={styles['text-input']}
+                            type="text"
+                            placeholder="Message"
+                            autoFocus
+                            value={inputMessage}
+                            onKeyDown={this._handleInputKeyDown}
+                            onChange={this._handleInputChange}
+                    />
+                </section>  
             </section>
         );
     }
