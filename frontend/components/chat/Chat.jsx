@@ -135,6 +135,7 @@ class Chat extends Component {
         return (
             <section styleName="chat">
                 <section styleName="online-list">
+                    <span styleName="count">{onlineUsers.length - 1} users online</span>
                     <div>Online users:</div>
                     {
                         onlineUsers.map((name, index) => {

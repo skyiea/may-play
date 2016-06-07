@@ -35,6 +35,12 @@
         overflow-y: auto;
 
         flex-shrink: 0;
+
+        >.count {
+            font-size: .9em;
+            color: #888;
+            font-style: italic;
+        }
     }
 
     >.message-container {

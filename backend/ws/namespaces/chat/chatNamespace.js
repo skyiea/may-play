@@ -39,7 +39,6 @@ module.exports = function (nsp) {
                 chatUsers.add(userName, sid, socket);
                 socket.emit('entered');
                 socket.emit('users-online', chatUsers.getUserNames());
-                socket.emit('server-message', `${chatUsers.getUserNames().length - 1} users online.`);
 
                 if (isNewUser) {
                     broadcastSessionEmit(socket, 'server-message', `${userName} entered chat.`);
