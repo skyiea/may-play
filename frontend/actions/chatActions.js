@@ -15,6 +15,13 @@ export function leaveChatAC(status) {
     };
 }
 
+export function usersListUpdatedAC(payload) {
+    return {
+        type: TYPES.CHAT.USERS_LIST_UPDATED,
+        payload
+    };
+}
+
 export function disconnectedAC() {
     return {
         type: TYPES.CHAT.DISCONNECTED

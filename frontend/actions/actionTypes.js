@@ -22,10 +22,11 @@ export default {
     PROFILE_UPDATE_FAILURE   : Symbol('Profile update failure'),
     
     CHAT: {
-        ENTER: Symbol('Enter chat'),
-        LEAVE: Symbol('Leave chat'),
-        SEND_MESSAGE: Symbol('Send message'),
-        RECEIVE_MESSAGE: Symbol('Receive message'),
-        DISCONNECTED: Symbol('Disconnected from server')
+        ENTER               : Symbol('Enter chat'),
+        LEAVE               : Symbol('Leave chat'),
+        SEND_MESSAGE        : Symbol('Send message'),
+        RECEIVE_MESSAGE     : Symbol('Receive message'),
+        DISCONNECTED        : Symbol('Disconnected from server'),
+        USERS_LIST_UPDATED  : Symbol('Users list updated')
     }
 };

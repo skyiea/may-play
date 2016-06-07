@@ -1,4 +1,5 @@
 @import '../../styles/layout';
+@import '../../styles/colors';
 
 .loader-container {
     @include flex-centered();
@@ -22,43 +23,63 @@
     display: flex;
     height: 100%;
 
-    flex-direction: column;
+    flex-direction: row;
 
-    >.log {
+    >.online-list {
+        width: 30%;
         padding: 1rem 1rem 0;
-
-        flex-grow: 1;
+        border-right: solid 2px $brand-gin;
 
         line-height: 2.4rem;
 
         overflow-y: auto;
 
-        >.message {
-            >.server {
-                font-size: .9em;
-                color: #888;
-                font-style: italic;
-            }
+        flex-shrink: 0;
+    }
 
-            >.user {
-                >.time {
+    >.message-container {
+        display: flex;
+        height: 100%;
+        width: 70%;
+
+        flex-direction: column;
+
+        > .log {
+            padding: 1rem 1rem 0;
+
+            flex-grow: 1;
+
+            line-height: 2.4rem;
+
+            overflow-y: auto;
+
+            > .message {
+                > .server {
                     font-size: .9em;
-                    color: #666;
+                    color: #888;
+                    font-style: italic;
                 }
 
-                >.name {
-                    font-size: .9em;
-                    color: #2f6fad;
+                > .user {
+                    > .time {
+                        font-size: .9em;
+                        color: #666;
+                    }
 
-                    &:after {
-                        content: ': ';
+                    > .name {
+                        font-size: .9em;
+                        color: #2f6fad;
+
+                        &:after {
+                            content: ': ';
+                        }
                     }
                 }
             }
         }
-    }
 
-    >.text-input {
-        margin-top: 1rem;
+        > .text-input {
+            margin-top: 1rem;
+        }
     }
 }

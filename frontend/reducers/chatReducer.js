@@ -48,6 +48,11 @@ export default function (state, domainState, action) {
                 log: [],
                 status: 'disconnected'
             };
+        case TYPES.CHAT.USERS_LIST_UPDATED:
+            return {
+                ...domainState,
+                onlineUsers: payload
+            };
         default:
             break;
     }
